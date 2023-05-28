@@ -1,4 +1,4 @@
-import { Profile_interface } from "../types/profile_interface";
+import Profile_interface from "../types/profile_interface";
 
 export default function decodeJwtResponse(token:string):Profile_interface{
     var base64Url = token.split(".")[1];

@@ -1,4 +1,4 @@
-export interface Profile_interface {
+export default interface Profile_interface {
     sub: string;
     name: string;
     given_name: string;
