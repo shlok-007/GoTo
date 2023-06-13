@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import './App.css';
 
@@ -8,6 +8,7 @@ import decodeJwtResponse from './utils/decodeJwtResponse';
 import Navbar from './components/Navbar';
 import DestinationSelect from './Pages/DestinationSelect';
 import LoginPage from './Pages/LoginPage';
+import ShowCompanions from './Pages/ShowCompanions';
 
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate} from 'react-router-dom';
@@ -50,6 +51,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<LoginPage loginPromptFunction={CallLogin}/>}/>
         <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>
+        <Route path="/showCompanions/:destination/:date" element={<ShowCompanions/>}/>
       </Routes>
     </>
   );

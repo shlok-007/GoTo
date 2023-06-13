@@ -2,10 +2,13 @@ import loggedInPageProps from "../types/loggedInPageProps"
 import React, {useState} from "react"
 import "../styles/loggedInPageStyle.css"
 import InfoCard from '../components/InfoCard';
+import {useNavigate} from 'react-router-dom';
 // import findCompanions from "../utils/findCompanions";
 
 
-export default function LoggedInPage({profile}:loggedInPageProps){
+export default function DestinationSelect({profile}:loggedInPageProps){
+
+  // console.log(profile);
 
   const [destination, setDestination] = useState<string>("Select your Destination");
 
@@ -26,23 +29,13 @@ export default function LoggedInPage({profile}:loggedInPageProps){
     setDestination(e.currentTarget.textContent || "Select your Destination");
   }
 
-  const findCompanions = async (destination:string, date: string) => {
-    console.log(destination, date);
-    const response = await fetch("http://localhost:5000/database/travelDetails/?" + new URLSearchParams({
-      destination: destination,
-      date: date
-      })
-    );
-    if (!response.ok) {
-      const message = `An error occurred: ${response.statusText}`;
-      window.alert(message);
-      return;
-    }
-    const data = await response.json();
-    console.log(data);
+  const navigate = useNavigate();
+  const [date, setDate] = useState<string>("");
+  
+  const redirect_to_ShowCompanions = (destination:string, date: string) => {
+    navigate(`/showCompanions/${destination}/${date}`);
   }
 
-  const [date, setDate] = useState<string>("");
 
   return(
       <>
@@ -52,7 +45,7 @@ export default function LoggedInPage({profile}:loggedInPageProps){
             <span>
             <button className="destination-selector-button" onClick={handleDropdownVisibility}>
               {destination}</button>
-            <button className="search-btn" onClick={()=>findCompanions(destination,date)}>Find Companions</button>
+            <button className="search-btn" onClick={()=>redirect_to_ShowCompanions(destination,date)}>Find Companions</button>
             </span>
             <div className="dropdown-menu">
               <div className="dropdown-cities">
