@@ -9,25 +9,23 @@ import InfoCard from '../components/InfoCard';
 const ShowCompanions = () => {
 
     const [loading, setLoading] = useState<boolean>(true);
-    const [data, setData] = useState<travelDetails_interface[]>([]);
+    const [data, setData] = useState<travelDetails_interface[] | boolean>([]);
     const {destination, date} = useParams();
-
-    // if(destination && date) {const data = findCompanions(destination, date);
-    //     data.then((val)=>console.log(val));}
-    // if(destination && date){ const res = findCompanions(destination, date);
         
     if(destination && date && loading){ findCompanions(destination, date).then(
-        (val)=>{setData(val); setLoading(false);});};
-    // console.log(data);
+        (val)=>{setData(val);   setLoading(false);});}
+
     return (
         <>
             {/* <h1>Companions</h1> */}
-            {loading && <p>Loading...</p>}
+            {loading && <InfoCard content='Loading...'/>}
 
-            {data.length === 0 && !loading && <InfoCard content='Sorry, no companions found as of now'/>}
+            {!loading && data===false && <InfoCard content='Unable to connect to the server :_('/>}
+
+            {!loading && typeof(data)!=='boolean' && data.length === 0 && <InfoCard content='Sorry, no companions found as of now'/>}
 
             <div className="companion-list">
-            {data.length > 0 && (
+            {typeof(data)!=='boolean' && data.length > 0 && (
                 <>
                 <InfoCard content='You can go with anyone of them...'/>
                 {data.map((item) => (

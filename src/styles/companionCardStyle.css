@@ -24,6 +24,19 @@
     object-fit: cover;
 }
 
+.contact-frame {
+    width: 45px;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    border: none;
+    border-color: transparent;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
 .left{
     width: 50%;
     display: flex;
@@ -37,17 +50,6 @@
     align-items: center;
     justify-content: flex-end;
     gap: 2rem;
-}
-
-.contact-frame {
-    width: 45px;
-    aspect-ratio: 1/1;
-    border:none;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    padding: 0;
-    /* margin: 0; */
 }
 
 .companion-list{

@@ -20,5 +20,6 @@ yarn-debug.log*
 yarn-error.log*
 
 mongo_creds.txt
+temp.txt
 .env
 /server/config.env
