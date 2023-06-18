@@ -51,7 +51,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<LoginPage loginPromptFunction={CallLogin}/>}/>
         <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>
-        <Route path="/showCompanions/:destination/:date" element={<ShowCompanions/>}/>
+        <Route path="/showCompanions/:destination/:date/:email" element={<ShowCompanions/>}/>
       </Routes>
     </>
   );

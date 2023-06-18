@@ -6,13 +6,28 @@ const router = express.Router();
 
 // This section will help you get a list of all the records.
 router.get("/", async (req, res) => {
-    const { destination, date} = req.query;
+    const { destination, date, email} = req.query;
     let collection = await db.collection("TravelDetails");
     let results = await collection.find({
         "destination": destination,
-        "date": date
+        "date": date,
+        "email": {$ne: email}
     }).toArray();
     res.send(results).status(200);
+});
+
+router.get("/checkEntry", async (req, res) => {
+  const { email, destination, date, time} = req.query;
+  let collection = await db.collection("TravelDetails");
+  let results = await collection.find({
+      "email": email,
+      "destination": destination,
+      "date": date,
+      "time": time
+  },{"_id":1}).toArray();
+  let found = false;
+  if(results.length>0){ found = true; }
+  res.send({"found":found}).status(200);
 });
 
 // This section will help you create a new record.

@@ -10,9 +10,9 @@ const ShowCompanions = () => {
 
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<travelDetails_interface[] | boolean>([]);
-    const {destination, date} = useParams();
+    const {destination, date, email} = useParams();
         
-    if(destination && date && loading){ findCompanions(destination, date).then(
+    if(destination && date && email && loading){ findCompanions(destination, date, email).then(
         (val)=>{setData(val);   setLoading(false);});}
 
     return (
@@ -32,7 +32,6 @@ const ShowCompanions = () => {
                     <div className="companion-card" key={item._id}>
                         <CompanionCard avatar={item.avatar} name={item.name} time={item.time} ph={item.ph_no} wa={item.wa_no} email={item.email}/>
                     </div>
-                    // <CompanionCard avatar=item.avatar name=item.name time=item.time ph=item.ph wa=item.wa email=item.email/>
                 ))}
                 </>
             )}

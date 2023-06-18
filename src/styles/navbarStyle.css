@@ -10,6 +10,7 @@
   .navbar__site-name {
     font-size: 40px;
     font-weight: bold;
+    cursor: pointer;
   }
   
   .navbar__user {
