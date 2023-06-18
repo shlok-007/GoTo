@@ -6,11 +6,11 @@ import travelDetails_interface from '../types/travelDetailsInterface';
 import {useState} from 'react';
 import InfoCard from '../components/InfoCard';
 
-const ShowCompanions = () => {
+const ShowCompanions : React.FC<{email:string}> = ({email}) => {
 
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<travelDetails_interface[] | boolean>([]);
-    const {destination, date, email} = useParams();
+    const {destination, date} = useParams();
         
     if(destination && date && email && loading){ findCompanions(destination, date, email).then(
         (val)=>{setData(val);   setLoading(false);});}

@@ -66,12 +66,12 @@ export default function DestinationSelect({profile}:loggedInPageProps){
           };
           addTravelDetail(travelDetail).then((val)=>{
             if(val){
-              navigate(`/showCompanions/${destination}/${date}/${profile?.email}`);
+              navigate(`/showCompanions/${destination}/${date}`);
             }
             else setIsServerDown(true);
           });
         }
-        else navigate(`/showCompanions/${destination}/${date}/${profile?.email}`);
+        else navigate(`/showCompanions/${destination}/${date}`);
       }
     });
   }

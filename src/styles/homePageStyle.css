@@ -1,0 +1,30 @@
+.center-btn > button{
+    background-color: hsl(0, 100%, 50%);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: white;
+    cursor: pointer;
+    padding: 5px 20px;
+    transition: background-color 150ms ease-in-out, border-radius 150ms ease-in-out;
+
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+}
+
+.center-btn > button:hover{
+    border-radius: 20px;
+    background-color: hsl(0, 100%, 45%);
+}
+
+.center-btn{
+    position: relative;
+    margin: 2rem auto;
+}
