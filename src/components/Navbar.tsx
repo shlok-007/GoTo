@@ -6,7 +6,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
   const navigate = useNavigate();
     return(
       <nav className="navbar">
-        <div className="navbar__site-name" onClick={()=> navigate("/")}>{siteName}</div>
+        <div className="navbar__site-name" onClick={()=> navigate("/home")}>{siteName}</div>
         {isLogged?
         <div className="navbar__user">
           <div className="navbar__avatar-frame">

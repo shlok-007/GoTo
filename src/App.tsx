@@ -10,6 +10,7 @@ import DestinationSelect from './Pages/DestinationSelect';
 import LoginPage from './Pages/LoginPage';
 import ShowCompanions from './Pages/ShowCompanions';
 import HomePage from './Pages/HomePage';
+import PrivateRoutes from './utils/PrivateRoutes';
 
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
@@ -23,7 +24,6 @@ const App: React.FC = () => {
   if(!!authToken && !isLogged){
     setIsLogged(true);
     setProfile(decodeJwtResponse(authToken));
-
   }
 
   const CallLogin = ()=>{
@@ -59,9 +59,11 @@ const App: React.FC = () => {
 
       <Routes>
         <Route path="/loginPage" element={<LoginPage loginPromptFunction={CallLogin}/>}/>
-        <Route path="/home" element={<HomePage name={profile?.name || ""}/>}/>
-        <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>
-        <Route path="/showCompanions/:destination/:date" element={<ShowCompanions email={profile?.email || ""}/>}/>
+        <Route element={<PrivateRoutes isLogged={isLogged}/>}>
+          <Route path="/home" element={<HomePage name={profile?.name || ""}/>}/>
+          <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>
+          <Route path="/showCompanions/:destination/:date" element={<ShowCompanions email={profile?.email || ""}/>}/>
+        </Route>
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>
     </>
