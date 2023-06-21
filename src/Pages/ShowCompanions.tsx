@@ -6,11 +6,8 @@ import "../styles/companionCardStyle.css"
 import travelDetails_interface from '../types/travelDetailsInterface';
 import {useState} from 'react';
 import InfoCard from '../components/InfoCard';
-import { useNavigate } from 'react-router-dom';
 
 const ShowCompanions : React.FC<{email:string}> = ({email}) => {
-
-    const navigate = useNavigate();
 
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<travelDetails_interface[] | boolean>([]);
@@ -29,9 +26,7 @@ const ShowCompanions : React.FC<{email:string}> = ({email}) => {
             {!loading && typeof(data)!=='boolean' && data.length === 0 && 
             <>
             <InfoCard content='Sorry, no companions found as of now'/>
-            <button onClick={()=>{
-                // navigate("/");  
-                getSubscriptionObject(email);}}>Get Notified!</button>
+            <button onClick={()=>{getSubscriptionObject(email);}}>Get Notified!</button>
             </>
             }
 

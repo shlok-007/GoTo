@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import './App.css';
 
@@ -21,32 +21,11 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [profile, setProfile] = useState<profile_interface | undefined>(undefined);
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
   const authToken = localStorage.getItem('authToken');
   if(!!authToken && !isLogged){
     setIsLogged(true);
     setProfile(decodeJwtResponse(authToken));
   }
-
-
-
-  async function addSubscriptionToServer(subscription:PushSubscription, email:string){
-    
-    const data = {"email":email, "subscription":subscription};
-    try{
-        await fetch('http://localhost:5000/userDetails/addSubscription', {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-            });
-            // return true;
-        }catch(err){
-            console.log(err);
-            // return false;
-        }
-    }
 
   const CallLogin = ()=>{
     useGoogleOneTapLogin({
