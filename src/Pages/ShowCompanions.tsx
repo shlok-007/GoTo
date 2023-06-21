@@ -1,12 +1,16 @@
 import {useParams} from 'react-router-dom';
 import findCompanions from '../utils/findCompanions';
+import getSubscriptionObject from '../utils/getSubscriptionObject';
 import CompanionCard from '../components/CompanionCard';
 import "../styles/companionCardStyle.css"
 import travelDetails_interface from '../types/travelDetailsInterface';
 import {useState} from 'react';
 import InfoCard from '../components/InfoCard';
+import { useNavigate } from 'react-router-dom';
 
 const ShowCompanions : React.FC<{email:string}> = ({email}) => {
+
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<travelDetails_interface[] | boolean>([]);
@@ -22,7 +26,14 @@ const ShowCompanions : React.FC<{email:string}> = ({email}) => {
 
             {!loading && data===false && <InfoCard content='Unable to connect to the server :_('/>}
 
-            {!loading && typeof(data)!=='boolean' && data.length === 0 && <InfoCard content='Sorry, no companions found as of now'/>}
+            {!loading && typeof(data)!=='boolean' && data.length === 0 && 
+            <>
+            <InfoCard content='Sorry, no companions found as of now'/>
+            <button onClick={()=>{
+                // navigate("/");  
+                getSubscriptionObject(email);}}>Get Notified!</button>
+            </>
+            }
 
             <div className="companion-list">
             {typeof(data)!=='boolean' && data.length > 0 && (

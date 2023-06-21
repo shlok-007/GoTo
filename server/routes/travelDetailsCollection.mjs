@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
+import sendPushNotification from "../pushNotifications.js";
 
 const router = express.Router();
 
@@ -13,6 +14,24 @@ router.get("/", async (req, res) => {
         "date": date,
         "email": {$ne: email}
     }).toArray();
+
+    let GotoUsersCollection = db.collection("GotoUsers");
+
+    for (const result of results) {
+      const { email } = result;
+  
+      // Search for email in GotoUsers collection
+      let user = await GotoUsersCollection.findOne({ email });
+  
+      // Perform action using specific field
+      if (user) {
+        const { subObject } = user;
+  
+        // Call a function using specific field value
+        sendPushNotification(subObject, "You have got a companion!")
+      }
+    }
+
     res.send(results).status(200);
 });
 
