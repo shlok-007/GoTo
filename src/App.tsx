@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 
 import './App.css';
 
 import {useGoogleOneTapLogin, googleLogout} from '@react-oauth/google';
 import decodeJwtResponse from './utils/decodeJwtResponse';
+import addUser from './utils/addUser';
 import getSubscriptionObject from './utils/getSubscriptionObject';
 
 import Navbar from './components/Navbar';
@@ -11,6 +12,7 @@ import DestinationSelect from './Pages/DestinationSelect';
 import LoginPage from './Pages/LoginPage';
 import ShowCompanions from './Pages/ShowCompanions';
 import HomePage from './Pages/HomePage';
+import InfoCard from './components/InfoCard';
 import PrivateRoutes from './utils/PrivateRoutes';
 
 import profile_interface from './types/profile_interface';
@@ -26,6 +28,12 @@ const App: React.FC = () => {
     setIsLogged(true);
     setProfile(decodeJwtResponse(authToken));
   }
+
+  useEffect(()=>{
+    if(profile){
+      addUser(profile.email).then((val)=>{if(!val) navigate("/serverOffline");});
+    }
+  },[profile]);
 
   const CallLogin = ()=>{
     useGoogleOneTapLogin({
@@ -64,6 +72,7 @@ const App: React.FC = () => {
           <Route path="/home" element={<HomePage name={profile?.name || ""}/>}/>
           <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>
           <Route path="/showCompanions/:destination/:date" element={<ShowCompanions email={profile?.email || ""}/>}/>
+          <Route path="/serverOffline" element={<InfoCard content="Unable to connect to the server :_(" />}/>
         </Route>
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>

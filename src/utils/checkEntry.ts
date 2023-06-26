@@ -1,3 +1,6 @@
+
+//-----------obsolete----------------
+
 export default async function checkEntry(email: string, destination:string, date:string, time:string): Promise<boolean | {found:boolean}> {
     try {
         const response = await fetch("http://localhost:5000/travelDetails/checkEntry/?" + new URLSearchParams({

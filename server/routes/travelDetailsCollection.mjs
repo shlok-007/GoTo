@@ -5,7 +5,6 @@ import sendPushNotification from "../pushNotifications.js";
 
 const router = express.Router();
 
-// This section will help you get a list of all the records.
 router.get("/", async (req, res) => {
     const { destination, date, email} = req.query;
     let collection = await db.collection("TravelDetails");
@@ -19,21 +18,19 @@ router.get("/", async (req, res) => {
 
     for (const result of results) {
       const { email } = result;
-  
-      // Search for email in GotoUsers collection
+
       let user = await GotoUsersCollection.findOne({ email });
   
-      // Perform action using specific field
       if (user) {
         const { subObject } = user;
-  
-        // Call a function using specific field value
         sendPushNotification(subObject, "You have got a companion!")
       }
     }
 
     res.send(results).status(200);
 });
+
+//--------obsolete------------
 
 router.get("/checkEntry", async (req, res) => {
   const { email, destination, date, time} = req.query;
@@ -49,61 +46,28 @@ router.get("/checkEntry", async (req, res) => {
   res.send({"found":found}).status(200);
 });
 
-// This section will help you create a new record.
+//--------------------------------
+
 router.post("/", async (req, res) => {
-  // const { name, email, ph_no, wa_no, time, destination, date, avatar} = req.body;
-  let newDocument = {
-    "name": req.body.name,
-    "email": req.body.email,
-    "ph_no": req.body.ph_no,
-    "wa_no": req.body.wa_no,
-    "time": req.body.time,
-    "destination": req.body.destination,
-    "date": req.body.date,
-    "avatar": req.body.avatar
-  };
+  const { name, email, ph_no, wa_no, time, destination, date, avatar} = req.body;
   let collection = await db.collection("TravelDetails");
-  let result = await collection.insertOne(newDocument);
+  const existingTravelDetail = await collection.findOne({
+    "email": email,
+    "destination": destination,
+    "date": date
+  });
+  if(existingTravelDetail)  return res.send(existingTravelDetail).status(204);
+  let newTravelDetail = {
+    "name": name,
+    "email": email,
+    "ph_no": ph_no,
+    "wa_no": wa_no,
+    "time": time,
+    "destination": destination,
+    "date": date,
+    "avatar": avatar
+  };
+  let result = await collection.insertOne(newTravelDetail);
   res.send(result).status(204);
 });
-
-// This section will help you get a single record by id
-// router.get("/:id", async (req, res) => {
-//   let collection = await db.collection("records");
-//   let query = {_id: new ObjectId(req.params.id)};
-//   let result = await collection.findOne(query);
-
-//   if (!result) res.send("Not found").status(404);
-//   else res.send(result).status(200);
-// });
-
-
-
-// This section will help you update a record by id.
-router.patch("/:id", async (req, res) => {
-  const query = { _id: new ObjectId(req.params.id) };
-  const updates =  {
-    $set: {
-      name: req.body.name,
-      position: req.body.position,
-      level: req.body.level
-    }
-  };
-
-  let collection = await db.collection("records");
-  let result = await collection.updateOne(query, updates);
-
-  res.send(result).status(200);
-});
-
-// This section will help you delete a record
-router.delete("/:id", async (req, res) => {
-  const query = { _id: new ObjectId(req.params.id) };
-
-  const collection = db.collection("records");
-  let result = await collection.deleteOne(query);
-
-  res.send(result).status(200);
-});
-
 export default router;

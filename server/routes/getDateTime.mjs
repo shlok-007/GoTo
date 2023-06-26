@@ -12,10 +12,10 @@ router.get("/", async (req, res) => {
   
     const hours = String(currentDate.getHours()).padStart(2, '0');
     const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    // const seconds = String(currentDate.getSeconds()).padStart(2, '0');
   
     const formattedDate = `${year}-${month}-${day}`;
-    const formattedTime = `${hours}:${minutes}:${seconds}`;
+    const formattedTime = `${hours}:${minutes}`;
     let results={
         date: formattedDate,
         time: formattedTime

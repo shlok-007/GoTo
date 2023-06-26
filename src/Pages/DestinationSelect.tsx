@@ -4,8 +4,9 @@ import "../styles/destinationSelectPageStyle.css"
 import InfoCard from '../components/InfoCard';
 import {useNavigate} from 'react-router-dom';
 import getDateTime from "../utils/getDateTime";
-import checkEntry from "../utils/checkEntry";
+// import checkEntry from "../utils/checkEntry";
 import addTravelDetail from "../utils/addTravelDetail";
+import updateContact from "../utils/updateContact";
 import dateTimeInterface from "../types/dateTimeInterface";
 // import findCompanions from "../utils/findCompanions";
 
@@ -46,36 +47,32 @@ export default function DestinationSelect({profile}:loggedInPageProps){
   });}
 
   const onSearch = (destination:string, date: string) => {
-    // navigate(`/showCompanions/${destination}/${date}`);
-    setLoading(true);
-    checkEntry(profile?.email || "", destination, date, time).then((val)=>{
-      setLoading(false);
-      if(typeof(val)==='boolean') setIsServerDown(true);
-      else{
-        setIsServerDown(false);
-        if(!val.found && profile){
-          const travelDetail={
-            email: profile.email,
-            name: profile.name,
-            avatar: profile.picture,
-            destination: destination,
-            date: date,
-            time: time,
-            ph_no: ph_no,
-            wa_no: wa_no
-          };
-          addTravelDetail(travelDetail).then((val)=>{
-            if(val){
-              navigate(`/showCompanions/${destination}/${date}`);
-            }
-            else setIsServerDown(true);
-          });
-        }
-        else navigate(`/showCompanions/${destination}/${date}`);
-      }
-    });
-  }
+    if(profile){
+      setLoading(true);
+      updateContact(profile.email, ph_no, wa_no).then((val)=>{if(!val) {setLoading(false);  setIsServerDown(true);return;}});
 
+      const travelDetail={
+        email: profile.email,
+        name: profile.name,
+        avatar: profile.picture,
+        destination: destination,
+        date: date,
+        time: time,
+        ph_no: ph_no,
+        wa_no: wa_no
+      };
+
+      addTravelDetail(travelDetail).then((val)=>{
+        setLoading(false);  
+        if(val){
+          navigate(`/showCompanions/${destination}/${date}`);
+        }
+        else setIsServerDown(true);
+      });
+    }
+
+    else window.alert("Please login to continue");
+  }
 
   return(
     <>
@@ -89,7 +86,7 @@ export default function DestinationSelect({profile}:loggedInPageProps){
           {/* <div className="selection-list"> */}
           <div className="date-time">
             <input type="date" onChange={(e)=>setDate(e.target.value)} value={date} min={serverDate.date} required/>
-            <input type="time" step="60" onChange={(e)=>setTime(e.target.value)} value={time.slice(0,5)} required/>
+            <input type="time" step="900" onChange={(e)=>setTime(e.target.value)} value={time.slice(0,5)} required/>
           </div>
           <div className="drop-wrap">
             <input type="tel" placeholder="Phone Number" onChange={(e)=>setPh_no(e.target.value)} value={ph_no} required/>
