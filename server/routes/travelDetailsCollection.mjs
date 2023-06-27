@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
 
       let user = await GotoUsersCollection.findOne({ email });
   
-      if (user) {
+      if (user.subObject!={}) {
         const { subObject } = user;
         sendPushNotification(subObject, "You have got a companion!")
       }

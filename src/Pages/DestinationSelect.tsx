@@ -3,10 +3,13 @@ import React, {useState} from "react"
 import "../styles/destinationSelectPageStyle.css"
 import InfoCard from '../components/InfoCard';
 import {useNavigate} from 'react-router-dom';
+
 import getDateTime from "../utils/getDateTime";
 // import checkEntry from "../utils/checkEntry";
 import addTravelDetail from "../utils/addTravelDetail";
 import updateContact from "../utils/updateContact";
+import getContact from "../utils/getContact";
+
 import dateTimeInterface from "../types/dateTimeInterface";
 // import findCompanions from "../utils/findCompanions";
 
@@ -42,9 +45,23 @@ export default function DestinationSelect({profile}:loggedInPageProps){
   const [isServerDown, setIsServerDown] = useState<boolean>(true);
 
 
-  if(serverDate===true){  getDateTime().then((val)=>{setServerDate(val); setLoading(false);
-                                                     if(typeof(val)!=='boolean'){setDate(val.date); setTime(val.time); setIsServerDown(false);}
-  });}
+  if(serverDate===true && profile){
+    getContact(profile.email).then((val)=>{
+      if(val===false) setLoading(false);
+      else if(typeof(val)!=='boolean'){
+        setPh_no(val.ph_no);
+        setWa_no(val.wa_no);
+      }
+    });
+
+    getDateTime().then((val)=>{
+      setServerDate(val); setLoading(false);
+      if(typeof(val)!=='boolean'){
+        setDate(val.date);
+        setTime(val.time);
+        setIsServerDown(false);}
+    });
+  }
 
   const onSearch = (destination:string, date: string) => {
     if(profile){

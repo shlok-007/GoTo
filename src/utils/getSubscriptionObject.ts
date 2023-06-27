@@ -2,8 +2,6 @@ export default function getSubscriptionObject(email:string){
     
     if ('serviceWorker' in navigator && 'PushManager' in window) {
         // Register a service worker
-        const publicUrl = process.env.PUBLIC_URL;
-        console.log(publicUrl);
         navigator.serviceWorker.register("/service-worker.js",{scope: '/'})
           .then(registration => {
             // Request permission to show notifications
@@ -21,7 +19,7 @@ export default function getSubscriptionObject(email:string){
                   })
                     .then(newSubscription => {
                       // Send the new subscription to the server
-                        console.log(newSubscription);
+                        // console.log(newSubscription);
                       addSubscriptionToServer(newSubscription, email);
                     });
                 }
