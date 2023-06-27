@@ -25,8 +25,10 @@ const ShowCompanions : React.FC<{email:string}> = ({email}) => {
 
             {!loading && typeof(data)!=='boolean' && data.length === 0 && 
             <>
-            <InfoCard content='Sorry, no companions found as of now'/>
-            <button onClick={()=>{getSubscriptionObject(email);}}>Get Notified!</button>
+            <div className="companion-list">
+                <InfoCard content='Sorry, no companions found as of now'/>
+                <button className='getNotified-btn' onClick={()=>{getSubscriptionObject(email);}}>Get Notified!</button>
+            </div>
             </>
             }
 

@@ -60,3 +60,24 @@
     justify-content: center;
     width: 100%;
 }
+
+.getNotified-btn {
+    background-color: hsl(0, 100%, 50%);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: white;
+    cursor: pointer;
+    padding: 5px 20px;
+    transition: background-color 150ms ease-in-out, border-radius 150ms ease-in-out;
+    
+    /* margin: 0 auto; */
+    /* width: 25%; */
+  }
+  
+  .getNotified-btn:hover{
+    border-radius: 20px;
+    background-color: hsl(0, 100%, 45%);
+  }
