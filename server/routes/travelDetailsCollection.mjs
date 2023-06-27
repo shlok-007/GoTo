@@ -6,15 +6,39 @@ import sendPushNotification from "../pushNotifications.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    const { destination, date, email} = req.query;
+    const { destination, date, email, name, time} = req.query;
     let collection = await db.collection("TravelDetails");
-    let results = await collection.find({
+    var results = await collection.find({
         "destination": destination,
         "date": date,
         "email": {$ne: email}
     }).toArray();
 
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    const curr_time = `${hours}:${minutes}`;
+    const curr_date = `${year}-${month}-${day}`;
+
+    // console.log(curr_time);
+    // console.log(results);
+
+    for(let i=0;i<results.length;i++){
+      if(date==curr_date && results[i].time<curr_time)  results.splice(i,1);
+    }
+
+    // console.log(results);
+
     let GotoUsersCollection = db.collection("GotoUsers");
+
+    let notification = `${name} wishes to go to ${destination} on ${date} at ${time}!`;
+    // notification.replace(/"/g, '');
 
     for (const result of results) {
       const { email } = result;
@@ -23,7 +47,7 @@ router.get("/", async (req, res) => {
   
       if (user.subObject!={}) {
         const { subObject } = user;
-        sendPushNotification(subObject, "You have got a companion!")
+        sendPushNotification(subObject, notification)
       }
     }
 

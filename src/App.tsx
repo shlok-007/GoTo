@@ -5,7 +5,6 @@ import './App.css';
 import {useGoogleOneTapLogin, googleLogout} from '@react-oauth/google';
 import decodeJwtResponse from './utils/decodeJwtResponse';
 import addUser from './utils/addUser';
-import getSubscriptionObject from './utils/getSubscriptionObject';
 
 import Navbar from './components/Navbar';
 import DestinationSelect from './Pages/DestinationSelect';
@@ -23,6 +22,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [profile, setProfile] = useState<profile_interface | undefined>(undefined);
+  const [serverDown, setServerDown] = useState<boolean>(false);
   const authToken = localStorage.getItem('authToken');
   if(!!authToken && !isLogged){
     setIsLogged(true);
@@ -31,7 +31,7 @@ const App: React.FC = () => {
 
   useEffect(()=>{
     if(profile){
-      addUser(profile.email).then((val)=>{if(!val) navigate("/serverOffline");});
+      addUser(profile.email).then((val)=>{if(!val) setServerDown(true);});
     }
   },[profile]);
 
@@ -65,17 +65,21 @@ const App: React.FC = () => {
     <>
 
       <Navbar isLogged={isLogged} profile={profile} siteName="GoTogether" onLogout={handleLogout}/>
+      {serverDown && <InfoCard content="Unable to connect to the server :_(" />}
 
+      {!serverDown &&
       <Routes>
         <Route path="/loginPage" element={<LoginPage loginPromptFunction={CallLogin}/>}/>
         <Route element={<PrivateRoutes isLogged={isLogged}/>}>
           <Route path="/home" element={<HomePage name={profile?.name || ""}/>}/>
           <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>
-          <Route path="/showCompanions/:destination/:date" element={<ShowCompanions email={profile?.email || ""}/>}/>
-          <Route path="/serverOffline" element={<InfoCard content="Unable to connect to the server :_(" />}/>
+          <Route path="/showCompanions/:destination/:date/:time" element={<ShowCompanions email={profile?.email || ""} name={profile?.name || ""} />}/>
+          {/* <Route path="/serverOffline" element={<InfoCard content="Unable to connect to the server :_(" />}/> */}
         </Route>
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>
+      }
+
     </>
   );
 }

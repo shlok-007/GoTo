@@ -3,7 +3,9 @@ import travelDetails_interface from "../types/travelDetailsInterface";
 const findCompanions = async (
   destination: string,
   date: string,
-  email: string
+  email: string,
+  name: string,
+  time: string
 ): Promise<travelDetails_interface[] | boolean> => {
   try {
     const response = await fetch(
@@ -11,7 +13,9 @@ const findCompanions = async (
         new URLSearchParams({
           destination: destination,
           date: date,
-          email: email
+          email: email,
+          name: name,
+          time: time
         })
     );
     if (!response.ok) {

@@ -5,7 +5,8 @@
     margin: 1rem auto;
     padding: 16px;
     max-width: fit-content;
-    /* text-align: center; */
+    text-align: center;
     font-size: 1.3rem;
-  }
+    white-space: pre-line;
+}
   

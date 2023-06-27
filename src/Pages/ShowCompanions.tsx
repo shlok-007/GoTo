@@ -7,13 +7,13 @@ import travelDetails_interface from '../types/travelDetailsInterface';
 import {useState} from 'react';
 import InfoCard from '../components/InfoCard';
 
-const ShowCompanions : React.FC<{email:string}> = ({email}) => {
+const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) => {
 
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<travelDetails_interface[] | boolean>([]);
-    const {destination, date} = useParams();
-        
-    if(destination && date && email && loading){ findCompanions(destination, date, email).then(
+    const {destination, date, time} = useParams();
+
+    if(destination && date && email && time && loading){ findCompanions(destination, date, email, name, time).then(
         (val)=>{setData(val);   setLoading(false);});}
 
     return (
@@ -33,16 +33,20 @@ const ShowCompanions : React.FC<{email:string}> = ({email}) => {
             }
 
             <div className="companion-list">
-            {typeof(data)!=='boolean' && data.length > 0 && (
-                <>
-                <InfoCard content='You can go with anyone of them...'/>
-                {data.map((item) => (
-                    <div className="companion-card" key={item._id}>
-                        <CompanionCard avatar={item.avatar} name={item.name} time={item.time} ph={item.ph_no} wa={item.wa_no} email={item.email}/>
-                    </div>
-                ))}
-                </>
-            )}
+                {typeof(data)!=='boolean' && data.length > 0 && (
+                    <>
+                    <InfoCard content='You can go with anyone of them...'/>
+                    {data.map((item) => (
+                        <div className="companion-card" key={item._id}>
+                            <CompanionCard avatar={item.avatar} name={item.name} time={item.time} ph={item.ph_no} wa={item.wa_no} email={item.email}/>
+                        </div>
+                    ))}
+                    <InfoCard content={`Don't wanna go with them?
+                    We'll let you know when there are more companions ;-)`}/>
+                    <button className='getNotified-btn' onClick={()=>{getSubscriptionObject(email);}}>Get Notified!</button>
+            
+                    </>
+                )}
             </div>
             
 

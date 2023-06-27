@@ -82,7 +82,7 @@ export default function DestinationSelect({profile}:loggedInPageProps){
       addTravelDetail(travelDetail).then((val)=>{
         setLoading(false);  
         if(val){
-          navigate(`/showCompanions/${destination}/${date}`);
+          navigate(`/showCompanions/${destination}/${date}/${time}`);
         }
         else setIsServerDown(true);
       });
