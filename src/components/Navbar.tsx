@@ -34,6 +34,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
           <button ref={openTripsDialogButton} className="user-trips" onClick={openTripsDialog}>Your Trips</button>
           <dialog className="user-trips-dialog" style={dialogPosition} open={tripsShown}>
             <div className="dialog-content">
+              {myTrips.length === 0 && <div className="no-trips">You haven't added any trip</div>}
               {myTrips.map((trip) => (
                 <YourTrip key={trip._id} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id}/>
               ))}

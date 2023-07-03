@@ -8,11 +8,28 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     const { destination, date, email, name, time} = req.query;
     let collection = await db.collection("TravelDetails");
-    var results = await collection.find({
+    var result1 = await collection.find({
         "destination": destination,
         "date": date,
         "email": {$ne: email}
     }).toArray();
+
+    var results=[];
+
+    let GotoUsersCollection = db.collection("GotoUsers");
+    for (const element of result1) {
+      let result2 = await GotoUsersCollection.findOne({ "email": element.email });
+      results.push({
+        _id: element._id,
+        name: result2.name,
+        email: element.email,
+        ph_no: result2.ph_no,
+        wa_no: result2.wa_no,
+        time: element.time,
+        date: element.date,
+        avatar: result2.avatar
+      });
+    };
 
     const now = new Date();
 
@@ -26,16 +43,9 @@ router.get("/", async (req, res) => {
     const curr_time = `${hours}:${minutes}`;
     const curr_date = `${year}-${month}-${day}`;
 
-    // console.log(curr_time);
-    // console.log(results);
-
     for(let i=0;i<results.length;i++){
       if(date==curr_date && results[i].time<curr_time)  results.splice(i,1);
     }
-
-    // console.log(results);
-
-    let GotoUsersCollection = db.collection("GotoUsers");
 
     let notification = `${name} wishes to go to ${destination} on ${date} at ${time}!`;
     // notification.replace(/"/g, '');
@@ -45,9 +55,8 @@ router.get("/", async (req, res) => {
 
       let user = await GotoUsersCollection.findOne({ email });
   
-      if (user.subObject!={}) {
-        const { subObject } = user;
-        sendPushNotification(subObject, notification)
+      if (user.subObject.endpoint) {
+        sendPushNotification(user.subObject, notification)
       }
     }
 
@@ -81,7 +90,7 @@ router.get("/checkEntry", async (req, res) => {
 //--------------------------------
 
 router.post("/", async (req, res) => {
-  const { name, email, ph_no, wa_no, time, destination, date, avatar} = req.body;
+  const { email, time, destination, date} = req.body;
   let collection = await db.collection("TravelDetails");
   const existingTravelDetail = await collection.findOne({
     "email": email,
@@ -90,14 +99,10 @@ router.post("/", async (req, res) => {
   });
   if(existingTravelDetail)  return res.send(existingTravelDetail).status(204);
   let newTravelDetail = {
-    "name": name,
     "email": email,
-    "ph_no": ph_no,
-    "wa_no": wa_no,
     "time": time,
     "destination": destination,
     "date": date,
-    "avatar": avatar
   };
   let result = await collection.insertOne(newTravelDetail);
   res.send(result).status(204);

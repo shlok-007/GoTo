@@ -70,13 +70,9 @@ export default function DestinationSelect({profile}:loggedInPageProps){
 
       const travelDetail={
         email: profile.email,
-        name: profile.name,
-        avatar: profile.picture,
         destination: destination,
         date: date,
         time: time,
-        ph_no: ph_no,
-        wa_no: wa_no
       };
 
       addTravelDetail(travelDetail).then((val)=>{

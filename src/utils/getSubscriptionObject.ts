@@ -9,7 +9,7 @@ export default function getSubscriptionObject(email:string){
               .then(subscription => {
                 if (subscription) {
                   // Subscription exists, send it to the server
-                  console.log(subscription);
+                  // console.log(subscription);
                   addSubscriptionToServer(subscription, email);
                 } else {
                   // Subscription doesn't exist, subscribe the user

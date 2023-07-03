@@ -41,7 +41,7 @@ export default function YourTrip({ destination, date, time, id }: { destination:
             {!deleted ?
                 <>
                 <dialog ref={deleteRef}>
-                    <div className="dialog-content">
+                    <div className="modal-content">
                     <div>{warningText}</div>
                     <div className="buttons">
                         <button onClick={(e)=>closeDeleteModal()}>No</button>
@@ -53,7 +53,7 @@ export default function YourTrip({ destination, date, time, id }: { destination:
                     </div>
                 </dialog>
                 <dialog ref={updateRef}>
-                    <div className="dialog-content">
+                    <div className="modal-content">
                     <div>{updateText}</div>
                     <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} min={newDate} required></input>
                     <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} required></input>

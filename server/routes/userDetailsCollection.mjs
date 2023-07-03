@@ -35,8 +35,10 @@ router.post("/addUser", async (req, res) => {
 
   let newUser = {
     "email": email,
+    "name": req.body.name,
     "ph_no": "",
     "wa_no": "",
+    "avatar": req.body.avatar,
     "subObject": {}
   };
   let result = await collection.insertOne(newUser);

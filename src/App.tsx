@@ -31,7 +31,7 @@ const App: React.FC = () => {
 
   useEffect(()=>{
     if(profile){
-      addUser(profile.email).then((val)=>{if(!val) setServerDown(true);});
+      addUser(profile.email, profile.name, profile.picture).then((val)=>{if(!val) setServerDown(true);});
     }
   },[profile]);
 
