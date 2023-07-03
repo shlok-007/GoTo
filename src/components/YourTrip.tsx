@@ -3,8 +3,11 @@ import '../styles/yourTripStyle.css'
 import updateTrip from '../utils/updateTrip';
 import deleteTrip from '../utils/deleteTrip';
 import getDateTime from '../utils/getDateTime';
+import { useNavigate } from 'react-router-dom';
 
 export default function YourTrip({ destination, date, time, id }: { destination: string, date: string, time: string, id: string }) {
+    const navigate = useNavigate();
+
     const [deleted, setDeleted] = useState(false);
     const [warningText, setWarningText] = useState("Are you sure you want to delete this trip?");
     const[updateText, setUpdateText] = useState("Update Your Trip");
@@ -74,6 +77,7 @@ export default function YourTrip({ destination, date, time, id }: { destination:
                         <div className="info">{newTime}</div>
                     </div>
                     <div className="modify">
+                        <button className="search" onClick={()=>navigate(`/showCompanions/${destination}/${newDate}/${newTime}`)}>S</button>
                         <button className="update-button" onClick={openUpdateModal}>U</button>
                         <button className="delete-button" onClick={openDeleteModal}>D</button>
                     </div>
