@@ -1,0 +1,39 @@
+.dest{
+    width: 13ch;
+}
+
+.trip {
+  width: 93%;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+  /* gap: 3.7rem; */
+  margin: 0.4rem;
+  margin-bottom: 0;
+  padding: 0.5rem;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.buttons{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.view, .modify{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.view{
+  width: 90%;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.modify{
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

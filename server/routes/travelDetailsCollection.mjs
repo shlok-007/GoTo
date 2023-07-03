@@ -54,6 +54,14 @@ router.get("/", async (req, res) => {
     res.send(results).status(200);
 });
 
+router.get("/userTrips", async (req, res) => {
+  const email= req.query.email;
+  let collection = await db.collection("TravelDetails");
+  const projection = {  _id: 1, destination: 1, date: 1, time: 1  };
+  let results = await collection.find({ "email": email }, projection).toArray();
+  res.send(results).status(200);
+});
+
 //--------obsolete------------
 
 router.get("/checkEntry", async (req, res) => {
@@ -94,4 +102,29 @@ router.post("/", async (req, res) => {
   let result = await collection.insertOne(newTravelDetail);
   res.send(result).status(204);
 });
+
+router.delete("/:id", async (req, res) => {
+  const query = { _id: new ObjectId(req.params.id) };
+
+  const collection = db.collection("TravelDetails");
+  let result = await collection.deleteOne(query);
+
+  res.send(result).status(200);
+});
+
+router.patch("/:id", async (req, res) => {
+  const query = { _id: new ObjectId(req.params.id) };
+  const updates =  {
+    $set: {
+      date: req.body.date,
+      time: req.body.time
+    }
+  };
+
+  let collection = await db.collection("TravelDetails");
+  let result = await collection.updateOne(query, updates);
+
+  res.send(result).status(200);
+});
+
 export default router;

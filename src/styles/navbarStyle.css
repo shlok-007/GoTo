@@ -16,6 +16,7 @@
   .navbar__user {
     display: flex;
     align-items: center;
+    gap: 1rem;
   }
   
   .navbar__avatar-frame {
@@ -23,18 +24,13 @@
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
-    margin-right: 10px;
+    /* margin-right: 10px; */
   }
   
   .navbar__avatar {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-  
-  .navbar__username {
-    font-size: 16px;
-    margin-right: 10px;
   }
   
   .navbar__logout {
@@ -48,5 +44,26 @@
   
   .navbar__logout:hover {
     background-color: #c62828;
+  }
+
+  .user-trips-dialog{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 400px;
+    position: absolute;
+    z-index: 100;
+  }
+
+  .dialog-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* gap: 0.3rem; */
+  }
+
+  .your-trips-close-btn{
+    margin: 0.8rem 0;
   }
   
