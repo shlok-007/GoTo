@@ -36,7 +36,8 @@ async function addSubscriptionToServer(subscription:PushSubscription, email:stri
     
     const data = {"email":email, "subscription":subscription};
     try{
-        await fetch('http://localhost:5000/userDetails/addSubscription', {
+        let serverURL = process.env.REACT_APP_SERVER_URL;
+        await fetch(serverURL+'/userDetails/addSubscription', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
