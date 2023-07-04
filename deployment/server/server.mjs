@@ -16,6 +16,6 @@ app.use("/getDateTime", getDateTime);
 app.use("/userDetails", userDetailsCollection);
 
 // start the Express server
-app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port: ${PORT}`);
+// });

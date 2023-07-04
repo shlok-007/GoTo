@@ -14,7 +14,7 @@
 /coverage
 
 # production
-/deployment/server/vercel.json
+# /deployment/server/vercel.json
 /build
 
 # misc
