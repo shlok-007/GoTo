@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import "./loadEnvironment.mjs";
+import "./loadEnvironment.js";
 import travelDetailsCollection from "./routes/travelDetailsCollection.js";
 import getDateTime from "./routes/getDateTime.js"
 import userDetailsCollection from "./routes/userDetailsCollection.js"
