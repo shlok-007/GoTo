@@ -136,7 +136,8 @@ router.delete("/dailyCleanUp", async (req, res) => {
   let db = await connectToDatabase();
   const collection = db.collection("TravelDetails");
 
-  const currentDate = new Date();
+  let now = new Date();
+  const currentDate = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
   currentDate.setDate(currentDate.getDate() - 1);
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
