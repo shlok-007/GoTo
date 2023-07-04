@@ -1,6 +1,7 @@
 export default async function updateContact(email: string, ph_no: string, wa_no: string) {
   try{
-    await fetch(`http://localhost:5000/userDetails//updateContact`, {
+    let serverURL = process.env.REACT_APP_SERVER_URL;
+    await fetch(serverURL+`/userDetails//updateContact`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

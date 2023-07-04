@@ -3,7 +3,8 @@ import travelDetailsPOST_interface from "../types/travelDetailsPOSTInterface";
 
 export default async function addTravelDetail(travelDetail : travelDetailsPOST_interface) : Promise<boolean>{
     try{
-    await fetch('http://localhost:5000/travelDetails', {
+    let serverURL = process.env.REACT_APP_SERVER_URL;
+    await fetch(serverURL+'/travelDetails', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

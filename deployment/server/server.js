@@ -16,7 +16,7 @@ app.use("/getDateTime", getDateTime);
 app.use("/userDetails", userDetailsCollection);
 app.get('*',(req,res,next)=>{
     res.status(200).json({
-      message:'bad request'
+      message:'server is working'
     })
 })
 

@@ -2,7 +2,8 @@ import dateTimeInterface from "../types/dateTimeInterface";
 
 export default async function getDateTime() : Promise<dateTimeInterface | boolean> {
     try{
-        const response = await fetch("http://localhost:5000/getDateTime/");
+        let serverURL = process.env.REACT_APP_SERVER_URL;
+        const response = await fetch(serverURL+"/getDateTime/");
         if(!response.ok){
             const message = `An error occurred: ${response.statusText}`;
             console.log(message);

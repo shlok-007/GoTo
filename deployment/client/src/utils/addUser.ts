@@ -1,6 +1,8 @@
 export default async function addUser(email:string, name:string, avatar:string) {
     try{
-    await fetch('http://localhost:5000/userDetails/addUser', {
+        let serverURL = process.env.REACT_APP_SERVER_URL;
+        await fetch(serverURL+'/userDetails/addUser', {
+            // mode: 'no-cors',
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',

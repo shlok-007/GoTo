@@ -8,8 +8,9 @@ const findCompanions = async (
   time: string
 ): Promise<travelDetails_interface[] | boolean> => {
   try {
+    let serverURL = process.env.REACT_APP_SERVER_URL;
     const response = await fetch(
-      "http://localhost:5000/travelDetails/?" +
+      serverURL+"/travelDetails/?" +
         new URLSearchParams({
           destination: destination,
           date: date,

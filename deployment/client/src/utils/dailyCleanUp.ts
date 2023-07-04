@@ -1,7 +1,8 @@
 export default async function dailyCleanUp() {
     try{
         console.log("dailyCleanUp");
-        await fetch("http://localhost:5000/travelDetails/dailyCleanUp",{
+        let serverURL = process.env.REACT_APP_SERVER_URL;
+        await fetch(serverURL+"/travelDetails/dailyCleanUp",{
             method: 'DELETE'
         });
     }catch(err){
