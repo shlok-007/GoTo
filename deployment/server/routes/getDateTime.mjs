@@ -1,5 +1,5 @@
 import express from "express";
-import giveDateTime from "../giveDateTime.js";
+import giveDateTime from "../giveDateTime.mjs";
 
 const router = express.Router();
 
@@ -8,4 +8,5 @@ router.get("/", async (req, res) => {
     res.send(results).status(200);
 });
 
-export default router;
+// export default router;
+module.exports = router;

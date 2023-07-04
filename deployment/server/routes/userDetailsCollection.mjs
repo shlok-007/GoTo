@@ -74,4 +74,5 @@ router.get("/getContact", async (req, res) => {
   }).status(200);
 });
 
-export default router;
+// export default router;
+module.exports = router;
