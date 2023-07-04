@@ -1,5 +1,5 @@
 import express from "express";
-import db from "../db/conn.mjs";
+import db from "../db/conn.js";
 import { ObjectId } from "mongodb";
 import sendPushNotification from "../pushNotifications.js";
 import giveDateTime from "../giveDateTime.js";
@@ -140,5 +140,5 @@ router.delete("/dailyCleanUp", async (req, res) => {
   res.send(result).status(200);
 });
 
-// export default router;
-module.exports = router;
+export default router;
+// module.exports = router;

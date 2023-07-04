@@ -8,5 +8,5 @@ router.get("/", async (req, res) => {
     res.send(results).status(200);
 });
 
-// export default router;
-module.exports = router;
+export default router;
+// module.exports = router;

@@ -1,5 +1,5 @@
-const webpush = require('web-push');
-// import webpush from 'web-push';
+// const webpush = require('web-push');
+import webpush from 'web-push';
 
 const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
 const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
@@ -14,4 +14,5 @@ function sendPushNotification(subscription, payload) {
   webpush.sendNotification(subscription, JSON.stringify(payload));
 }
 
-module.exports = sendPushNotification;
+// module.exports = sendPushNotification;
+export default sendPushNotification;

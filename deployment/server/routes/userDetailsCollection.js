@@ -1,5 +1,5 @@
 import express from "express";
-import db from "../db/conn.mjs";
+import db from "../db/conn.js";
 
 const router = express.Router();
 
@@ -74,5 +74,5 @@ router.get("/getContact", async (req, res) => {
   }).status(200);
 });
 
-// export default router;
-module.exports = router;
+export default router;
+// module.exports = router;

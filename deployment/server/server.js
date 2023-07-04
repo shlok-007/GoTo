@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
 import "./loadEnvironment.mjs";
-import travelDetailsCollection from "./routes/travelDetailsCollection.mjs";
-import getDateTime from "./routes/getDateTime.mjs"
-import userDetailsCollection from "./routes/userDetailsCollection.mjs"
+import travelDetailsCollection from "./routes/travelDetailsCollection.js";
+import getDateTime from "./routes/getDateTime.js"
+import userDetailsCollection from "./routes/userDetailsCollection.js"
 
 const PORT = process.env.PORT || 3069;
 const app = express();
@@ -15,7 +15,8 @@ app.use("/travelDetails", travelDetailsCollection);
 app.use("/getDateTime", getDateTime);
 app.use("/userDetails", userDetailsCollection);
 
-module.exports = app;
+// module.exports = app;
+export default app;
 
 // start the Express server
 // app.listen(PORT, () => {
