@@ -2,8 +2,11 @@
 
 # dependencies
 /server/node_modules
-/client/node_modules
 /node_modules
+/deployment/server/node_modules
+/deployment/client/node_modules
+
+
 /.pnp
 .pnp.js
 
@@ -11,6 +14,7 @@
 /coverage
 
 # production
+/deployment/server/vercel.json
 /build
 
 # misc
@@ -20,6 +24,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# confidential
 mongo_creds.txt
 temp.txt
 /client/temp.txt
