@@ -1,9 +1,10 @@
 import express from "express";
-import db from "../db/conn.js";
+import connectToDatabase from "../db/conn.js";
 
 const router = express.Router();
 
 router.patch("/addSubscription", async (req, res) => {
+    let db = await connectToDatabase();
     const {email, subscription} = req.body;
     let collection = await db.collection("GotoUsers");
     const filter = { "email": email };
@@ -24,6 +25,7 @@ router.patch("/addSubscription", async (req, res) => {
 });
 
 router.post("/addUser", async (req, res) => {
+  let db = await connectToDatabase();
   let collection = await db.collection("GotoUsers");
   let email=req.body.email;
   const existingUser = await collection.findOne({ email });
@@ -45,6 +47,7 @@ router.post("/addUser", async (req, res) => {
 });
 
 router.patch("/updateContact", async (req, res) => {
+  let db = await connectToDatabase();
   const {email, ph_no, wa_no} = req.body;
   let collection = await db.collection("GotoUsers");
   const filter = { "email": email };
@@ -65,6 +68,7 @@ router.patch("/updateContact", async (req, res) => {
   });
 
 router.get("/getContact", async (req, res) => {
+  let db = await connectToDatabase();
   const {email} = req.query;
   let collection = await db.collection("GotoUsers");
   let results = await collection.findOne({"email": email});

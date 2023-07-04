@@ -1,5 +1,5 @@
 import express from "express";
-import db from "../db/conn.js";
+import connectToDatabase from "../db/conn.js";
 import { ObjectId } from "mongodb";
 import sendPushNotification from "../pushNotifications.js";
 import giveDateTime from "../giveDateTime.js";
@@ -7,6 +7,7 @@ import giveDateTime from "../giveDateTime.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
+    let db = await connectToDatabase();
     const { destination, date, email, name, time} = req.query;
     let collection = await db.collection("TravelDetails");
     var result1 = await collection.find({
@@ -58,6 +59,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/userTrips", async (req, res) => {
+  let db = await connectToDatabase();
   const email= req.query.email;
   let collection = await db.collection("TravelDetails");
   const projection = {  _id: 1, destination: 1, date: 1, time: 1  };
@@ -68,6 +70,7 @@ router.get("/userTrips", async (req, res) => {
 //--------obsolete------------
 
 router.get("/checkEntry", async (req, res) => {
+  let db = await connectToDatabase();
   const { email, destination, date, time} = req.query;
   let collection = await db.collection("TravelDetails");
   let results = await collection.find({
@@ -84,6 +87,7 @@ router.get("/checkEntry", async (req, res) => {
 //--------------------------------
 
 router.post("/", async (req, res) => {
+  let db = await connectToDatabase();
   const { email, time, destination, date} = req.body;
   let collection = await db.collection("TravelDetails");
   const existingTravelDetail = await collection.findOne({
@@ -103,6 +107,7 @@ router.post("/", async (req, res) => {
 });
 
 router.patch("/:id", async (req, res) => {
+  let db = await connectToDatabase();
   const query = { _id: new ObjectId(req.params.id) };
   const updates =  {
     $set: {
@@ -118,6 +123,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
+  let db = await connectToDatabase();
   const query = { _id: new ObjectId(req.params.id) };
 
   const collection = db.collection("TravelDetails");
@@ -127,6 +133,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.delete("/dailyCleanUp", async (req, res) => {
+  let db = await connectToDatabase();
   const collection = db.collection("TravelDetails");
 
   const currentDate = new Date();
