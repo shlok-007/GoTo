@@ -73,13 +73,13 @@ export default function YourTrip({ destination, date, time, id }: { destination:
                 <div className="trip">
                     <div className="view">
                         <div className="dest">{destination}</div>
-                        <div className="info">{newDate}</div>
-                        <div className="info">{newTime}</div>
+                        <div className="tripDate">{newDate}</div>
+                        <div className="tripTime">{newTime}</div>
                     </div>
                     <div className="modify">
-                        <button className="search" onClick={()=>navigate(`/showCompanions/${destination}/${newDate}/${newTime}`)}>S</button>
-                        <button className="update-button" onClick={openUpdateModal}>U</button>
-                        <button className="delete-button" onClick={openDeleteModal}>D</button>
+                        <button className="search-button" onClick={()=>navigate(`/showCompanions/${destination}/${newDate}/${newTime}`)}><img src="/icons/magnifier.png" alt='search' className='icon-btn'/></button>
+                        <button className="update-button" onClick={openUpdateModal}><img src="/icons/edit-button.png" alt='modify' className='icon-btn'/></button>
+                        <button className="delete-button" onClick={openDeleteModal}><img src="/icons/delete.png" alt='delete' className='icon-btn'/></button>
                     </div>
                 </div>
                 </>
