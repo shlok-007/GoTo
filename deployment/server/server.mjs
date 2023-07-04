@@ -15,6 +15,8 @@ app.use("/travelDetails", travelDetailsCollection);
 app.use("/getDateTime", getDateTime);
 app.use("/userDetails", userDetailsCollection);
 
+module.exports = app;
+
 // start the Express server
 // app.listen(PORT, () => {
 //   console.log(`Server is running on port: ${PORT}`);
