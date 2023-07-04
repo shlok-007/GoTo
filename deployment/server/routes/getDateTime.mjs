@@ -1,5 +1,5 @@
 import express from "express";
-import giveDateTime from "../giveDateTime.mjs";
+import giveDateTime from "../giveDateTime.js";
 
 const router = express.Router();
 

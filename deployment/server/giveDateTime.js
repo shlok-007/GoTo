@@ -18,4 +18,5 @@ function giveDateTime() {
     return results;
 }
 
-module.exports = giveDateTime;
+// module.exports = giveDateTime;
+export default giveDateTime;

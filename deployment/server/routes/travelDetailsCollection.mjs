@@ -2,7 +2,7 @@ import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
 import sendPushNotification from "../pushNotifications.js";
-import giveDateTime from "../giveDateTime.mjs";
+import giveDateTime from "../giveDateTime.js";
 
 const router = express.Router();
 

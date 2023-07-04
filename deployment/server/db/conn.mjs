@@ -15,5 +15,5 @@ try {
 
 let db = conn.db("GoTo");
 
-// export default db;
-module.exports = db;
+export default db;
+// module.exports = db;
