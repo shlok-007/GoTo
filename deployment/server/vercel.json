@@ -1,7 +1,6 @@
 {
     "version": 2,
     "name": "goto-server",
-    "author": "Shlok Kumar Shaw",
 
     "builds": [
         { "src": "server.mjs", "use": "@vercel/node" }
