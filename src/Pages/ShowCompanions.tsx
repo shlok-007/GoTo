@@ -7,13 +7,12 @@ import travelDetails_interface from '../types/travelDetailsInterface';
 import {useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import InfoCard from '../components/InfoCard';
-import { set } from 'mongoose';
 
 const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) => {
 
     const location = useLocation();
     useEffect(()=> setLoading(true), [location]);
-    
+
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<travelDetails_interface[] | boolean>([]);
     const {destination, date, time} = useParams();

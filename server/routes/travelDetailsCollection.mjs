@@ -2,6 +2,7 @@ import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
 import sendPushNotification from "../pushNotifications.js";
+import giveDateTime from "../giveDateTime.js";
 
 const router = express.Router();
 
@@ -31,17 +32,10 @@ router.get("/", async (req, res) => {
       });
     };
 
-    const now = new Date();
+    const dateTime = giveDateTime();
 
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-
-    const curr_time = `${hours}:${minutes}`;
-    const curr_date = `${year}-${month}-${day}`;
+    const curr_time = dateTime.time;
+    const curr_date = dateTime.date;
 
     for(let i=0;i<results.length;i++){
       if(date==curr_date && results[i].time<curr_time)  results.splice(i,1);
@@ -108,15 +102,6 @@ router.post("/", async (req, res) => {
   res.send(result).status(204);
 });
 
-router.delete("/:id", async (req, res) => {
-  const query = { _id: new ObjectId(req.params.id) };
-
-  const collection = db.collection("TravelDetails");
-  let result = await collection.deleteOne(query);
-
-  res.send(result).status(200);
-});
-
 router.patch("/:id", async (req, res) => {
   const query = { _id: new ObjectId(req.params.id) };
   const updates =  {
@@ -129,6 +114,29 @@ router.patch("/:id", async (req, res) => {
   let collection = await db.collection("TravelDetails");
   let result = await collection.updateOne(query, updates);
 
+  res.send(result).status(200);
+});
+
+router.delete("/:id", async (req, res) => {
+  const query = { _id: new ObjectId(req.params.id) };
+
+  const collection = db.collection("TravelDetails");
+  let result = await collection.deleteOne(query);
+
+  res.send(result).status(200);
+});
+
+router.delete("/dailyCleanUp", async (req, res) => {
+  const collection = db.collection("TravelDetails");
+
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() - 1);
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const previousDay = `${year}-${month}-${day}`;
+
+  let result = await collection.deleteMany({ date: previousDay });
   res.send(result).status(200);
 });
 
