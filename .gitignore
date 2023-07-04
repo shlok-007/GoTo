@@ -2,6 +2,7 @@
 
 # dependencies
 /server/node_modules
+/client/node_modules
 /node_modules
 /.pnp
 .pnp.js
@@ -21,5 +22,5 @@ yarn-error.log*
 
 mongo_creds.txt
 temp.txt
+/client/temp.txt
 .env
-/server/config.env
