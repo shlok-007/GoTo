@@ -132,7 +132,7 @@ router.delete("/deleteOneTrip/:id", async (req, res) => {
   res.send(result).status(200);
 });
 
-router.delete("/dailyCleanUp", async (req, res) => {
+router.get("/dailyCleanUp", async (req, res) => {
   let db = await connectToDatabase();
   const collection = db.collection("TravelDetails");
 
