@@ -1,9 +1,11 @@
 import companionCardProps from "../types/companionCardProps"
 import "../styles/companionCardStyle.css"
-import {useRef} from "react"
+import {useState,useRef} from "react"
+import PopupMessage from '../components/PopupMessage';
 
 const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, wa, email}) => {
 
+  const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const openModal = () => {
@@ -18,51 +20,69 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
     }
   };
 
+  const handleCopyClick = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setDisplayPopup(true);
+    setTimeout(() => {
+      setDisplayPopup(false);
+    }, 2000);
+  };
+
   return(
       <>
+          
           <dialog className="contact-details" ref={dialogRef} onClose={closeModal}>
+            {displayPopup && <PopupMessage content="Copied to clipboard!"/>}
               <div className="grid-container">
                 <div className="grid-row">
+                  <div className="contact-info-left">
                   <div className="medium">
                     <img src="/icons/telephone-call.png" alt="phone" />
                   </div>
                   <div className="contact-data">
                     {ph===""?"Not available":ph}
                   </div>
-                  <button className="copy-btn">
-                    <img src="/icons/copy.png" alt="copy" />
+                  </div>
+                  {ph!=="" &&
+                  <button onClick={()=>handleCopyClick(ph)} className="copy-btn">
+                    <img  src="/icons/copy.png" alt="copy" />
                   </button>
+                  }
                 </div>
                 <div className="grid-row">
+                <div className="contact-info-left">
                   <div className="medium">
                     <img src="/icons/whatsapp.png" alt="whatsapp" />
                   </div>
                   <div className="contact-data">
                     {wa===""?"Not available":wa}
                   </div>
-                  <button className="copy-btn">
-                    <img src="/icons/copy.png" alt="copy" />
+                  </div>
+                  {wa!=="" &&
+                  <button onClick={()=>handleCopyClick(wa)} className="copy-btn">
+                    <img  src="/icons/copy.png" alt="copy" />
                   </button>
+                  }
                 </div>
                 <div className="grid-row">
+                <div className="contact-info-left">
                   <div className="medium">
                     <img src="/icons/gmail.png" alt="email" />
                   </div>
                   <div className="contact-data">
                     {email===""?"Not available":email}
                   </div>
-                  <button className="copy-btn">
-                    <img src="/icons/copy.png" alt="copy" />
+                  </div>
+                  {email!=="" &&
+                  <button onClick={()=>handleCopyClick(email)} className="copy-btn">
+                    <img  src="/icons/copy.png" alt="copy" />
                   </button>
+                  }
                 </div>
                 <div className="close-contact-btn">
-                  <button  onClick={closeModal}>Close</button>
+                  <button className="red-text-btn" onClick={closeModal}>Close</button>
                 </div>
               </div>
-              {/* <div>{ph==""?"Not available":ph}</div>
-              <div>{wa==""?"Not available":wa}</div>
-              <div>{email==""?"Not available":email}</div>
-              <button onClick={closeModal}>Close</button> */}
           </dialog>
               <div className="left">
                   <div className="avatar-frame">
@@ -73,7 +93,7 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
               <div className="right">
                   <div>{time}</div>
                   <button className="contact-frame" onClick={openModal}>
-                      <img src="/icons/contact.png" alt="User Avatar" className="avatar" />
+                      <img src="/icons/contact.png" alt="contact-details" className="avatar" />
                   </button>
               </div>
       </>

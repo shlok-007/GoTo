@@ -1,17 +1,18 @@
 .center-btn > button{
-    background-color: hsl(0, 100%, 50%);
+    font-size: large;
+    font-weight: bold;
+    font-family: inherit;
+    background-color:rgb(100, 150, 255);
     border: none;
     border-radius: 5px;
     text-decoration: none;
-    font-family: inherit;
-    font-size: inherit;
     color: white;
     cursor: pointer;
     padding: 5px 20px;
     transition: background-color 150ms ease-in-out, border-radius 150ms ease-in-out;
     height: 40px;
 
-    margin: 0;
+    margin: 1rem auto;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -22,7 +23,7 @@
 
 .center-btn > button:hover{
     border-radius: 20px;
-    background-color: hsl(0, 100%, 45%);
+    background-color: rgb(69, 128, 255);
 }
 
 .center-btn{

@@ -1,0 +1,22 @@
+.popup {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    animation: slide-up 0.3s ease;
+  }
+  
+  @keyframes slide-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

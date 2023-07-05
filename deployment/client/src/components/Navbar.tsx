@@ -40,7 +40,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
               {myTrips.map((trip) => (
                 <YourTrip key={trip._id} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id}/>
               ))}
-              <button className="your-trips-close-btn" onClick={()=> setTripsShown(false)}>Close</button>
+              <button className="red-text-btn" onClick={()=> setTripsShown(false)}>Close</button>
             </div>
           </dialog>
 

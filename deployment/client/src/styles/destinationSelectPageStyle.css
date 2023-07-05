@@ -83,12 +83,13 @@
 }
 
 .search-btn {
-  background-color: hsl(0, 100%, 50%);
+  font-size: large;
+  font-weight: bold;
+  background-color: rgb(100, 150, 255);
   border: none;
   border-radius: 5px;
   text-decoration: none;
   font-family: inherit;
-  font-size: inherit;
   color: white;
   cursor: pointer;
   padding: 5px 20px;
@@ -101,5 +102,5 @@
 
 .search-btn:hover{
   border-radius: 20px;
-  background-color: hsl(0, 100%, 45%);
+  background-color: rgb(69, 128, 255);;
 }

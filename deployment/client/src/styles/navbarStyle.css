@@ -35,8 +35,10 @@
   }
   
   .navbar__logout {
+    font-size: large;
+    font-weight: bold;
     background-color: #e53935;
-    color: #fff;
+    color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 5px;
@@ -56,9 +58,12 @@
   }
 
   .user-trips{
+    color: white;
+    font-size: large;
+    font-weight: bold;
     border: none;
     border-radius: 5px;
-    background-color: #daacfe;
+    background-color: #bc65ff;
     padding: 8px 16px;
     cursor: pointer;
     transition: 250ms ease-in-out;
@@ -66,7 +71,7 @@
   }
 
   .user-trips:hover{
-    background-color: #bf7cfa;
+    background-color: #a136ff;
     border-radius: 20px;
   }
 
@@ -87,12 +92,55 @@
     /* gap: 0.3rem; */
   }
 
-  .your-trips-close-btn{
-    margin: 0.8rem 0;
-    cursor: pointer;
-  }
-
   .no-trips{
     margin-top: 0.7rem;
   }
   
+  dialog{
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-color: #f0f0f0;
+    max-width: 370px;
+  }
+
+  dialog::backdrop{
+    /* blur the backdrop */
+    backdrop-filter: blur(3px);
+  }
+
+  /* all text buttons */
+
+  .red-text-btn, .blue-text-btn, .green-text-btn{
+    color: white;
+    border-color: transparent;
+    cursor: pointer;
+    padding: 5px 12px;
+    margin: 0.5rem auto;
+    border-radius: 5px;
+    transition: 250ms ease-in-out;
+    height: 30px;
+  }
+
+  .red-text-btn:hover, .blue-text-btn:hover, .green-text-btn:hover{
+    border-radius: 20px;
+  }
+
+  .red-text-btn{
+    background-color: rgb(255, 73, 73);
+  }
+  .blue-text-btn{
+    background-color: rgb(96, 96, 255);
+  }
+  .green-text-btn{
+    background-color: rgb(96, 255, 96);
+  }
+
+  .red-text-btn:hover{
+    background-color: rgb(255, 26, 26);
+  }
+  .blue-text-btn:hover{
+    background-color: rgb(39, 39, 255);
+  }
+  .green-text-btn:hover{
+    background-color: rgb(39, 255, 39);
+  }

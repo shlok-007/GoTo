@@ -47,8 +47,8 @@ export default function YourTrip({ destination, date, time, id }: { destination:
                     <div className="modal-content">
                     <div>{warningText}</div>
                     <div className="buttons">
-                        <button onClick={(e)=>closeDeleteModal()}>No</button>
-                        <button onClick={() => {
+                        <button className='blue-text-btn' onClick={(e)=>closeDeleteModal()}>No</button>
+                        <button className='red-text-btn' onClick={() => {
                             setWarningText("Deleting...");
                             deleteTrip(id).then(() => {setWarningText("Deleted"); setDeleted(true); closeDeleteModal();})}
                         }>Yes</button>
@@ -61,8 +61,8 @@ export default function YourTrip({ destination, date, time, id }: { destination:
                     <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} min={newDate} required></input>
                     <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} required></input>
                     <div className="buttons">
-                        <button onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
-                        <button onClick={() => {
+                        <button className='red-text-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
+                        <button className='blue-text-btn' onClick={() => {
                             setUpdateText("Updating...");
                             updateTrip(id, newDate, newTime).then(() => {setUpdateText("Updated"); closeUpdateModal();})}
                         }>Update</button>

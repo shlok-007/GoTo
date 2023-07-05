@@ -64,6 +64,10 @@ export default function DestinationSelect({profile}:loggedInPageProps){
   }
 
   const onSearch = (destination:string, date: string) => {
+    if(destination==="Select your Destination"){
+      window.alert("Please select a destination");
+      return;
+    }
     if(profile){
       setLoading(true);
       updateContact(profile.email, ph_no, wa_no).then((val)=>{if(!val) {setLoading(false);  setIsServerDown(true);return;}});

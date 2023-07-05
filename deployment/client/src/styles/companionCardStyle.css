@@ -7,7 +7,7 @@
     background-color: #f0f0f0;
     font-size: 1.25rem;
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
 }
 
 .avatar-frame {
@@ -25,36 +25,46 @@
 }
 
 .contact-frame {
-    width: 45px;
+    width: 50px;
     flex-shrink: 0;
     aspect-ratio: 1/1;
-    border: none;
-    border-color: transparent;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
     padding: 0;
     margin: 0;
-    transition: background-color 250ms ease-in-out;
+    transition: 250ms ease-in-out;
+    /* border-color:#f0f0f0; */
+    border: 3px solid black;
+}
+
+.contact-frame > img{
+    width: 80%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
 }
 
 .contact-frame:hover{
     background-color: rgb(119, 183, 255);
 }
 
+.contact-details{
+  padding-bottom: 0.2rem;
+}
+
 .left{
-    width: 50%;
+    width: 70%;
     display: flex;
     align-items: center;
     gap: 1.5rem;
 }
 
 .right{
-    width: 50%;
+    width: 30%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .companion-list{
@@ -67,12 +77,13 @@
 }
 
 .getNotified-btn {
-    background-color: hsl(0, 100%, 50%);
+    font-size: large;
+    font-weight: bold;
+    background-color: rgb(100, 150, 255);
     border: none;
     border-radius: 5px;
     text-decoration: none;
     font-family: inherit;
-    font-size: inherit;
     color: white;
     cursor: pointer;
     padding: 5px 20px;
@@ -85,7 +96,7 @@
   
   .getNotified-btn:hover{
     border-radius: 20px;
-    background-color: hsl(0, 100%, 45%);
+    background-color: rgb(69, 128, 255);;
   }
 
   .grid-container{
@@ -99,7 +110,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
+  }
+
+  .contact-info-left{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .medium{
+    text-align: center;
   }
 
   .conatact-data{
