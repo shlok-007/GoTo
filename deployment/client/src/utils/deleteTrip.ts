@@ -1,7 +1,7 @@
 export default async function deleteTrip(tripId: string){
     try{
         let serverURL = process.env.REACT_APP_SERVER_URL;
-        const response = await fetch(serverURL+`/travelDetails/${tripId}`,{
+        const response = await fetch(serverURL+`/travelDetails/deleteOneTrip/${tripId}`,{
             method: 'DELETE'
         });
         if(response.status === 200) return true;

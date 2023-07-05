@@ -122,7 +122,7 @@ router.patch("/:id", async (req, res) => {
   res.send(result).status(200);
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/deleteOneTrip/:id", async (req, res) => {
   let db = await connectToDatabase();
   const query = { _id: new ObjectId(req.params.id) };
 
@@ -145,6 +145,7 @@ router.delete("/dailyCleanUp", async (req, res) => {
   const previousDay = `${year}-${month}-${day}`;
 
   let result = await collection.deleteMany({ date: previousDay });
+  console.log(result);
   res.send(result).status(200);
 });
 

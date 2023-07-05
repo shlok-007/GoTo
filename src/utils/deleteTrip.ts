@@ -1,6 +1,6 @@
 export default async function deleteTrip(tripId: string){
     try{
-        const response = await fetch(`http://localhost:5000/travelDetails/${tripId}`,{
+        const response = await fetch(`http://localhost:5000/travelDetails/deleteOneTrip/${tripId}`,{
             method: 'DELETE'
         });
         if(response.status === 200) return true;

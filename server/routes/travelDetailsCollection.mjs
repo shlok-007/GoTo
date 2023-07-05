@@ -117,7 +117,7 @@ router.patch("/:id", async (req, res) => {
   res.send(result).status(200);
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/deleteOneTrip/:id", async (req, res) => {
   const query = { _id: new ObjectId(req.params.id) };
 
   const collection = db.collection("TravelDetails");
@@ -127,16 +127,20 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.delete("/dailyCleanUp", async (req, res) => {
-  const collection = db.collection("TravelDetails");
+  console.log("Requests for daily clean up");
+  const collection = await db.collection("TravelDetails");
 
-  const currentDate = new Date();
+  var currentDate = new Date();
   currentDate.setDate(currentDate.getDate() - 1);
+  // console.log(currentDate);
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const day = String(currentDate.getDate()).padStart(2, '0');
   const previousDay = `${year}-${month}-${day}`;
+  // console.log(previousDay);
 
-  let result = await collection.deleteMany({ date: previousDay });
+  let result = await collection.deleteMany({ "date": previousDay });
+  // console.log(result);
   res.send(result).status(200);
 });
 

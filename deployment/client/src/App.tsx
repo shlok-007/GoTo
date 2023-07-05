@@ -13,7 +13,6 @@ import ShowCompanions from './Pages/ShowCompanions';
 import HomePage from './Pages/HomePage';
 import InfoCard from './components/InfoCard';
 import PrivateRoutes from './utils/PrivateRoutes';
-import dailyCleanUp from './utils/dailyCleanUp';
 
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
@@ -29,21 +28,6 @@ const App: React.FC = () => {
     setIsLogged(true);
     setProfile(decodeJwtResponse(authToken));
   }
-
-  useEffect(() => {
-    // Run the function immediately when the component mounts
-    dailyCleanUp();
-
-    // Run the function every 24 hours
-    const intervalId = setInterval(() => {
-      dailyCleanUp();
-    }, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
-
-    // Clean up the interval when the component unmounts
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
 
   useEffect(()=>{
     if(profile){

@@ -29,7 +29,7 @@ router.post("/addUser", async (req, res) => {
   const existingUser = await collection.findOne({ email });
 
   if (existingUser) {
-    return res.status(204);
+    return res.send().status(204);
   }
 
   let newUser = {
