@@ -15,6 +15,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
 
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<travelDetails_interface[] | boolean>([]);
+    const [pressed, setPressed] = useState<boolean>(false);
     const {destination, date, time} = useParams();
 
 
@@ -32,7 +33,14 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
             <>
             <div key={3} className="companion-list">
                 <InfoCard content='Sorry, no companions found as of now'/>
-                <button className='getNotified-btn' onClick={()=>{getSubscriptionObject(email);}}>Get Notified!</button>
+                {!pressed ?
+                    <>
+                    <InfoCard content={`Don't wanna go alone?
+                    We'll let you know when there are companions for you ;-)`}/>
+                    <button className='getNotified-btn' onClick={()=>{getSubscriptionObject(email);setPressed(true);}}>Get Notified!</button>
+                    </>
+                    :<InfoCard content='You will be notified when there are companions for you.'/>
+                }
             </div>
             </>
             }
@@ -46,10 +54,14 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                             <CompanionCard avatar={item.avatar} name={item.name} time={item.time} ph={item.ph_no} wa={item.wa_no} email={item.email}/>
                         </div>
                     ))}
-                    <InfoCard key={6} content={`Don't wanna go with them?
-                    We'll let you know when there are more companions ;-)`}/>
-                    <button className='getNotified-btn' onClick={()=>{getSubscriptionObject(email);}}>Get Notified!</button>
-            
+                    {!pressed ?
+                        <>
+                        <InfoCard key={6} content={`Don't wanna go with them?
+                        We'll let you know when there are more companions ;-)`}/>
+                        <button className='getNotified-btn' onClick={()=>{getSubscriptionObject(email);setPressed(true);}}>Get Notified!</button>
+                        </>
+                        :<InfoCard key={7} content='You will be notified when there are more companions for you.'/>
+                    }
                     </>
                 )}
             </div>
