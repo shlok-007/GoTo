@@ -4,6 +4,7 @@
   width: 50%;
   margin: 4rem auto;
   margin-bottom: 1rem;
+  gap: 1rem;
 }
 
 .drop-wrap{
@@ -92,6 +93,7 @@
   cursor: pointer;
   padding: 5px 20px;
   transition: background-color 150ms ease-in-out, border-radius 150ms ease-in-out;
+  height: 40px;
   
   /* margin: 0 auto; */
   /* width: 25%; */

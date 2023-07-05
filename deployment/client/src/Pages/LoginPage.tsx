@@ -6,8 +6,9 @@ const LoginPage : React.FC<loginPageProps> = ({loginPromptFunction}) => {
     loginPromptFunction();
     return (
         <>
-            <InfoCard content="Hello there, please login to continue" />
-            <div id="google-one-tap-button"></div>
+            <div id="google-one-tap-button">
+                <InfoCard content="Hello there, please login to continue" />
+            </div>
         </>
     );
 };

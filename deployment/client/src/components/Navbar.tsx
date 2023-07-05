@@ -28,7 +28,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
     return(
       <nav className="navbar">
         <div className="navbar__site-name" onClick={()=> navigate("/home")}>
-          {window.screen.width>window.screen.height?"GoTogether":"GoTo"}
+          {window.screen.width>window.screen.height || !isLogged?"GoTogether":"GoTo"}
         </div>
         {isLogged?
         <div className="navbar__user">

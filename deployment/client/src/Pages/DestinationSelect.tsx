@@ -121,7 +121,7 @@ export default function DestinationSelect({profile}:loggedInPageProps){
                   <button className="dropdown-item" onClick={handleDestinationSelection}>Bhubaneshwar</button>
                   <button className="dropdown-item" onClick={handleDestinationSelection}>Airport</button>
                   <button className="dropdown-item" onClick={handleDestinationSelection}>Puri</button>
-                  <button className="dropdown-item" onClick={handleDestinationSelection}>Bhubaneshwar</button>
+                  <button className="dropdown-item" onClick={handleDestinationSelection}>NISER</button>
                 </div>
               </div>
             </div>
