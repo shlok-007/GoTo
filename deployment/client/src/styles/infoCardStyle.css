@@ -3,8 +3,8 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 1rem auto;
-    padding: 16px;
-    max-width: fit-content;
+    padding: 10px;
+    max-width: 30ch;
     text-align: center;
     font-size: 1.3rem;
     white-space: pre-line;
