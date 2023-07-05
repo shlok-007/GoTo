@@ -5,7 +5,7 @@ import PopupMessage from '../components/PopupMessage';
 
 const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, wa, email}) => {
 
-  const [displayPopup, setDisplayPopup] = useState<boolean>(false);
+  
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const openModal = () => {
@@ -19,10 +19,11 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
       dialogRef.current.close();
     }
   };
-
+  
+  const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   const handleCopyClick = (text: string) => {
-    navigator.clipboard.writeText(text);
     setDisplayPopup(true);
+    navigator.clipboard.writeText(text);
     setTimeout(() => {
       setDisplayPopup(false);
     }, 2000);

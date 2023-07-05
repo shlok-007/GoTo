@@ -2,6 +2,8 @@ import loggedInPageProps from "../types/loggedInPageProps"
 import React, {useState} from "react"
 import "../styles/destinationSelectPageStyle.css"
 import InfoCard from '../components/InfoCard';
+import PopupMessage from '../components/PopupMessage';
+
 import {useNavigate} from 'react-router-dom';
 
 import getDateTime from "../utils/getDateTime";
@@ -63,9 +65,18 @@ export default function DestinationSelect({profile}:loggedInPageProps){
     });
   }
 
+  const [displayPopup, setDisplayPopup] = useState<boolean>(false);
+  const handleUnfilledDestination = () => {
+    setDisplayPopup(true);
+    setTimeout(() => {
+      setDisplayPopup(false);
+    }, 2000);
+  };
+
   const onSearch = (destination:string, date: string) => {
     if(destination==="Select your Destination"){
-      window.alert("Please select a destination");
+      // window.alert("Please select a destination");
+      handleUnfilledDestination();
       return;
     }
     if(profile){
@@ -93,6 +104,7 @@ export default function DestinationSelect({profile}:loggedInPageProps){
 
   return(
     <>
+      {displayPopup && <PopupMessage content="Please select a destination."/>}
       {loading && <InfoCard content='Loading...'/>}
 
       {!loading && isServerDown && <InfoCard content='Unable to connect to the server :_('/>}

@@ -3,6 +3,7 @@ import '../styles/yourTripStyle.css'
 import updateTrip from '../utils/updateTrip';
 import deleteTrip from '../utils/deleteTrip';
 import getDateTime from '../utils/getDateTime';
+import PopupMessage from './PopupMessage';
 import { useNavigate } from 'react-router-dom';
 
 export default function YourTrip({ destination, date, time, id }: { destination: string, date: string, time: string, id: string }) {
@@ -13,6 +14,7 @@ export default function YourTrip({ destination, date, time, id }: { destination:
     const[updateText, setUpdateText] = useState("Update Your Trip");
     const [newDate, setNewDate] = useState(date);
     const [newTime, setNewTime] = useState(time);
+    const [popupContent, setPopupContent] = useState<string>("");
 
     const deleteRef = useRef<HTMLDialogElement>(null);
     const updateRef = useRef<HTMLDialogElement>(null);
@@ -39,8 +41,17 @@ export default function YourTrip({ destination, date, time, id }: { destination:
         if (updateRef.current) {
             updateRef.current.close();
         }};
+    const [displayPopup, setDisplayPopup] = useState<boolean>(false);
+    const showPopUp = () => {
+        setDisplayPopup(true);
+        setTimeout(() => {
+        setDisplayPopup(false);
+        }, 2000);
+    };
     return (
         <>
+        {displayPopup && <PopupMessage content={popupContent}/>}
+      
             {!deleted ?
                 <>
                 <dialog ref={deleteRef}>
@@ -50,7 +61,7 @@ export default function YourTrip({ destination, date, time, id }: { destination:
                         <button className='blue-text-btn' onClick={(e)=>closeDeleteModal()}>No</button>
                         <button className='red-text-btn' onClick={() => {
                             setWarningText("Deleting...");
-                            deleteTrip(id).then(() => {setWarningText("Deleted"); setDeleted(true); closeDeleteModal();})}
+                            deleteTrip(id).then(() => {setWarningText("Deleted"); setDeleted(true); closeDeleteModal();setPopupContent("Trip Deleted"); showPopUp();})}
                         }>Yes</button>
                     </div>
                     </div>
@@ -64,7 +75,7 @@ export default function YourTrip({ destination, date, time, id }: { destination:
                         <button className='red-text-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
                         <button className='blue-text-btn' onClick={() => {
                             setUpdateText("Updating...");
-                            updateTrip(id, newDate, newTime).then(() => {setUpdateText("Updated"); closeUpdateModal();})}
+                            updateTrip(id, newDate, newTime).then(() => {setUpdateText("Updated"); closeUpdateModal();setPopupContent("Trip Updated"); showPopUp();})}
                         }>Update</button>
                     </div>
                     </div>

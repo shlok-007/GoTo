@@ -11,7 +11,7 @@
     "crons": [
         {
           "path": "/travelDetails/dailyCleanUp",
-          "schedule": "30 5 * * *"
+          "schedule": "32 18 * * *"
         }
     ]
 }
