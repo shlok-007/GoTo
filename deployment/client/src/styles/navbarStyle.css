@@ -39,9 +39,15 @@
     color: #fff;
     border: none;
     padding: 8px 16px;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     transition: 250ms ease-in-out;
+    height: 40px;
+  }
+
+  .navbar__logout_icon{
+    width:40px;
+    height:40px;
   }
   
   .navbar__logout:hover {
@@ -55,18 +61,20 @@
     background-color: #daacfe;
     padding: 8px 16px;
     cursor: pointer;
-    transition: background-color 250ms ease-in-out;
+    transition: 250ms ease-in-out;
+    height: 40px;
   }
 
   .user-trips:hover{
     background-color: #bf7cfa;
+    border-radius: 20px;
   }
 
   .user-trips-dialog{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    width: 400px;
+    width: 370px;
     position: absolute;
     z-index: 100;
   }

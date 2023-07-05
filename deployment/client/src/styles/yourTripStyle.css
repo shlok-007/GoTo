@@ -1,5 +1,9 @@
 .dest{
-    width: 13ch;
+    width: 12ch;
+}
+
+.tripDate{
+  width:10ch;
 }
 
 .trip {
@@ -34,7 +38,7 @@
 .view{
   width: 90%;
   justify-content: flex-start;
-  gap: 0.5rem;
+  gap: 0.1rem;
 }
 
 .modify{

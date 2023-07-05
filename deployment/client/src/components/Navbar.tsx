@@ -18,7 +18,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
       const buttonRect = openTripsDialogButton.current.getBoundingClientRect();
       setDialogPosition({
         top: buttonRect.bottom + 5,
-        left: buttonRect.right - 380,
+        left: buttonRect.right - 250,
       });
     }
     setTripsShown(true);
@@ -47,8 +47,10 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
           <div className="navbar__avatar-frame">
             <img src={profile?.picture} alt="User Avatar" className="navbar__avatar" />
           </div>
-
-          <button className="navbar__logout" onClick={onLogout}>Logout</button>
+          {window.screen.width>window.screen.height?
+            <button className="navbar__logout" onClick={onLogout}>Logout</button>
+            :<img src="/icons/logout.png" alt="Logout" className="navbar__logout_icon" onClick={onLogout}/>
+          }
 
         </div>
         :<></>}
