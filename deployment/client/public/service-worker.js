@@ -22,7 +22,7 @@ self.addEventListener('notificationclick', event => {
   event.notification.close();
 
   const payload = event.notification.data;
-  const url = `http://localhost:3000/showCompanions/${payload.destination}/${payload.date}/${payload.time}`;
+  const url = `https://goto-nine.vercel.app/showCompanions/${payload.destination}/${payload.date}/${payload.time}`;
 
   event.waitUntil(
     clients.openWindow(url)

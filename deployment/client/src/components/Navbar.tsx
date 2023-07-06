@@ -98,8 +98,8 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
           </button>
 
           <dialog className="user-menu-dialog" style={userMenuDialogPosition} open={userMenuShown}>
-            <div>`Phone number {ph_no}</div>
-            <div>`Whatsapp number {wa_no}</div>
+            <div>Phone number {ph_no}</div>
+            <div>Whatsapp number {wa_no}</div>
             <button className="blue-text-btn" onClick={()=>getSubscriptionObject(profile?.email || "")}>Get Notified!</button>
             <button className="red-text-btn" onClick={()=> setUserMenuShown(false)}>Close</button>
           </dialog>
