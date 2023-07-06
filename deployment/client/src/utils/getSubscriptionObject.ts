@@ -1,10 +1,16 @@
-export default function getSubscriptionObject(email:string){
+export default async function getSubscriptionObject(email:string){
     
     if ('serviceWorker' in navigator && 'PushManager' in window) {
+      //deregister all service workers
+      // navigator.serviceWorker.getRegistrations().then(registrations => {
+      //   registrations.forEach(registration => {
+      //     registration.unregister();
+      // })});
         // Register a service worker
         navigator.serviceWorker.register("/service-worker.js",{scope: '/'})
           .then(registration => {
             // Request permission to show notifications
+            registration.update().then(()=>{
             return registration.pushManager.getSubscription()
               .then(subscription => {
                 if (subscription) {
@@ -24,6 +30,7 @@ export default function getSubscriptionObject(email:string){
                     });
                 }
               });
+            });
           })
           .catch(error => {
             console.error('Error occurred while registering service worker:', error);

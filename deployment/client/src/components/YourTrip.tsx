@@ -6,7 +6,7 @@ import getDateTime from '../utils/getDateTime';
 import PopupMessage from './PopupMessage';
 import { useNavigate } from 'react-router-dom';
 
-export default function YourTrip({ destination, date, time, id }: { destination: string, date: string, time: string, id: string }) {
+export default function YourTrip({ destination, date, time, id, name }: { destination: string, date: string, time: string, id: string, name: string }) {
     const navigate = useNavigate();
 
     const [deleted, setDeleted] = useState(false);
@@ -75,7 +75,7 @@ export default function YourTrip({ destination, date, time, id }: { destination:
                         <button className='red-text-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
                         <button className='blue-text-btn' onClick={() => {
                             setUpdateText("Updating...");
-                            updateTrip(id, newDate, newTime).then(() => {setUpdateText("Updated"); closeUpdateModal();setPopupContent("Trip Updated"); showPopUp();})}
+                            updateTrip(id, newDate, newTime, destination, name).then(() => {setUpdateText("Updated"); closeUpdateModal();setPopupContent("Trip Updated"); showPopUp();})}
                         }>Update</button>
                     </div>
                     </div>

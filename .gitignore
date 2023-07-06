@@ -29,3 +29,5 @@ mongo_creds.txt
 temp.txt
 /client/temp.txt
 .env
+
+/deployment/client/src/components/UserMenu.tsx

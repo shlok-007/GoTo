@@ -17,6 +17,7 @@ router.get("/", async (req, res) => {
     }).toArray();
 
     var results=[];
+    var subObjects=[];
 
     let GotoUsersCollection = db.collection("GotoUsers");
     for (const element of result1) {
@@ -31,6 +32,7 @@ router.get("/", async (req, res) => {
         date: element.date,
         avatar: result2.avatar
       });
+      subObjects.push(result2.subObject);
     };
 
     const dateTime = giveDateTime();
@@ -39,19 +41,22 @@ router.get("/", async (req, res) => {
     const curr_date = dateTime.date;
 
     for(let i=0;i<results.length;i++){
-      if(date==curr_date && results[i].time<curr_time)  results.splice(i,1);
+      if(date==curr_date && results[i].time<curr_time){
+        results.splice(i,1);
+        subObjects.splice(i,1);
+    }}
+
+    let notification = {
+      name: name,
+      destination: destination,
+      date: date,
+      time: time
     }
 
-    let notification = `${name} wishes to go to ${destination} on ${date} at ${time}!`;
-    // notification.replace(/"/g, '');
-
-    for (const result of results) {
-      const { email } = result;
-
-      let user = await GotoUsersCollection.findOne({ email });
+    for (const subObject of subObjects) {
   
-      if (user.subObject.endpoint) {
-        sendPushNotification(user.subObject, notification)
+      if (subObject.endpoint) {
+        sendPushNotification(subObject, notification)
       }
     }
 
@@ -108,6 +113,7 @@ router.post("/", async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
   let db = await connectToDatabase();
+  let collection = await db.collection("TravelDetails");
   const query = { _id: new ObjectId(req.params.id) };
   const updates =  {
     $set: {
@@ -115,10 +121,29 @@ router.patch("/:id", async (req, res) => {
       time: req.body.time
     }
   };
-
-  let collection = await db.collection("TravelDetails");
   let result = await collection.updateOne(query, updates);
 
+  let curr_time = giveDateTime().time;
+  var result1 = await collection.find({
+    "destination": req.body.destination,
+    "date": req.body.date,
+    "_id": {$ne: new ObjectId(req.params.id)},
+    "time": {$gt: curr_time}
+  },{email:1}).toArray();
+
+  let notification = {
+    name: req.body.name,
+    destination: req.body.destination,
+    date: req.body.date,
+    time: req.body.time
+  }
+  let GotoUsersCollection = db.collection("GotoUsers");
+  for (const element of result1) {
+    let result2 = await GotoUsersCollection.findOne({ "email": element.email },{subObject:1});
+    if (result2.subObject.endpoint) {
+      sendPushNotification(result2.subObject, notification)
+    }
+  }
   res.send(result).status(200);
 });
 

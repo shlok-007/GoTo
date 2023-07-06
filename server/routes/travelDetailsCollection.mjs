@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
     }).toArray();
 
     var results=[];
+    var subObjects=[];
 
     let GotoUsersCollection = db.collection("GotoUsers");
     for (const element of result1) {
@@ -30,6 +31,7 @@ router.get("/", async (req, res) => {
         date: element.date,
         avatar: result2.avatar
       });
+      subObjects.push(result2.subObject);
     };
 
     const dateTime = giveDateTime();
@@ -38,19 +40,26 @@ router.get("/", async (req, res) => {
     const curr_date = dateTime.date;
 
     for(let i=0;i<results.length;i++){
-      if(date==curr_date && results[i].time<curr_time)  results.splice(i,1);
-    }
+      if(date==curr_date && results[i].time<curr_time){
+        results.splice(i,1);
+        subObjects.splice(i,1);
+    }}
 
-    let notification = `${name} wishes to go to ${destination} on ${date} at ${time}!`;
+    let notification = {
+      name: name,
+      destination: destination,
+      date: date,
+      time: time
+    }
     // notification.replace(/"/g, '');
 
-    for (const result of results) {
-      const { email } = result;
+    for (const subObject of subObjects) {
+      // const { email } = result;
 
-      let user = await GotoUsersCollection.findOne({ email });
+      // let user = await GotoUsersCollection.findOne({ email });
   
-      if (user.subObject.endpoint) {
-        sendPushNotification(user.subObject, notification)
+      if (subObject.endpoint) {
+        sendPushNotification(subObject, notification)
       }
     }
 
