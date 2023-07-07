@@ -1,0 +1,41 @@
+.user-menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.user-menu-title{
+    font-weight: bold;
+}
+
+.user-menu > *{
+    z-index: 100;
+    width: 100%;
+}
+
+.user-menu-content_item{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-menu-content_item > img, button > img{
+    width: 20px;
+    height: 20px;
+}
+
+.inline-buttons{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.inline-buttons > button{
+    margin: 0 !important;
+    min-width: 45%;
+    height: 35px;
+}

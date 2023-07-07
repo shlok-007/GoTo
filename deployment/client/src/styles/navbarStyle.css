@@ -28,6 +28,7 @@
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
+    cursor: pointer;
     /* margin-right: 10px; */
   }
   
@@ -98,6 +99,12 @@
   .no-trips{
     margin-top: 0.7rem;
   }
+
+  .user-menu-dialog{
+    width: 200px;
+    text-align: center;
+    padding-bottom: 0;
+  }
   
   dialog{
     border-radius: 8px;
@@ -107,7 +114,6 @@
   }
 
   dialog::backdrop{
-    /* blur the backdrop */
     backdrop-filter: blur(3px);
   }
 

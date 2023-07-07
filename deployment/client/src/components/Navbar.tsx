@@ -3,19 +3,21 @@ import "../styles/navbarStyle.css"
 import { useNavigate } from "react-router-dom"
 import { useState, useRef } from "react"
 import YourTrip from "./YourTrip"
+import UserMenu from "./UserMenu"
 import getUserTrips from "../utils/getUserTrips"
-import getSubscriptionObject from "../utils/getSubscriptionObject"
 import getContact from "../utils/getContact"
 
 const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) => {
   const navigate = useNavigate();
   const openTripsDialogButton = useRef<HTMLButtonElement>(null);
-  const openUserMenuBtn = useRef<HTMLButtonElement>(null);
   const [tripsShown, setTripsShown] = useState<boolean>(false);
-  const [userMenuShown, setUserMenuShown] = useState<boolean>(false);
   const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
-  const [userMenuDialogPosition, setUserMenuDialogPosition] = useState({ top: 0, left: 0 });
   const [myTrips, setMyTrips] = useState<{_id:string, destination:string, date:string, time:string}[]>([]);
+
+  const openUserMenuBtn = useRef<HTMLButtonElement>(null);
+  const [userMenuShown, setUserMenuShown] = useState<boolean>(false);
+  const [userMenuDialogPosition, setUserMenuDialogPosition] = useState({ top: 0, left: 0 });
+
   const logoutConfirmationDialog = useRef<HTMLDialogElement>(null);
 
   const [ph_no, setPh_no] = useState<string>("");
@@ -43,7 +45,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
         setWa_no(contact.wa_no);
       }
     });
-
+    
     if(openUserMenuBtn.current){
       const buttonRect = openUserMenuBtn.current.getBoundingClientRect();
       setUserMenuDialogPosition({
@@ -98,9 +100,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
           </button>
 
           <dialog className="user-menu-dialog" style={userMenuDialogPosition} open={userMenuShown}>
-            <div>Phone number {ph_no}</div>
-            <div>Whatsapp number {wa_no}</div>
-            <button className="blue-text-btn" onClick={()=>getSubscriptionObject(profile?.email || "")}>Get Notified!</button>
+            <UserMenu key={ph_no} email={profile?.email || ""} ph_no={ph_no} wa_no={wa_no} />
             <button className="red-text-btn" onClick={()=> setUserMenuShown(false)}>Close</button>
           </dialog>
 

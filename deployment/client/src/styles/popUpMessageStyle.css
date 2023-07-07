@@ -3,7 +3,7 @@
     bottom: 30px;
     right: 30px;
     left: 30px;
-    width: max-content;
+    width: max-content !important;
     background-color: #fff;
     font-size: large;
     color: #000;
