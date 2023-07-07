@@ -24,24 +24,21 @@ const App: React.FC = () => {
   const [profile, setProfile] = useState<profile_interface | undefined>(undefined);
   const [serverDown, setServerDown] = useState<boolean>(false);
   const authToken = localStorage.getItem('authToken');
+
   if(!!authToken && !isLogged){
     setIsLogged(true);
     setProfile(decodeJwtResponse(authToken));
   }
 
-  useEffect(()=>{
-    if(profile){
-      addUser(profile.email, profile.name, profile.picture).then((val)=>{if(!val) setServerDown(true);});
-    }
-  },[profile]);
-
   const CallLogin = ()=>{
     useGoogleOneTapLogin({
       onSuccess: credentialResponse => {
         setIsLogged(true);
-        if(credentialResponse.credential){ 
-          setProfile(decodeJwtResponse(credentialResponse.credential));
+        if(credentialResponse.credential){
+          let temp = decodeJwtResponse(credentialResponse.credential);
+          setProfile(temp);
           localStorage.setItem('authToken', credentialResponse.credential);
+          addUser(temp.email, temp.name, temp.picture).then((val)=>{if(!val) setServerDown(true);});
         }
         navigate("/selectDestination");
       },
