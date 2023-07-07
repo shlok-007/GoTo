@@ -8,7 +8,7 @@ import userDetailsCollection from "./routes/userDetailsCollection.js"
 const PORT = process.env.PORT || 3069;
 const app = express();
 
-const allowedOrigins = [process.env.CLIENT_URL];
+const allowedOrigins = ['https://goto-nine.vercel.app'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (allowedOrigins.includes(origin)) {
