@@ -8,7 +8,18 @@ import userDetailsCollection from "./routes/userDetailsCollection.js"
 const PORT = process.env.PORT || 3069;
 const app = express();
 
-app.use(cors());
+const allowedOrigins = [process.env.CLIENT_URL];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/travelDetails", travelDetailsCollection);
