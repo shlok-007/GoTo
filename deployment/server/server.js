@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3069;
 const app = express();
 
 const allowedOrigins = ['https://goto-nine.vercel.app'
-                        , 'http://localhost:3000'
+                        // , 'http://localhost:3000'
                        ];
 const corsOptions = {
   origin: function (origin, callback) {
