@@ -114,18 +114,26 @@ export default function DestinationSelect({profile}:loggedInPageProps){
           <InfoCard content={`So ${profile?.given_name}, where would you like to go today ?`} />
           {/* <div className="selection-list"> */}
           <div className="date-time">
-            <input type="date" onChange={(e)=>setDate(e.target.value)} value={date} min={serverDate.date} required/>
-            <input type="time" step="900" onChange={(e)=>setTime(e.target.value)} value={time.slice(0,5)} required/>
+            <input className="date-time-ip" type="date" onChange={(e)=>setDate(e.target.value)} value={date} min={serverDate.date} required/>
+            <input className="date-time-ip" type="time" step="900" onChange={(e)=>setTime(e.target.value)} value={time.slice(0,5)} required/>
           </div>
           <div className="drop-wrap">
-            <input type="tel" placeholder="Phone Number" onChange={(e)=>setPh_no(e.target.value)} value={ph_no} required/>
-            <input type="tel" placeholder="WhatsApp Number" onChange={(e)=>setWa_no(e.target.value)} value={wa_no} required/>
-            <span>
-            <input type="checkbox" id="myCheckbox" onChange={(e)=> {
-              if(e.target.checked) setWa_no(ph_no)
-            }} />
-            <label htmlFor="myCheckbox">Same as phone number</label>
-            </span>
+            <div className="icon-ip">
+              <img src="/icons/telephone-call.png" alt="phone number" />
+              <input className="contact-ip" type="tel" placeholder="Phone Number" onChange={(e)=>setPh_no(e.target.value)} value={ph_no} required/>
+            </div>
+            <div className="icon-ip">
+              <img src="/icons/whatsapp.png" alt="whatsapp number" />
+              <input className="contact-ip" type="tel" placeholder="WhatsApp Number" onChange={(e)=>setWa_no(e.target.value)} value={wa_no} required/>
+            </div>
+            <div className="icon-ip">
+              <div className="checkbox-frame">
+                <input type="checkbox" id="myCheckbox" onChange={(e)=> {
+                  if(e.target.checked) setWa_no(ph_no)
+                }} />
+              </div>
+              Same as phone number
+            </div>
 
             <div className="dropdown" data-dropdown>
               <button className="destination-selector-button" onClick={handleDropdownVisibility}>

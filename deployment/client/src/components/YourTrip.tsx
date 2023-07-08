@@ -50,8 +50,8 @@ export default function YourTrip({ destination, date, time, id, name }: { destin
     };
     return (
         <>
-        {displayPopup && <PopupMessage content={popupContent}/>}
       
+        {displayPopup && <PopupMessage content={popupContent}/>}
             {!deleted ?
                 <>
                 <dialog ref={deleteRef}>
@@ -69,8 +69,8 @@ export default function YourTrip({ destination, date, time, id, name }: { destin
                 <dialog ref={updateRef}>
                     <div className="modal-content">
                     <div>{updateText}</div>
-                    <input type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} min={newDate} required></input>
-                    <input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} required></input>
+                    <input className='date-time-ip' type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} min={newDate} required></input>
+                    <input className='date-time-ip' type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} required></input>
                     <div className="buttons">
                         <button className='red-text-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
                         <button className='blue-text-btn' onClick={() => {

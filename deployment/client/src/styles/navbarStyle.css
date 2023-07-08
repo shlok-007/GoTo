@@ -3,9 +3,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #f0f0f0;
-    border-bottom: 1px solid #ccc;
-    /* width: 100%; */
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
   }
   
   .navbar__site-name {
@@ -41,8 +40,9 @@
   .navbar__logout {
     font-size: large;
     font-weight: bold;
-    background-color: #e53935;
+    font-family: inherit;
     color: white;
+    background-color: rgba(255, 0, 0, 0.7);
     border: none;
     padding: 8px 16px;
     border-radius: 5px;
@@ -57,7 +57,7 @@
   }
   
   .navbar__logout:hover {
-    background-color: #c62828;
+    background-color: rgba(255, 0, 0, 0.9);
     border-radius: 20px;
   }
 
@@ -67,7 +67,7 @@
     font-weight: bold;
     border: none;
     border-radius: 5px;
-    background-color: #bc65ff;
+    background-color: rgba(212, 0, 255,0.7);
     padding: 8px 16px;
     cursor: pointer;
     transition: 250ms ease-in-out;
@@ -75,7 +75,7 @@
   }
 
   .user-trips:hover{
-    background-color: #a136ff;
+    background-color: rgba(212, 0, 255,0.9);
     border-radius: 20px;
   }
 
@@ -84,15 +84,17 @@
     padding: 0;
     box-sizing: border-box;
     width: 370px;
+    /* background-color: rgba(0,0,0,0.7); */
     position: absolute;
     z-index: 100;
   }
-
+  
   .dialog-content{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: transparent;
     /* gap: 0.3rem; */
   }
 
@@ -101,16 +103,21 @@
   }
 
   .user-menu-dialog{
-    width: 200px;
+    width: 230px;
     text-align: center;
+    margin: 0;
     padding-bottom: 0;
+    z-index: 100;
+    /* backdrop-filter: blur(3px);  */
   }
   
   dialog{
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-color: #f0f0f0;
+    border-color: rgba(255,255,255,0.2);
     max-width: 370px;
+    color: white;
+    background-color: rgba(0,0,0,0.6);
   }
 
   dialog::backdrop{
@@ -166,19 +173,19 @@
 
   .red-icon-btn, .blue-icon-btn, .purple-icon-btn{
     border: none;
-    border-radius: 5px;
     cursor: pointer;
     padding: 5px 5px;
     transition: 250ms ease-in-out;
     display: flex;
     align-items: center;
+    background-color: transparent;
   }
 
   .red-icon-btn:hover, .blue-icon-btn:hover, .purple-icon-btn:hover{
-    border-radius: 10px;
+    border-radius: 5px;
   }
 
-  .red-icon-btn{
+  /* .red-icon-btn{
     background-color: rgb(255, 73, 73);
   }
 
@@ -188,16 +195,35 @@
 
   .purple-icon-btn{
     background-color: #bc65ff;
-  }
+  } */
 
   .red-icon-btn:hover{
-    background-color: rgb(255, 26, 26);
+    background-color: rgba(255,0,0,0.5);
   }
 
   .blue-icon-btn:hover{
-    background-color: rgb(39, 39, 255);
+    background-color: rgba(0, 119, 255, 0.7);
   }
 
   .purple-icon-btn:hover{
-    background-color: #a136ff;
+    background-color: rgba(212, 0, 255,0.5);
+  }
+
+  .date-time-ip{
+    background-color: rgba(255,255,255,0.7);
+    border:none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: medium;
+    font-family: inherit;
+  }
+
+  .contact-ip{
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+    border:none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: large;
+    font-family: inherit;
   }

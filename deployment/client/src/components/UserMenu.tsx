@@ -39,17 +39,17 @@ export default function UserMenu({email, ph_no, wa_no}:{email:string, ph_no:stri
             <div className="user-menu-title">Update Your Contact Details</div>
             <div className="user-menu-content_item">
                 <img src="/icons/telephone-call.png" alt="phone-icon" />
-                <input type="tel" value={curr_ph_no} placeholder='Phone Number' onChange={(e) => setCurr_ph_no(e.target.value)} required></input>
+                <input className='contact-ip' type="tel" value={curr_ph_no} placeholder='Phone Number' onChange={(e) => setCurr_ph_no(e.target.value)} required></input>
             </div>
             <div className="user-menu-content_item">
                 <img src="/icons/whatsapp.png" alt="phone-icon" />
-                <input type="tel" value={curr_wa_no} placeholder='WhatsApp Number' onChange={(e) => setCurr_wa_no(e.target.value)} required></input>
+                <input className='contact-ip' type="tel" value={curr_wa_no} placeholder='WhatsApp Number' onChange={(e) => setCurr_wa_no(e.target.value)} required></input>
             </div>
             
             <div className="inline-buttons">
                 <button className='red-text-btn' onClick={()=>{closeUpdateModal(); setCurr_ph_no(ph_no); setCurr_wa_no(wa_no);}}>Cancel</button>
                 <button className='blue-text-btn' onClick={() => {
-                    updateContact(email, curr_ph_no, curr_wa_no).then(() => {closeUpdateModal();setPopupContent("Trip Updated"); showPopup();})}
+                    updateContact(email, curr_ph_no, curr_wa_no).then(() => {closeUpdateModal();setPopupContent("Contact(s) Updated"); showPopup();})}
                 }>Update</button>
             </div>
             </div>

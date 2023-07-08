@@ -15,77 +15,81 @@
 }
 
 .destination-selector-button {
-  background: #F3F3F3;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
   border: none;
   border-radius: 10px;
   text-decoration: none;
-  color: #777;
   font-family: inherit;
   font-size: inherit;
   cursor: pointer;
   padding: 15px;
   width: 40ch;
+  transition: 250ms ease-in-out;
 }
 
 .dropdown.active > .destination-selector-button,
 .destination-selector-button:hover {
-  color: black;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 
 .dropdown {
-  /* flex-shrink: 0; */
   position: relative;
-  /* width: 100%; */
+  font-size: large;
 }
 
 .dropdown-menu {
   position: absolute;
   left: 0;
   top: calc(100% + 0.25rem);
-  background-color: white;
-  /* border-radius: 50%; */
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
   width: 40ch;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .1);
   opacity: 0;
   pointer-events: none;
   transform: translateY(-10px);
-  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+  transition: 150ms ease-in-out;
+  border-radius: 10px;
 }
 
 .dropdown.active > .dropdown-menu {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  z-index: 100;
 }
 
 .dropdown-cities {
   display: flex;
   flex-direction: column;
-  /* gap: .25rem; */
+  background-color: transparent;
 }
 
 .dropdown-item {
-  background: white;
+  color: white;
+  background-color: transparent;
   border: none;
+  border-radius: 10px;
   text-decoration: none;
-  /* color: #777; */
   font-family: inherit;
   font-size: inherit;
   cursor: pointer;
   padding: 8px 50px;
-  transition: background-color 150ms ease-in-out;
-  /* width: 100%; */
+  transition: background-color 250ms ease-in-out;
 }
 
 .dropdown-item:hover {
-  background-color: #F3F3F3;
+  background-color: rgba(0,0,0,0.55);
 }
 
 .search-btn {
   font-size: large;
   font-weight: bold;
-  background-color: rgb(100, 150, 255);
+  background-color: rgba(100, 150, 255, 0.7);
+  backdrop-filter: blur(5px);
   border: none;
   border-radius: 5px;
   text-decoration: none;
@@ -102,5 +106,23 @@
 
 .search-btn:hover{
   border-radius: 20px;
-  background-color: rgb(69, 128, 255);;
+  background-color: rgba(100, 150, 255, 0.9);
+}
+
+.icon-ip{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#myCheckbox{
+  width: 15px;
+  height: 15px;
+  margin: 4px 4px 3px 4px;
+}
+
+.checkbox-frame{
+  border: none;
+  background-color: black;
+  border-radius: 3px;
 }
