@@ -43,26 +43,11 @@
   gap: 0.2rem;
 }
 
-
-
-.update-button, .delete-button, .search-button{
-  width: 25px;
-  flex-shrink: 0;
-  aspect-ratio: 1/1;
-  /* border: none; */
-  border-color: transparent;
-  border-radius: 5px;
-  overflow: hidden;
-  cursor: pointer;
-  padding: 0.15rem;
-  margin: 0;
-  transition: background-color 250ms ease-in-out;
-}
-
 .icon-btn{
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .update-button:hover{

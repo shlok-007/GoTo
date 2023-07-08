@@ -161,3 +161,43 @@
   .green-text-btn:hover{
     background-color: rgb(39, 255, 39);
   }
+
+  /* all icon buttons */
+
+  .red-icon-btn, .blue-icon-btn, .purple-icon-btn{
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 5px;
+    transition: 250ms ease-in-out;
+    display: flex;
+    align-items: center;
+  }
+
+  .red-icon-btn:hover, .blue-icon-btn:hover, .purple-icon-btn:hover{
+    border-radius: 10px;
+  }
+
+  .red-icon-btn{
+    background-color: rgb(255, 73, 73);
+  }
+
+  .blue-icon-btn{
+    background-color: rgb(96, 96, 255);
+  }
+
+  .purple-icon-btn{
+    background-color: #bc65ff;
+  }
+
+  .red-icon-btn:hover{
+    background-color: rgb(255, 26, 26);
+  }
+
+  .blue-icon-btn:hover{
+    background-color: rgb(39, 39, 255);
+  }
+
+  .purple-icon-btn:hover{
+    background-color: #a136ff;
+  }

@@ -45,7 +45,7 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
                   </div>
                   </div>
                   {ph!=="" &&
-                  <button onClick={()=>handleCopyClick(ph)} className="copy-btn">
+                  <button onClick={()=>handleCopyClick(ph)} className="blue-icon-btn">
                     <img  src="/icons/copy.png" alt="copy" />
                   </button>
                   }
@@ -60,7 +60,7 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
                   </div>
                   </div>
                   {wa!=="" &&
-                  <button onClick={()=>handleCopyClick(wa)} className="copy-btn">
+                  <button onClick={()=>handleCopyClick(wa)} className="blue-icon-btn">
                     <img  src="/icons/copy.png" alt="copy" />
                   </button>
                   }
@@ -75,7 +75,7 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
                   </div>
                   </div>
                   {email!=="" &&
-                  <button onClick={()=>handleCopyClick(email)} className="copy-btn">
+                  <button onClick={()=>handleCopyClick(email)} className="blue-icon-btn">
                     <img  src="/icons/copy.png" alt="copy" />
                   </button>
                   }
@@ -93,8 +93,8 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
               </div>
               <div className="right">
                   <div>{time}</div>
-                  <button className="contact-frame" onClick={openModal}>
-                      <img src="/icons/contact.png" alt="contact-details" className="avatar" />
+                  <button className="blue-icon-btn contact-frame" onClick={openModal}>
+                      <img src="/icons/contact.png" alt="contact-details" className="contact-icon" />
                   </button>
               </div>
       </>

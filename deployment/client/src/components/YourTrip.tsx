@@ -88,9 +88,9 @@ export default function YourTrip({ destination, date, time, id, name }: { destin
                         <div className="tripTime">{newTime}</div>
                     </div>
                     <div className="modify">
-                        <button className="search-button" onClick={()=>navigate(`/showCompanions/${destination}/${newDate}/${newTime}`)}><img src="/icons/magnifier.png" alt='search' className='icon-btn'/></button>
-                        <button className="update-button" onClick={openUpdateModal}><img src="/icons/edit-button.png" alt='modify' className='icon-btn'/></button>
-                        <button className="delete-button" onClick={openDeleteModal}><img src="/icons/delete.png" alt='delete' className='icon-btn'/></button>
+                        <button className="purple-icon-btn" onClick={()=>navigate(`/showCompanions/${destination}/${newDate}/${newTime}`)}><img src="/icons/magnifier.png" alt='search' className='icon-btn'/></button>
+                        <button className="blue-icon-btn" onClick={openUpdateModal}><img src="/icons/edit-button.png" alt='modify' className='icon-btn'/></button>
+                        <button className="red-icon-btn" onClick={openDeleteModal}><img src="/icons/delete.png" alt='delete' className='icon-btn'/></button>
                     </div>
                 </div>
                 </>

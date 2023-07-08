@@ -25,27 +25,19 @@
 }
 
 .contact-frame {
-    width: 50px;
-    flex-shrink: 0;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    transition: 250ms ease-in-out;
-    /* border-color:#f0f0f0; */
-    border: 3px solid black;
+  border-radius: 50% !important;
+  padding: 8px 8px;
 }
 
-.contact-frame > img{
-    width: 80%;
-    aspect-ratio: 1/1;
+
+.contact-icon{
+    width: 30px;
+    height: 30px;
     object-fit: cover;
 }
 
 .contact-frame:hover{
-    background-color: rgb(119, 183, 255);
+  border-radius: 50%;
 }
 
 .contact-details{

@@ -106,7 +106,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
           {window.screen.width>window.screen.height?
             <button className="navbar__logout" onClick={openLogoutModal}>Logout</button>
-            :<img src="/icons/logout.png" alt="Logout" className="navbar__logout_icon" onClick={onLogout}/>
+            :<img src="/icons/logout.png" alt="Logout" className="navbar__logout_icon" onClick={openLogoutModal}/>
           }
 
         </div>
