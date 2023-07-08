@@ -11,7 +11,7 @@ export default function YourTrip({ destination, date, time, id, name }: { destin
 
     const [deleted, setDeleted] = useState(false);
     const [warningText, setWarningText] = useState("Are you sure you want to delete this trip?");
-    const[updateText, setUpdateText] = useState("Update Your Trip");
+    const[updateText, setUpdateText] = useState("");
     const [newDate, setNewDate] = useState(date);
     const [newTime, setNewTime] = useState(time);
     const [popupContent, setPopupContent] = useState<string>("");
@@ -28,6 +28,7 @@ export default function YourTrip({ destination, date, time, id, name }: { destin
         deleteRef.current.close();
         }};
     const openUpdateModal = () => {
+        setUpdateText("Update Your Trip");
         getDateTime().then((val)=>{
             if(typeof(val)!=='boolean'){
                 setNewDate(val.date);

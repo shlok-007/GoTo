@@ -123,13 +123,14 @@ router.patch("/:id", async (req, res) => {
   };
   let result = await collection.updateOne(query, updates);
 
-  let curr_time = giveDateTime().time;
+  let dateTime = giveDateTime();
+  let curr_time = dateTime.time;
+  let curr_date = dateTime.date;
   var result1 = await collection.find({
     "destination": req.body.destination,
     "date": req.body.date,
     "_id": {$ne: new ObjectId(req.params.id)},
-    "time": {$gt: curr_time}
-  },{email:1}).toArray();
+  },{email:1, time:1,_id:0, destination:0, date:0}).toArray();
 
   let notification = {
     name: req.body.name,
@@ -139,10 +140,11 @@ router.patch("/:id", async (req, res) => {
   }
   let GotoUsersCollection = db.collection("GotoUsers");
   for (const element of result1) {
-    let result2 = await GotoUsersCollection.findOne({ "email": element.email },{subObject:1});
-    if (result2.subObject.endpoint) {
-      await sendPushNotification(result2.subObject, notification)
-    }
+    if(curr_date<req.body.date || (curr_date==req.body.date && element.time>=curr_time)){
+      let result2 = await GotoUsersCollection.findOne({ "email": element.email },{subObject:1});
+      if (result2.subObject.endpoint) {
+        await sendPushNotification(result2.subObject, notification)
+      }}
   }
   res.send(result).status(200);
 });
