@@ -10,8 +10,8 @@ webpush.setVapidDetails(
   privateVapidKey
 );
 
-function sendPushNotification(subscription, payload) {
-  webpush.sendNotification(subscription, JSON.stringify(payload));
+async function sendPushNotification(subscription, payload) {
+  await webpush.sendNotification(subscription, JSON.stringify(payload));
 }
 
 // module.exports = sendPushNotification;

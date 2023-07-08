@@ -56,7 +56,7 @@ router.get("/", async (req, res) => {
     for (const subObject of subObjects) {
   
       if (subObject.endpoint) {
-        sendPushNotification(subObject, notification)
+        await sendPushNotification(subObject, notification);
       }
     }
 
