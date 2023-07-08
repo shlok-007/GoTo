@@ -141,7 +141,7 @@ router.patch("/:id", async (req, res) => {
   for (const element of result1) {
     let result2 = await GotoUsersCollection.findOne({ "email": element.email },{subObject:1});
     if (result2.subObject.endpoint) {
-      sendPushNotification(result2.subObject, notification)
+      await sendPushNotification(result2.subObject, notification)
     }
   }
   res.send(result).status(200);
