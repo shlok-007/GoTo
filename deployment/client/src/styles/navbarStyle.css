@@ -103,11 +103,12 @@
   }
 
   .user-menu-dialog{
-    width: 230px;
+    width: 250px;
     text-align: center;
     margin: 0;
-    padding-bottom: 0;
+    padding: 0;
     z-index: 100;
+    box-sizing: border-box;
     /* backdrop-filter: blur(3px);  */
   }
   

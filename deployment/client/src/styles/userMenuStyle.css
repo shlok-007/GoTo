@@ -3,9 +3,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    /* width: 100%; */
     gap: 1rem;
     color: white;
+    backdrop-filter: blur(5px);
+    padding: 0.5rem;
+    border-radius: 10px;
 }
 
 .user-menu-title{
@@ -32,7 +35,7 @@
 .inline-buttons{
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .inline-buttons > button{

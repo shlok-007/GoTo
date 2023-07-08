@@ -25,7 +25,7 @@
   font-size: inherit;
   cursor: pointer;
   padding: 15px;
-  width: 40ch;
+  width: 30ch;
   transition: 250ms ease-in-out;
 }
 
@@ -46,7 +46,7 @@
   top: calc(100% + 0.25rem);
   background-color: rgba(0,0,0,0.5);
   backdrop-filter: blur(5px);
-  width: 40ch;
+  width: 30ch;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .1);
   opacity: 0;
   pointer-events: none;
