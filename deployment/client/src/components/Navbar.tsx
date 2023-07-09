@@ -13,6 +13,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
   const [tripsShown, setTripsShown] = useState<boolean>(false);
   const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
   const [myTrips, setMyTrips] = useState<{_id:string, destination:string, date:string, time:string}[]>([]);
+  const [tripState, setTripState] = useState<string>("Loading...");
 
   const openUserMenuBtn = useRef<HTMLButtonElement>(null);
   const [userMenuShown, setUserMenuShown] = useState<boolean>(false);
@@ -20,12 +21,12 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
   const logoutConfirmationDialog = useRef<HTMLDialogElement>(null);
 
-  const [ph_no, setPh_no] = useState<string>("");
-  const [wa_no, setWa_no] = useState<string>("");
+  const [ph_no, setPh_no] = useState<string>("Loading...");
+  const [wa_no, setWa_no] = useState<string>("Loading...");
 
   const openTripsDialog = () => {
     setUserMenuShown(false);
-    if(profile?.email)  getUserTrips(profile.email).then((trips) => setMyTrips(trips));
+    if(profile)  getUserTrips(profile.email).then((trips) => {if(trips.length===0)  setTripState("You haven't added any trips."); setMyTrips(trips)});
     if(openTripsDialogButton.current){
       const buttonRect = openTripsDialogButton.current.getBoundingClientRect();
       setDialogPosition({
@@ -38,13 +39,15 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
   const openUserMenu = () => {
     setTripsShown(false);
-
-    getContact(profile?.email || "").then((contact) => {
+    if(profile){
+    getContact(profile.email).then((contact) => {
       if(typeof(contact)!=='boolean'){
-        setPh_no(contact.ph_no);
-        setWa_no(contact.wa_no);
+        if(contact.ph_no==="") setPh_no("Not Provided");
+        else  setPh_no(contact.ph_no);
+        if(contact.wa_no==="") setWa_no("Not Provided");
+        else  setWa_no(contact.wa_no);
       }
-    });
+    });}
     
     if(openUserMenuBtn.current){
       const buttonRect = openUserMenuBtn.current.getBoundingClientRect();
@@ -70,7 +73,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
       <>
       <dialog className="user-trips-dialog" style={dialogPosition} open={tripsShown}>
         <div className="dialog-content">
-          {myTrips.length === 0 && <div className="no-trips">You haven't added any trip</div>}
+          {myTrips.length === 0 && <div className="no-trips">{tripState}</div>}
           {myTrips.map((trip) => (
             <YourTrip key={trip._id} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id} name={profile?.name || ""}/>
           ))}

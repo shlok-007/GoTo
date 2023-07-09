@@ -72,10 +72,16 @@ router.get("/getContact", async (req, res) => {
   const {email} = req.query;
   let collection = await db.collection("GotoUsers");
   let results = await collection.findOne({"email": email});
+  if(results){
   res.send({
     "ph_no": results.ph_no,
     "wa_no": results.wa_no
   }).status(200);
+  }else{
+  res.send({
+    "ph_no": "",
+    "wa_no": ""
+  }).status(404);}
 });
 
 export default router;

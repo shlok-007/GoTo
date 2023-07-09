@@ -16,6 +16,7 @@ const corsOptions = {
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("BANNED_ORIGIN : "+origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -36,7 +37,6 @@ app.get('*',(req,res,next)=>{
 // module.exports = app;
 // export default app;
 
-// start the Express server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });

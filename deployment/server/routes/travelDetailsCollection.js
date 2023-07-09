@@ -22,6 +22,7 @@ router.get("/", async (req, res) => {
     let GotoUsersCollection = db.collection("GotoUsers");
     for (const element of result1) {
       let result2 = await GotoUsersCollection.findOne({ "email": element.email });
+      if(result2===null) continue;
       results.push({
         _id: element._id,
         name: result2.name,
@@ -54,9 +55,12 @@ router.get("/", async (req, res) => {
     }
 
     for (const subObject of subObjects) {
-  
-      if (subObject.endpoint) {
+      try{
+      if (subObject?.endpoint) {
         await sendPushNotification(subObject, notification);
+      }
+      }catch(err){
+        console.log(err);
       }
     }
 
@@ -142,7 +146,7 @@ router.patch("/:id", async (req, res) => {
   for (const element of result1) {
     if(curr_date<req.body.date || (curr_date==req.body.date && element.time>=curr_time)){
       let result2 = await GotoUsersCollection.findOne({ "email": element.email },{subObject:1});
-      if (result2.subObject.endpoint) {
+      if (result2?.subObject?.endpoint) {
         await sendPushNotification(result2.subObject, notification)
       }}
   }

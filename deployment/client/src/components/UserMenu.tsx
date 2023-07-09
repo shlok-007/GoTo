@@ -39,11 +39,11 @@ export default function UserMenu({email, ph_no, wa_no}:{email:string, ph_no:stri
             <div className="user-menu-title">Update Your Contact Details</div>
             <div className="user-menu-content_item">
                 <img src="/icons/telephone-call.png" alt="phone-icon" />
-                <input className='contact-ip' type="tel" value={curr_ph_no} placeholder='Phone Number' onChange={(e) => setCurr_ph_no(e.target.value)} required></input>
+                <input className='contact-ip' type="tel" value={curr_ph_no==="Not Provided"?"":curr_ph_no} placeholder='Phone Number' onChange={(e) => setCurr_ph_no(e.target.value)} required></input>
             </div>
             <div className="user-menu-content_item">
                 <img src="/icons/whatsapp.png" alt="phone-icon" />
-                <input className='contact-ip' type="tel" value={curr_wa_no} placeholder='WhatsApp Number' onChange={(e) => setCurr_wa_no(e.target.value)} required></input>
+                <input className='contact-ip' type="tel" value={curr_wa_no==="Not Provided"?"":curr_wa_no} placeholder='WhatsApp Number' onChange={(e) => setCurr_wa_no(e.target.value)} required></input>
             </div>
             
             <div className="inline-buttons">
@@ -63,11 +63,11 @@ export default function UserMenu({email, ph_no, wa_no}:{email:string, ph_no:stri
             </div>
             <div className="user-menu-content_item">
                 <img src="/icons/telephone-call.png" alt="phone-icon" />
-                {curr_ph_no!==""?curr_ph_no:"Not Provided"}
+                {curr_ph_no}
             </div>
             <div className="user-menu-content_item">
                 <img src="/icons/whatsapp.png" alt="whatsapp-icon" />
-                {curr_wa_no!==""?curr_wa_no:"Not Provided"}
+                {curr_wa_no}
             </div>
             <div className="inline-buttons">
                 <button className="blue-text-btn" onClick={openUpdateModal}>
