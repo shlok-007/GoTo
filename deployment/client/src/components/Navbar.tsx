@@ -42,10 +42,8 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
     if(profile){
     getContact(profile.email).then((contact) => {
       if(typeof(contact)!=='boolean'){
-        if(contact.ph_no==="") setPh_no("Not Provided");
-        else  setPh_no(contact.ph_no);
-        if(contact.wa_no==="") setWa_no("Not Provided");
-        else  setWa_no(contact.wa_no);
+        setPh_no(contact.ph_no);
+        setWa_no(contact.wa_no);
       }
     });}
     
