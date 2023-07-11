@@ -1,3 +1,5 @@
+import { CredentialResponse } from "@react-oauth/google";
+
 export default interface loginPageProps {
-    loginPromptFunction: ()=>void;
+    handleLoginSuccess: (credentialResponse:CredentialResponse)=>Promise<void>;
 }

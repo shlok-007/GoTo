@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import './App.css';
 
-import {useGoogleOneTapLogin, googleLogout} from '@react-oauth/google';
+import {googleLogout, CredentialResponse} from '@react-oauth/google';
 import decodeJwtResponse from './utils/decodeJwtResponse';
 import addUser from './utils/addUser';
 
@@ -30,25 +30,15 @@ const App: React.FC = () => {
     setProfile(decodeJwtResponse(authToken));
   }
 
-  const CallLogin = ()=>{
-    useGoogleOneTapLogin({
-      onSuccess: credentialResponse => {
-        setIsLogged(true);
-        if(credentialResponse.credential){
-          let temp = decodeJwtResponse(credentialResponse.credential);
-          setProfile(temp);
-          localStorage.setItem('authToken', credentialResponse.credential);
-          addUser(temp.email, temp.name, temp.picture).then((val)=>{if(!val) setServerDown(true);});
-        }
-        navigate("/selectDestination");
-      },
-      onError: () => {
-        console.log('Login Failed');
-      },
-      cancel_on_tap_outside: false,
-      prompt_parent_id: 'google-one-tap-button',
-    });
-  };
+  const handleLoginSuccess = async (credentialResponse: CredentialResponse)=>{
+    if(credentialResponse.credential){
+      let temp = decodeJwtResponse(credentialResponse.credential);
+      setProfile(temp);
+      localStorage.setItem('authToken', credentialResponse.credential);
+      addUser(temp.email, temp.name, temp.picture).then((val)=>{if(!val) setServerDown(true);});
+    }
+    navigate("/selectDestination");
+  }
 
   const handleLogout = () => {
     setIsLogged(false);
@@ -66,7 +56,7 @@ const App: React.FC = () => {
 
       {!serverDown &&
       <Routes>
-        <Route path="/loginPage" element={<LoginPage loginPromptFunction={CallLogin}/>}/>
+        <Route path="/loginPage" element={<LoginPage handleLoginSuccess={handleLoginSuccess}/>}/>
         <Route element={<PrivateRoutes isLogged={isLogged}/>}>
           <Route path="/home" element={<HomePage name={profile?.name || ""}/>}/>
           <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>

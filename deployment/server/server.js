@@ -9,14 +9,15 @@ const PORT = process.env.PORT || 3069;
 const app = express();
 
 const allowedOrigins = ['https://goto-nine.vercel.app'
-                        , 'http://localhost:3000'
+                        // , 'http://localhost:3000'
                        ];
 const corsOptions = {
   origin: function (origin, callback) {
+    console.log("REQUEST_ORIGIN : "+origin);
+    //allow a specific request user agent
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.log("BANNED_ORIGIN : "+origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
