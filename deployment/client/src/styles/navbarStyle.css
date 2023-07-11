@@ -83,7 +83,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    width: max-content;
+    width: 370px;
     /* background-color: rgba(0,0,0,0.7); */
     position: absolute;
     z-index: 100;
@@ -99,14 +99,17 @@
   }
 
   .no-trips{
-    margin-top: 0.7rem;
+    margin: 0;
+    padding: 2rem 0;
+    font-size: large;
   }
 
   .user-menu-dialog{
-    width: 250px;
+    width:max-content;
     text-align: center;
     margin: 0;
     padding: 0;
+    padding-bottom: 0.5rem;
     z-index: 100;
     box-sizing: border-box;
     /* backdrop-filter: blur(3px);  */

@@ -12,7 +12,8 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
   const openTripsDialogButton = useRef<HTMLButtonElement>(null);
   const [tripsShown, setTripsShown] = useState<boolean>(false);
   const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
-  const [myTrips, setMyTrips] = useState<{_id:string, destination:string, date:string, time:string}[]>([]);
+  let storedTrips = localStorage.getItem('myTrips');
+  const [myTrips, setMyTrips] = useState<{_id:string, destination:string, date:string, time:string}[]>((!!storedTrips)?JSON.parse(storedTrips) : []);
   const [tripState, setTripState] = useState<string>("Loading...");
 
   const openUserMenuBtn = useRef<HTMLButtonElement>(null);
@@ -21,8 +22,8 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
   const logoutConfirmationDialog = useRef<HTMLDialogElement>(null);
 
-  const [ph_no, setPh_no] = useState<string>("Loading...");
-  const [wa_no, setWa_no] = useState<string>("Loading...");
+  const [ph_no, setPh_no] = useState<string>(localStorage.getItem('ph_no') || "Loading...");
+  const [wa_no, setWa_no] = useState<string>(localStorage.getItem('wa_no') || "Loading...");
 
   const openTripsDialog = () => {
     setUserMenuShown(false);
@@ -39,7 +40,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
   const openUserMenu = () => {
     setTripsShown(false);
-    if(profile){
+    if(profile && (ph_no==="Loading..." || wa_no==="Loading...")){
     getContact(profile.email).then((contact) => {
       if(typeof(contact)!=='boolean'){
         setPh_no(contact.ph_no);
@@ -73,7 +74,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
         <div className="dialog-content">
           {myTrips.length === 0 && <div className="no-trips">{tripState}</div>}
           {myTrips.map((trip) => (
-            <YourTrip key={trip._id} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id} name={profile?.name || ""}/>
+            <YourTrip key={trip._id+trip.date+trip.time} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id} name={profile?.name || ""}/>
           ))}
           <button className="red-text-btn" onClick={()=> setTripsShown(false)}>Close</button>
         </div>
