@@ -45,6 +45,10 @@ export default function DestinationSelect({profile}:loggedInPageProps){
   const [wa_no, setWa_no] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [isServerDown, setIsServerDown] = useState<boolean>(true);
+  
+  const [dir, setDir] = useState<boolean>(false);
+
+  const placeList = ["DNR", "Khurda Station", "Bhubaneshwar", "Airport", "Puri", "NISER", "Esplanade"];
 
 
   if(serverDate===true && profile){
@@ -88,12 +92,13 @@ export default function DestinationSelect({profile}:loggedInPageProps){
         destination: destination,
         date: date,
         time: time,
+        dir: dir
       };
 
       addTravelDetail(travelDetail).then((val)=>{
         setLoading(false);  
         if(val){
-          navigate(`/showCompanions/${destination}/${date}/${time}`);
+          navigate(`/showCompanions/${destination}/${date}/${time}/${dir?"true":"false"}`);
         }
         else setIsServerDown(true);
       });
@@ -135,18 +140,27 @@ export default function DestinationSelect({profile}:loggedInPageProps){
               Same as phone number
             </div>
 
+            <div className="dir-select">
+              <div>
+                <input type="radio" id="to" value="to" className="custom-radio" onChange={()=>setDir(false)} checked={!dir}/>
+                <label htmlFor="to">To</label>
+              </div>
+              <div>
+                <input type="radio" id="from" value="from" className="custom-radio" onChange={()=>setDir(true)} checked={dir}/>
+                <label htmlFor="from">From</label>
+              </div>
+            </div>
+
             <div className="dropdown" data-dropdown>
               <button className="destination-selector-button" onClick={handleDropdownVisibility}>
                 {destination}</button>
               <div className="dropdown-menu">
                 <div className="dropdown-cities">
-                  <button className="dropdown-item" onClick={handleDestinationSelection}>DNR</button>
-                  <button className="dropdown-item" onClick={handleDestinationSelection}>Khurda Station</button>
-                  <button className="dropdown-item" onClick={handleDestinationSelection}>Bhubaneshwar</button>
-                  <button className="dropdown-item" onClick={handleDestinationSelection}>Airport</button>
-                  <button className="dropdown-item" onClick={handleDestinationSelection}>Puri</button>
-                  <button className="dropdown-item" onClick={handleDestinationSelection}>NISER</button>
-                  <button className="dropdown-item" onClick={handleDestinationSelection}>Esplanade</button>
+                  {placeList.map((place, index)=>{
+                    return(
+                      <button className="dropdown-item" key={index} onClick={handleDestinationSelection}>{place}</button>
+                    )
+                  })}
                 </div>
               </div>
             </div>

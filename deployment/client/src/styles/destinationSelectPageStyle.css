@@ -7,6 +7,15 @@
   gap: 1rem;
 }
 
+.dir-select{
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+  margin: 0 auto;
+  /* margin-bottom: 1rem; */
+  /* gap: 1rem; */
+}
+
 .drop-wrap{
   display: flex;
   flex-direction: column;
@@ -125,4 +134,10 @@
   border: none;
   background-color: black;
   border-radius: 3px;
+}
+
+#to #from{
+  width: 15px;
+  height: 15px;
+  margin: 4px 4px 3px 4px;
 }

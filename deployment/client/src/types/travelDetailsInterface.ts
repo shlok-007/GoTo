@@ -7,5 +7,6 @@ export default interface travelDetails_interface {
     time: string,
     wa_no: string,
     _id: string,
-    avatar: string
+    avatar: string,
+    dir: boolean
 }

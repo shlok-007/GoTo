@@ -12,3 +12,11 @@ html {
 
     color: white;
   }
+
+:root{
+  --text: hsl(220, 66%, 92%);
+  --background: hsl(0, 0%, 0%);
+  --primary: hsl(221, 100%, 78%);
+  --secondary: hsl(221, 58%, 14%);
+  --accent: hsl(281, 65%, 52%);
+}

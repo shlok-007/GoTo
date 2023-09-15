@@ -8,11 +8,12 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     let db = await connectToDatabase();
-    const { destination, date, email, name, time} = req.query;
+    const { destination, date, email, name, time, dir} = req.query;
     let collection = await db.collection("TravelDetails");
     var result1 = await collection.find({
         "destination": destination,
         "date": date,
+        "dir": dir=='true'?true:false,
         "email": {$ne: email}
     }).toArray();
 
@@ -71,7 +72,7 @@ router.get("/userTrips", async (req, res) => {
   let db = await connectToDatabase();
   const email= req.query.email;
   let collection = await db.collection("TravelDetails");
-  const projection = {  _id: 1, destination: 1, date: 1, time: 1  };
+  const projection = {  _id: 1, destination: 1, date: 1, time: 1, dir: 1  };
   let results = await collection.find({ "email": email }, projection).toArray();
   res.send(results).status(200);
 });
@@ -97,12 +98,13 @@ router.get("/checkEntry", async (req, res) => {
 
 router.post("/", async (req, res) => {
   let db = await connectToDatabase();
-  const { email, time, destination, date} = req.body;
+  const { email, time, destination, date, dir} = req.body;
   let collection = await db.collection("TravelDetails");
   const existingTravelDetail = await collection.findOne({
     "email": email,
     "destination": destination,
-    "date": date
+    "date": date,
+    "dir": dir
   });
   if(existingTravelDetail)  return res.send(existingTravelDetail).status(204);
   let newTravelDetail = {
@@ -110,6 +112,7 @@ router.post("/", async (req, res) => {
     "time": time,
     "destination": destination,
     "date": date,
+    "dir": dir
   };
   let result = await collection.insertOne(newTravelDetail);
   res.send(result).status(204);

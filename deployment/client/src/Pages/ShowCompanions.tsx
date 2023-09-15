@@ -17,7 +17,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
     const [loading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<travelDetails_interface[] | boolean>([]);
     const [pressed, setPressed] = useState<boolean>(false);
-    const {destination, date, time} = useParams();
+    const {destination, date, time, dir} = useParams();
 
     const [displayPopup, setDisplayPopup] = useState<boolean>(false);
     const handleNotificationSubscriptionPopup = () => {
@@ -27,7 +27,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
       }, 2000);
     };
 
-    if(loading && destination && date && email && time){ findCompanions(destination, date, email, name, time).then(
+    if(loading && destination && date && dir && email && time){ findCompanions(destination, date, email, name, time, dir).then(
         (val)=>{setData(val);   setLoading(false);});}
 
     return (

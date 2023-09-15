@@ -60,7 +60,7 @@ const App: React.FC = () => {
         <Route element={<PrivateRoutes isLogged={isLogged}/>}>
           <Route path="/home" element={<HomePage name={profile?.name || ""}/>}/>
           <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>
-          <Route path="/showCompanions/:destination/:date/:time" element={<ShowCompanions email={profile?.email || ""} name={profile?.name || ""} />}/>
+          <Route path="/showCompanions/:destination/:date/:time/:dir" element={<ShowCompanions email={profile?.email || ""} name={profile?.name || ""} />}/>
           {/* <Route path="/serverOffline" element={<InfoCard content="Unable to connect to the server :_(" />}/> */}
         </Route>
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />

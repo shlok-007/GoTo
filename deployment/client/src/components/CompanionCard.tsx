@@ -41,7 +41,7 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
                     <img src="/icons/telephone-call.png" alt="phone" />
                   </div>
                   <div className="contact-data">
-                    {ph===""?"Not available":ph}
+                    {ph===""?"Not available":<a href={`tel:${ph}`}>{ph}</a>}
                   </div>
                   </div>
                   {ph!=="" &&
@@ -56,7 +56,7 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
                     <img src="/icons/whatsapp.png" alt="whatsapp" />
                   </div>
                   <div className="contact-data">
-                    {wa===""?"Not available":wa}
+                    {wa===""?"Not available":<a href={`tel:${wa}`}>{wa}</a>}
                   </div>
                   </div>
                   {wa!=="" &&
@@ -71,7 +71,7 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
                     <img src="/icons/gmail.png" alt="email" />
                   </div>
                   <div className="contact-data">
-                    {email===""?"Not available":email}
+                    {email===""?"Not available":<a href={`mailto : ${email}`}>{email}</a>}
                   </div>
                   </div>
                   {email!=="" &&

@@ -5,7 +5,8 @@ const findCompanions = async (
   date: string,
   email: string,
   name: string,
-  time: string
+  time: string,
+  dir: string
 ): Promise<travelDetails_interface[] | boolean> => {
   try {
     let serverURL = process.env.REACT_APP_SERVER_URL;
@@ -16,7 +17,8 @@ const findCompanions = async (
           date: date,
           email: email,
           name: name,
-          time: time
+          time: time,
+          dir: dir
         })
     );
     if (!response.ok) {
