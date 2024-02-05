@@ -6,7 +6,7 @@ import getDateTime from '../utils/getDateTime';
 import PopupMessage from './PopupMessage';
 import { useNavigate } from 'react-router-dom';
 
-export default function YourTrip({ destination, date, time, id, name }: { destination: string, date: string, time: string, id: string, name: string }) {
+export default function YourTrip({ destination, date, time, id, name, dir }: { destination: string, date: string, time: string, id: string, name: string, dir: boolean }) {
     const navigate = useNavigate();
 
     const [deleted, setDeleted] = useState(false);
@@ -14,6 +14,7 @@ export default function YourTrip({ destination, date, time, id, name }: { destin
     const[updateText, setUpdateText] = useState("");
     const [newDate, setNewDate] = useState(date);
     const [newTime, setNewTime] = useState(time);
+    const [newDir,  setNewDir] = useState(dir);
     const [popupContent, setPopupContent] = useState<string>("");
 
     const deleteRef = useRef<HTMLDialogElement>(null);
@@ -72,11 +73,21 @@ export default function YourTrip({ destination, date, time, id, name }: { destin
                     <div>{updateText}</div>
                     <input className='date-time-ip' type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} min={newDate} required></input>
                     <input className='date-time-ip' type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} required></input>
+                    <div className="dir-select">
+                    <div>
+                        <input type="radio" id="to" value="to" className="custom-radio" onChange={()=>setNewDir(false)} checked={!newDir}/>
+                        <label htmlFor="to">To</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="from" value="from" className="custom-radio" onChange={()=>setNewDir(true)} checked={newDir}/>
+                        <label htmlFor="from">From</label>
+                    </div>
+                    </div>
                     <div className="buttons">
                         <button className='red-text-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
                         <button className='blue-text-btn' onClick={() => {
                             setUpdateText("Updating...");
-                            updateTrip(id, newDate, newTime, destination, name).then(() => {setUpdateText("Updated"); closeUpdateModal();setPopupContent("Trip Updated"); showPopUp();})}
+                            updateTrip(id, newDate, newTime, destination, name, newDir).then(() => {setUpdateText("Updated"); closeUpdateModal();setPopupContent("Trip Updated"); showPopUp();})}
                         }>Update</button>
                     </div>
                     </div>
@@ -89,7 +100,7 @@ export default function YourTrip({ destination, date, time, id, name }: { destin
                         <div className="tripTime">{newTime}</div>
                     </div>
                     <div className="modify">
-                        <button className="purple-icon-btn" onClick={()=>navigate(`/showCompanions/${destination}/${newDate}/${newTime}`)}><img src="/icons/magnifier.png" alt='search' className='icon-btn'/></button>
+                        <button className="purple-icon-btn" onClick={()=>navigate(`/showCompanions/${destination}/${newDate}/${newTime}/${newDir}`)}><img src="/icons/magnifier.png" alt='search' className='icon-btn'/></button>
                         <button className="blue-icon-btn" onClick={openUpdateModal}><img src="/icons/edit-button.png" alt='modify' className='icon-btn'/></button>
                         <button className="red-icon-btn" onClick={openDeleteModal}><img src="/icons/delete.png" alt='delete' className='icon-btn'/></button>
                     </div>

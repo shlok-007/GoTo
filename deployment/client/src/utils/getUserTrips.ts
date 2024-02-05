@@ -1,4 +1,4 @@
-export default async function getUserTrips(email: string) : Promise<{_id:string, destination:string, date:string, time:string}[]> {
+export default async function getUserTrips(email: string) : Promise<{_id:string, destination:string, date:string, time:string, dir: boolean}[]> {
   try{
     let serverURL = process.env.REACT_APP_SERVER_URL;
     const response = await fetch(serverURL+`/travelDetails/userTrips/?email=${email}`);

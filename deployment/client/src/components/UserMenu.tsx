@@ -73,7 +73,7 @@ export default function UserMenu({email, ph_no, wa_no}:{email:string, ph_no:stri
                 <button className="blue-text-btn" onClick={openUpdateModal}>
                     <img src="/icons/edit-button.png" alt="edit-icon" />
                 </button>
-                <button className="red-text-btn" onClick={()=>{getSubscriptionObject(email).then(()=>{setPopupContent("You will be notified!"); setNotified(true); showPopup()})}}>
+                <button className="red-text-btn" onClick={async()=>{await getSubscriptionObject(email); setPopupContent("You will be notified!"); setNotified(true); showPopup();}}>
                     {notified?<img src="/icons/notification.png" alt="notification-icon" />
                             :<img src="/icons/bell-icon.png" alt="notification-icon" />}
                 </button>

@@ -13,7 +13,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
   const [tripsShown, setTripsShown] = useState<boolean>(false);
   const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
   let storedTrips = localStorage.getItem('myTrips');
-  const [myTrips, setMyTrips] = useState<{_id:string, destination:string, date:string, time:string}[]>((!!storedTrips)?JSON.parse(storedTrips) : []);
+  const [myTrips, setMyTrips] = useState<{_id:string, destination:string, date:string, time:string, dir: boolean}[]>((!!storedTrips)?JSON.parse(storedTrips) : []);
   const [tripState, setTripState] = useState<string>("Loading...");
 
   const openUserMenuBtn = useRef<HTMLButtonElement>(null);
@@ -74,7 +74,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
         <div className="dialog-content">
           {myTrips.length === 0 && <div className="no-trips">{tripState}</div>}
           {myTrips.map((trip) => (
-            <YourTrip key={trip._id+trip.date+trip.time} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id} name={profile?.name || ""}/>
+            <YourTrip key={trip._id+trip.date+trip.time} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id} name={profile?.name || ""} dir={trip.dir}/>
           ))}
           <button className="red-text-btn" onClick={()=> setTripsShown(false)}>Close</button>
         </div>

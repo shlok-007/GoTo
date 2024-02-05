@@ -48,7 +48,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                     <>
                     <InfoCard content={`Don't wanna go alone?
                     We'll let you know when there are companions for you ;-)`}/>
-                    <button className='getNotified-btn' onClick={()=>{getSubscriptionObject(email);setPressed(true);handleNotificationSubscriptionPopup();}}>Get Notified!</button>
+                    <button className='getNotified-btn' onClick={async()=>{await getSubscriptionObject(email);setPressed(true);handleNotificationSubscriptionPopup();}}>Get Notified!</button>
                     </>
                     :<InfoCard content='You will be notified when there are companions for you.'/>
                 }
@@ -60,7 +60,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                 {typeof(data)!=='boolean' && data.length > 0 && (
                     <>
                     
-                    <InfoCard key={5} content={`You can go to ${destination} with anyone of them...`}/>
+                    <InfoCard key={5} content={`You can ${dir=='true'? 'return from' : 'go to'} ${destination} with anyone of them...`}/>
                     {data.map((item) => (
                         <div className="companion-card" key={item._id}>
                             <CompanionCard avatar={item.avatar} name={item.name} time={item.time} ph={item.ph_no} wa={item.wa_no} email={item.email}/>
@@ -70,7 +70,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                         <>
                         <InfoCard key={6} content={`Don't wanna go with them?
                         We'll let you know when there are more companions ;-)`}/>
-                        <button className='getNotified-btn' onClick={()=>{getSubscriptionObject(email);setPressed(true);handleNotificationSubscriptionPopup();}}>Get Notified!</button>
+                        <button className='getNotified-btn' onClick={async()=>{await getSubscriptionObject(email);setPressed(true);handleNotificationSubscriptionPopup();}}>Get Notified!</button>
                         </>
                         :<InfoCard key={7} content='You will be notified when there are more companions for you.'/>
                     }

@@ -52,7 +52,8 @@ router.get("/", async (req, res) => {
       name: name,
       destination: destination,
       date: date,
-      time: time
+      time: time,
+      dir: dir
     }
 
     for (const subObject of subObjects) {
@@ -125,7 +126,8 @@ router.patch("/:id", async (req, res) => {
   const updates =  {
     $set: {
       date: req.body.date,
-      time: req.body.time
+      time: req.body.time,
+      dir: req.body.dir
     }
   };
   let result = await collection.updateOne(query, updates);
@@ -136,14 +138,16 @@ router.patch("/:id", async (req, res) => {
   var result1 = await collection.find({
     "destination": req.body.destination,
     "date": req.body.date,
+    "dir": req.body.dir,
     "_id": {$ne: new ObjectId(req.params.id)},
-  },{email:1, time:1,_id:0, destination:0, date:0}).toArray();
+  },{email:1, time:1,_id:0, destination:0, date:0, dir: 0}).toArray();
 
   let notification = {
     name: req.body.name,
     destination: req.body.destination,
     date: req.body.date,
-    time: req.body.time
+    time: req.body.time,
+    dir: req.body.dir
   }
   let GotoUsersCollection = db.collection("GotoUsers");
   for (const element of result1) {
