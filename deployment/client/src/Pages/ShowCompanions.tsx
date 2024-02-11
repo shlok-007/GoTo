@@ -60,7 +60,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                 {typeof(data)!=='boolean' && data.length > 0 && (
                     <>
                     
-                    <InfoCard key={5} content={`You can ${dir=='true'? 'return from' : 'go to'} ${destination} with anyone of them...`}/>
+                    <InfoCard key={5} content={`You can ${dir==='true'? 'return from' : 'go to'} ${destination} with anyone of them...`}/>
                     {data.map((item) => (
                         <div className="companion-card" key={item._id}>
                             <CompanionCard avatar={item.avatar} name={item.name} time={item.time} ph={item.ph_no} wa={item.wa_no} email={item.email}/>
