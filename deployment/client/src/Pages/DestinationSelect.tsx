@@ -18,6 +18,18 @@ import dateTimeInterface from "../types/dateTimeInterface";
 
 export default function DestinationSelect({profile}:loggedInPageProps){
 
+  const navigate = useNavigate();
+
+  const [dir, setDir] = useState<boolean>(false);
+  const [destination, setDestination] = useState<string>("Select your Destination");
+  const [date, setDate] = useState<string>("");
+  const [serverDate, setServerDate] = useState<dateTimeInterface | boolean>(true);
+  const [time, setTime] = useState<string>("");
+  const [ph_no, setPh_no] = useState<string>("");
+  const [wa_no, setWa_no] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [isServerDown, setIsServerDown] = useState<boolean>(true);
+
   const handleDropdownVisibility = (e:React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     let dropdown = document.querySelector("[data-dropdown]");
@@ -32,22 +44,10 @@ export default function DestinationSelect({profile}:loggedInPageProps){
     if(dropdown){
       dropdown.classList.toggle("active");
     }
-    setDestination(e.currentTarget.textContent || "Select your Destination");
+    if(e.currentTarget.textContent)
+      setDestination(e.currentTarget.textContent);
   }
-
-  const navigate = useNavigate();
-
-  const [destination, setDestination] = useState<string>("Select your Destination");
-  const [date, setDate] = useState<string>("");
-  const [serverDate, setServerDate] = useState<dateTimeInterface | boolean>(true);
-  const [time, setTime] = useState<string>("");
-  const [ph_no, setPh_no] = useState<string>("");
-  const [wa_no, setWa_no] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
-  const [isServerDown, setIsServerDown] = useState<boolean>(true);
   
-  const [dir, setDir] = useState<boolean>(false);
-
   const placeList = ["DNR", "Khurda Station", "Bhubaneshwar", "Airport", "Puri", "NISER", "Esplanade"];
 
 
@@ -78,7 +78,7 @@ export default function DestinationSelect({profile}:loggedInPageProps){
   };
 
   const onSearch = (destination:string, date: string) => {
-    if(destination==="Select your Destination"){
+    if( !placeList.includes(destination) ){
       // window.alert("Please select a destination");
       handleUnfilledDestination();
       return;
@@ -143,11 +143,15 @@ export default function DestinationSelect({profile}:loggedInPageProps){
 
             <div className="dir-select">
               <div>
-                <input type="radio" id="to" value="to" className="custom-radio" onChange={()=>setDir(false)} checked={!dir}/>
+                <input type="radio" id="to" value="to" className="custom-radio" 
+                onChange={()=>{setDir(false); if(!placeList.includes(destination)) setDestination("Select your Destination")}} 
+                checked={!dir}/>
                 <label htmlFor="to">To</label>
               </div>
               <div>
-                <input type="radio" id="from" value="from" className="custom-radio" onChange={()=>setDir(true)} checked={dir}/>
+                <input type="radio" id="from" value="from" className="custom-radio" 
+                onChange={()=>{setDir(true);  if(!placeList.includes(destination)) setDestination("Select your current location")}} 
+                checked={dir}/>
                 <label htmlFor="from">From</label>
               </div>
             </div>
