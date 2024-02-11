@@ -3,5 +3,6 @@ export default interface travelDetailsPOST_interface {
     destination: string,
     email: string,
     time: string,
-    dir: boolean
+    dir: boolean,
+    name: string
 }

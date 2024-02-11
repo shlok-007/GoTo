@@ -92,7 +92,8 @@ export default function DestinationSelect({profile}:loggedInPageProps){
         destination: destination,
         date: date,
         time: time,
-        dir: dir
+        dir: dir,
+        name: profile.name
       };
 
       addTravelDetail(travelDetail).then((val)=>{

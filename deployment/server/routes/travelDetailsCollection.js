@@ -1,85 +1,69 @@
 import express from "express";
 import connectToDatabase from "../db/conn.js";
 import { ObjectId } from "mongodb";
-import sendPushNotification from "../pushNotifications.js";
-import giveDateTime from "../giveDateTime.js";
+import sendNotifications from "../pushNotifications.js";
+import isCompanion from "../isCompanion.js";
+import sortCompanions from "../sortCompanions.js";
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    let db = await connectToDatabase();
-    const { destination, date, email, name, time, dir} = req.query;
-    let collection = await db.collection("TravelDetails");
-    var result1 = await collection.find({
-        "destination": destination,
-        "date": date,
-        "dir": dir=='true'?true:false,
-        "email": {$ne: email}
-    }).toArray();
+  let db = await connectToDatabase();
+  const { destination, date, email, name, time, dir } = req.query;
+  const tripsCollection = db.collection("TravelDetails");
 
-    var results=[];
-    var subObjects=[];
+  let prevDate = new Date(date);
+  prevDate.setDate(prevDate.getDate() - 1);
+  prevDate = prevDate.toISOString().split('T')[0];
 
-    let GotoUsersCollection = db.collection("GotoUsers");
-    for (const element of result1) {
-      let result2 = await GotoUsersCollection.findOne({ "email": element.email });
-      if(result2===null) continue;
-      results.push({
-        _id: element._id,
-        name: result2.name,
-        email: element.email,
-        ph_no: result2.ph_no,
-        wa_no: result2.wa_no,
-        time: element.time,
-        date: element.date,
-        avatar: result2.avatar
-      });
-      subObjects.push(result2.subObject);
-    };
+  let trips = await tripsCollection.find({
+    "destination": destination,
+    "date": { $in: [date, prevDate] },
+    "dir": dir === 'true',
+    "email": { $ne: email }
+  }).toArray();
 
-    const dateTime = giveDateTime();
+  const usersCollection = db.collection("GotoUsers");
 
-    const curr_time = dateTime.time;
-    const curr_date = dateTime.date;
+  let userDetails = await usersCollection.find({
+    email: { $in: trips.map(trip => trip.email) }
+  }).toArray();
 
-    for(let i=0;i<results.length;i++){
-      if(date==curr_date && results[i].time<curr_time){
-        results.splice(i,1);
-        subObjects.splice(i,1);
-    }}
+  let results = [];
 
-    let notification = {
-      name: name,
-      destination: destination,
-      date: date,
-      time: time,
-      dir: dir
-    }
+  userDetails.forEach((user, index) => {
+    const trip = trips[index];
+    if (user === null
+        || !isCompanion(date, time, trip.date, trip.time)
+    ) return;
 
-    for (const subObject of subObjects) {
-      try{
-      if (subObject?.endpoint) {
-        await sendPushNotification(subObject, notification);
-      }
-      }catch(err){
-        console.log(err);
-      }
-    }
+    results.push({
+      _id: trip._id,
+      name: user.name,
+      email: trip.email,
+      ph_no: user.ph_no,
+      wa_no: user.wa_no,
+      time: trip.time,
+      date: trip.date,
+      avatar: user.avatar
+    });
+  });
 
-    res.send(results).status(200);
+  results = sortCompanions(results, date, time);
+
+  res.send(results).status(200);
 });
+
 
 router.get("/userTrips", async (req, res) => {
   let db = await connectToDatabase();
   const email= req.query.email;
   let collection = await db.collection("TravelDetails");
-  const projection = {  _id: 1, destination: 1, date: 1, time: 1, dir: 1  };
-  let results = await collection.find({ "email": email }, projection).toArray();
+  let results = await collection.find({ "email": email }).project({email: 0}).toArray();
   res.send(results).status(200);
 });
 
 //--------obsolete------------
-
 router.get("/checkEntry", async (req, res) => {
   let db = await connectToDatabase();
   const { email, destination, date, time} = req.query;
@@ -94,14 +78,13 @@ router.get("/checkEntry", async (req, res) => {
   if(results.length>0){ found = true; }
   res.send({"found":found}).status(200);
 });
-
 //--------------------------------
 
 router.post("/", async (req, res) => {
   let db = await connectToDatabase();
-  const { email, time, destination, date, dir} = req.body;
-  let collection = await db.collection("TravelDetails");
-  const existingTravelDetail = await collection.findOne({
+  const { email, time, destination, date, dir, name} = req.body;
+  let tripsCollection = await db.collection("TravelDetails");
+  const existingTravelDetail = await tripsCollection.findOne({
     "email": email,
     "destination": destination,
     "date": date,
@@ -115,48 +98,98 @@ router.post("/", async (req, res) => {
     "date": date,
     "dir": dir
   };
-  let result = await collection.insertOne(newTravelDetail);
+  let result = await tripsCollection.insertOne(newTravelDetail);
+
+  // notify other users
+  let prevDate = new Date(date);
+  prevDate.setDate(prevDate.getDate() - 1);
+  prevDate = prevDate.toISOString().split('T')[0];
+  
+  let companions = await tripsCollection.find({
+    "destination": destination,
+    "date": { $in: [date, prevDate] },
+    "dir": dir,
+    "email": {$ne: email}
+  }).project({email:1, time:1, date:1}).toArray();
+
+  let companionData = await db.collection("GotoUsers").find({
+    email: { $in: companions.map(companion => companion.email) }
+  }).toArray();
+
+  let subObjects = new Array();
+  companionData.forEach((companion, index) => {
+    const companionTrip = companions[index];
+    if (companion === null
+        || !isCompanion(date, time, companionTrip.date, companionTrip.time)
+    ) return;
+
+    subObjects.push(companion.subObject);
+  });
+
+  let notification = {
+    name: name,
+    destination: destination,
+    date: date,
+    time: time,
+    dir: dir
+  };
+
+  await sendNotifications(subObjects, notification);
+
   res.send(result).status(204);
 });
 
 router.patch("/:id", async (req, res) => {
+
+  const { time, destination, date, dir, name } = req.body;
   let db = await connectToDatabase();
-  let collection = await db.collection("TravelDetails");
+  let collection = db.collection("TravelDetails");
   const query = { _id: new ObjectId(req.params.id) };
   const updates =  {
     $set: {
-      date: req.body.date,
-      time: req.body.time,
-      dir: req.body.dir
+      date: date,
+      time: time,
+      dir: dir,
     }
   };
   let result = await collection.updateOne(query, updates);
 
-  let dateTime = giveDateTime();
-  let curr_time = dateTime.time;
-  let curr_date = dateTime.date;
-  var result1 = await collection.find({
-    "destination": req.body.destination,
-    "date": req.body.date,
-    "dir": req.body.dir,
-    "_id": {$ne: new ObjectId(req.params.id)},
-  },{email:1, time:1,_id:0, destination:0, date:0, dir: 0}).toArray();
+  // notify other users
+  let prevDate = new Date(date);
+  prevDate.setDate(prevDate.getDate() - 1);
+  prevDate = prevDate.toISOString().split('T')[0];
+  
+  let companions = await collection.find({
+    "destination": destination,
+    "date": { $in: [date, prevDate] },
+    "dir": dir,
+    "_id": { $ne: new ObjectId(req.params.id) }
+  }).project({email:1, time:1, date:1}).toArray();
+
+  let companionData = await db.collection("GotoUsers").find({
+    email: { $in: companions.map(companion => companion.email) }
+  }).toArray();
+
+  let subObjects = new Array();
+  companionData.forEach((companion, index) => {
+    const companionTrip = companions[index];
+    if (companion === null
+        || !isCompanion(date, time, companionTrip.date, companionTrip.time)
+    ) return;
+
+    subObjects.push(companion.subObject);
+  });
 
   let notification = {
-    name: req.body.name,
-    destination: req.body.destination,
-    date: req.body.date,
-    time: req.body.time,
-    dir: req.body.dir
-  }
-  let GotoUsersCollection = db.collection("GotoUsers");
-  for (const element of result1) {
-    if(curr_date<req.body.date || (curr_date==req.body.date && element.time>=curr_time)){
-      let result2 = await GotoUsersCollection.findOne({ "email": element.email },{subObject:1});
-      if (result2?.subObject?.endpoint) {
-        await sendPushNotification(result2.subObject, notification)
-      }}
-  }
+    name: name,
+    destination: destination,
+    date: date,
+    time: time,
+    dir: dir
+  };
+
+  await sendNotifications(subObjects, notification);
+
   res.send(result).status(200);
 });
 
@@ -175,14 +208,10 @@ router.get("/dailyCleanUp", async (req, res) => {
   const collection = db.collection("TravelDetails");
 
   let now = new Date();
-  var currentDate = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
-  currentDate.setDate(currentDate.getDate() - 1);
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-  const day = String(currentDate.getDate()).padStart(2, '0');
-  const previousDay = `${year}-${month}-${day}`;
+  let currentDate = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
+  currentDate = currentDate.toISOString().split('T')[0];
 
-  let result = await collection.deleteMany({ date: previousDay });
+  let result = await collection.deleteMany({ date: { $lt: currentDate } });
   console.log(result);
   res.send(result).status(200);
 });

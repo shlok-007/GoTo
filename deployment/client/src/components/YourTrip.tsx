@@ -85,7 +85,9 @@ export default function YourTrip({ destination, date, time, id, name, dir }: { d
                     </div>
                     <div className="buttons">
                         <button className='red-text-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
-                        <button className='blue-text-btn' onClick={() => {
+                        <button className='blue-text-btn' 
+                            disabled = {date == newDate && time == newTime && dir == newDir}
+                            onClick={() => {
                             setUpdateText("Updating...");
                             updateTrip(id, newDate, newTime, destination, name, newDir).then(() => {setUpdateText("Updated"); closeUpdateModal();setPopupContent("Trip Updated"); showPopUp();})}
                         }>Update</button>
