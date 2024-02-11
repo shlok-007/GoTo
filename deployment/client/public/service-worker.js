@@ -3,7 +3,7 @@
 self.addEventListener('push', event => {
   const payload = event.data ? event.data.json() : { name: '', destination: '', date: '', time: '' };
   let message;
-  if(payload.dir == 'false')
+  if(payload.dir === 'false' || payload.dir === false)
     message = `${payload.name} wishes to go to ${payload.destination} on ${payload.date} at ${payload.time}. Click here to get contact details!`;
   else
     message = `${payload.name} is returning from ${payload.destination} on ${payload.date} at ${payload.time}. Click here to get contact details!`
