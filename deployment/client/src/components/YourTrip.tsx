@@ -17,6 +17,11 @@ export default function YourTrip({ destination, date, time, id, name, dir }: { d
     const [newDir,  setNewDir] = useState(dir);
     const [popupContent, setPopupContent] = useState<string>("");
 
+    const tripBG = {
+        // true: faint green, false: faint blue
+        backgroundColor: dir ? "rgba(0, 0, 255, 0.1)" : "rgba(0, 255, 0, 0.1)"
+    }
+
     const deleteRef = useRef<HTMLDialogElement>(null);
     const updateRef = useRef<HTMLDialogElement>(null);
 
@@ -86,7 +91,7 @@ export default function YourTrip({ destination, date, time, id, name, dir }: { d
                     <div className="buttons">
                         <button className='red-text-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
                         <button className='blue-text-btn' 
-                            disabled = {date == newDate && time == newTime && dir == newDir}
+                            disabled = {date === newDate && time === newTime && dir === newDir}
                             onClick={() => {
                             setUpdateText("Updating...");
                             updateTrip(id, newDate, newTime, destination, name, newDir).then(() => {setUpdateText("Updated"); closeUpdateModal();setPopupContent("Trip Updated"); showPopUp();})}
@@ -95,7 +100,7 @@ export default function YourTrip({ destination, date, time, id, name, dir }: { d
                     </div>
                 </dialog>
 
-                <div className="trip">
+                <div style = {tripBG} className="trip">
                     <div className="view">
                         <div className="dest">{destination}</div>
                         <div className="tripDate">{newDate}</div>
