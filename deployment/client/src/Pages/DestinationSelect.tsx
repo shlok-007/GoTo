@@ -15,6 +15,7 @@ import getContact from "../utils/getContact";
 import dateTimeInterface from "../types/dateTimeInterface";
 // import findCompanions from "../utils/findCompanions";
 
+const regex = /^(?:\+91|0)?[6789]\d{9}$/ ;
 
 export default function DestinationSelect({profile}:loggedInPageProps){
 
@@ -84,6 +85,13 @@ export default function DestinationSelect({profile}:loggedInPageProps){
       return;
     }
     if(profile){
+      //add a regex to check if the phone number and whatsapp number are valid
+
+      if(!regex.test(ph_no) || !regex.test(wa_no)){
+        window.alert("Please enter a valid phone number and whatsapp number");
+        return;
+      }
+
       setLoading(true);
       updateContact(profile.email, ph_no, wa_no).then((val)=>{if(!val) {setLoading(false);  setIsServerDown(true);return;}});
 
