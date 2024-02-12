@@ -1,5 +1,6 @@
 function giveDateTime() {
-    const currentDate = new Date();
+    let now = new Date();
+    const currentDate = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
 
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -18,4 +19,5 @@ function giveDateTime() {
     return results;
 }
 
-module.exports = giveDateTime;
+// module.exports = giveDateTime;
+export default giveDateTime;
