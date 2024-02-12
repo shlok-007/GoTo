@@ -1,11 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/server/node_modules
-/node_modules
-/deployment/server/node_modules
-/deployment/client/node_modules
-
+**/node_modules
 
 /.pnp
 .pnp.js
@@ -25,8 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # confidential
-mongo_creds.txt
 temp.txt
-/client/temp.txt
 .env
-/deployment/client/src/pages/PrevLoginPage.tsx
+client/src/pages/PrevLoginPage.tsx
