@@ -31,8 +31,8 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
     if(openTripsDialogButton.current){
       const buttonRect = openTripsDialogButton.current.getBoundingClientRect();
       setDialogPosition({
-        top: buttonRect.bottom + 5,
-        left: buttonRect.right - 250,
+        top: buttonRect.bottom + 15,
+        left: buttonRect.right - 320,
       });
     }
     setTripsShown(true);
@@ -51,8 +51,8 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
     if(openUserMenuBtn.current){
       const buttonRect = openUserMenuBtn.current.getBoundingClientRect();
       setUserMenuDialogPosition({
-        top: buttonRect.bottom + 5,
-        left: buttonRect.right - 200,
+        top: buttonRect.bottom + 15,
+        left: buttonRect.right - 230,
       });
     }
     setUserMenuShown(true);
@@ -76,30 +76,34 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
           {myTrips.map((trip) => (
             <YourTrip key={trip._id+trip.date+trip.time} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id} name={profile?.name || ""} dir={trip.dir}/>
           ))}
-          <button className="red-text-btn" onClick={()=> setTripsShown(false)}>Close</button>
+          <button className="close-btn" onClick={()=> setTripsShown(false)}>Close</button>
         </div>
       </dialog>
 
       <dialog className="user-menu-dialog" style={userMenuDialogPosition} open={userMenuShown}>
         <UserMenu key={ph_no} email={profile?.email || ""} ph_no={ph_no} wa_no={wa_no} />
-        <button className="red-text-btn" onClick={()=> setUserMenuShown(false)}>Close</button>
+        <div className="usr-menu-inline-buttons">
+          <button className="close-btn" onClick={()=> setUserMenuShown(false)}>Close</button>
+          <button className="navbar__logout" onClick={openLogoutModal}>Logout</button>
+        </div>
       </dialog>
 
-      <nav className="navbar">
-        <dialog ref={logoutConfirmationDialog}>
+      <dialog ref={logoutConfirmationDialog}>
           <div className="modal-content">
           <div>Are you sure that you want to logout?</div>
           <div className="buttons">
-              <button className='blue-text-btn' onClick={closeLogoutModal}>No</button>
-              <button className='red-text-btn' onClick={()=>{onLogout(); closeLogoutModal()}}>Yes</button>
+              <button className='close-btn' onClick={closeLogoutModal}>No</button>
+              <button className='' onClick={()=>{onLogout(); closeLogoutModal()}}>Yes</button>
           </div>
           </div>
-        </dialog>
+      </dialog>
 
+      <nav className="navbar">
+        
         <div className="navbar__site-name" onClick={()=> navigate("/home")}>
           {window.screen.width>window.screen.height || !isLogged?"GoTogether":"GoTo"}
         </div>
-        {isLogged?
+        {isLogged &&
         <div className="navbar__user">
 
           <button ref={openTripsDialogButton} className="user-trips" onClick={openTripsDialog}>Your Trips</button>
@@ -111,13 +115,13 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
           
 
-          {window.screen.width>window.screen.height?
+          {/* {window.screen.width>window.screen.height?
             <button className="navbar__logout" onClick={openLogoutModal}>Logout</button>
             :<img src="/icons/logout.png" alt="Logout" className="navbar__logout_icon" onClick={openLogoutModal}/>
-          }
+          } */}
 
         </div>
-        :<></>}
+        }
       </nav>
       </>
     )

@@ -3,14 +3,27 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
   }
   
   .navbar__site-name {
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
+
+    background-color: var(--text);
+    background-image: linear-gradient(120deg, var(--primary), var(--accent));
+    background-size: 100%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+  }
+
+  .navbar__site-name:hover{
+    background-image: linear-gradient(240deg, var(--primary), var(--accent));
   }
   
   .navbar__user {
@@ -22,7 +35,7 @@
   .navbar__avatar-frame {
     width: 40px;
     height: 40px;
-    border: none;
+    border: 3px solid var(--accent);
     padding: 0;
     border-radius: 50%;
     overflow: hidden;
@@ -36,48 +49,24 @@
     height: 100%;
     object-fit: cover;
   }
-  
-  .navbar__logout {
-    font-size: large;
-    font-weight: bold;
-    font-family: inherit;
-    color: white;
-    background-color: rgba(255, 0, 0, 0.7);
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 250ms ease-in-out;
-    height: 40px;
-  }
-
-  .navbar__logout_icon{
-    width:40px;
-    height:40px;
-  }
-  
-  .navbar__logout:hover {
-    background-color: rgba(255, 0, 0, 0.9);
-    border-radius: 20px;
-  }
 
   .user-trips{
-    color: white;
+    color: var(--text);
     font-size: large;
     font-weight: bold;
     border: none;
     border-radius: 5px;
-    background-color: rgba(212, 0, 255,0.7);
+    background-color: var(--secondary);
     padding: 8px 16px;
     cursor: pointer;
     transition: 250ms ease-in-out;
     height: 40px;
   }
 
-  .user-trips:hover{
+  /* .user-trips:hover{
     background-color: rgba(212, 0, 255,0.9);
     border-radius: 20px;
-  }
+  } */
 
   @keyframes slide-down {
     0% {
@@ -90,19 +79,42 @@
     }
   }
 
+  dialog{
+    position: absolute;
+    z-index: 20000;
+    border-radius: 8px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+    border-color: var(--secondary);
+    max-width: 390px;
+    /* color: var(--text-950); */
+    background-color: var(--transparent_bg);
+    animation: slide-down 0.3s ease;
+    color: var(--text);
+  }
+
+  dialog::backdrop{
+    backdrop-filter: blur(3px);
+  }
+
   a{
     text-decoration: none;
-    color: inherit;
+    /* color: inherit; */
   }
 
   .user-trips-dialog{
     margin: 0;
-    padding: 0;
+    padding: 0 0 0.5rem 0;
     box-sizing: border-box;
-    width: 370px;
+    /* width: 370px; */
     /* background-color: rgba(0,0,0,0.7); */
-    position: absolute;
-    z-index: 100;
+    /* position: absolute; */
+    /* z-index: 100; */
+    backdrop-filter: blur(2px);
+  }
+
+  /* select 2nd last child of user-trips-dialog */
+  .dialog-content > *:nth-last-child(2){
+    margin-bottom: 1rem;
   }
   
   .dialog-content{
@@ -110,9 +122,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: transparent;
-    margin-bottom: 0.5rem;
-    /* gap: 0.3rem; */
+    margin: 0.5rem 0;
+    gap: 0.3rem;
   }
 
   .no-trips{
@@ -127,24 +138,76 @@
     margin: 0;
     padding: 0;
     padding-bottom: 0.5rem;
-    z-index: 100;
+    /* z-index: 100; */
     box-sizing: border-box;
     /* backdrop-filter: blur(3px);  */
   }
-  
-  dialog{
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-color: rgba(255,255,255,0.2);
-    max-width: 370px;
-    color: white;
-    background-color: rgba(0,0,0,0.6);
-    animation: slide-down 0.3s ease;
+
+  .usr-menu-inline-buttons{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    /* width: 100%; */
   }
 
-  dialog::backdrop{
-    backdrop-filter: blur(3px);
+  .usr-menu-inline-buttons > button{
+    /* margin: 0 !important; */
+    min-width: 45%;
+    height: 35px;
+    /* border-color: transparent; */
+    border-radius: 5px;
+    /* background-color: var(--secondary); */
+}
+
+  .buttons{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 5rem;
+    width: 100%;
+    font-size: medium;
   }
+
+  .buttons > button{
+    border-radius: 5px;
+    width: 30%;
+    padding: 8px 16px;
+  }
+
+  /* select the 2nd child of buttons */
+  .buttons > button:nth-child(2){
+    background-color: var(--secondary);
+    border: none;
+  }
+
+  .navbar__logout {
+    font-weight: bold;
+    /* font-family: inherit; */
+    /* color: white; */
+    background-color: var(--primary);
+    border: none;
+    color: var(--secondary);
+    /* margin-left: 1rem; */
+    width: 20%;
+    /* padding: 8px 16px;
+    border-radius: 5px;
+    height: 40px; */
+  }
+
+  .close-btn{
+    /* margin-right: 1rem; */
+    background-color: transparent !important;
+    border: 2px solid var(--text) !important;
+    border-radius: 5px;
+    width: 30%;
+    padding: 8px 16px;
+  }
+  
+  /* .navbar__logout:hover {
+    background-color: rgba(255, 0, 0, 0.9);
+    border-radius: 20px;
+  } */
 
   .modal-content{
     display: flex;
@@ -156,7 +219,7 @@
 
   /* all text buttons */
 
-  .red-text-btn, .blue-text-btn, .green-text-btn{
+  /* .red-text-btn, .blue-text-btn, .green-text-btn{
     color: white;
     border-color: transparent;
     cursor: pointer;
@@ -189,11 +252,11 @@
   }
   .green-text-btn:hover{
     background-color: rgb(39, 255, 39);
-  }
+  } */
 
   /* all icon buttons */
 
-  .red-icon-btn, .blue-icon-btn, .purple-icon-btn{
+  /* .red-icon-btn, .blue-icon-btn, .purple-icon-btn{
     border: none;
     cursor: pointer;
     padding: 5px 5px;
@@ -205,7 +268,7 @@
 
   .red-icon-btn:hover, .blue-icon-btn:hover, .purple-icon-btn:hover{
     border-radius: 5px;
-  }
+  } */
 
   /* .red-icon-btn{
     background-color: rgb(255, 73, 73);
@@ -219,7 +282,7 @@
     background-color: #bc65ff;
   } */
 
-  .red-icon-btn:hover{
+  /* .red-icon-btn:hover{
     background-color: rgba(255,0,0,0.5);
   }
 
@@ -229,7 +292,7 @@
 
   .purple-icon-btn:hover{
     background-color: rgba(212, 0, 255,0.5);
-  }
+  } */
 
   .date-time-ip{
     background-color: rgba(255,255,255,0.7);
@@ -237,16 +300,16 @@
     padding: 5px 10px;
     border-radius: 5px;
     font-size: medium;
-    font-family: inherit;
+    /* font-family: inherit; */
   }
 
   .contact-ip{
-    background-color: rgba(0,0,0,0.4);
+    background-color: var(--background);
     backdrop-filter: blur(3px);
     color: white;
     border:none;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: large;
-    font-family: inherit;
+    /* font-family: inherit; */
   }

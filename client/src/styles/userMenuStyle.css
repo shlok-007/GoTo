@@ -28,10 +28,10 @@
     gap: 1rem;
 }
 
-.user-menu-content_item > img, button > img{
+/* .user-menu-content_item > img, button > img{
     width: 20px;
     height: 20px;
-}
+} */
 
 .inline-buttons{
     display: flex;
@@ -40,8 +40,18 @@
     /* width: 100%; */
 }
 
+.up-modal-btn{
+    margin-top: 2rem;
+    gap: 2rem;
+    width: 85%;
+}
+
 .inline-buttons > button{
-    margin: 0 !important;
+    /* margin: 0 !important; */
     min-width: 45%;
     height: 35px;
+    border-color: transparent;
+    border-radius: 5px;
+    background-color: var(--secondary);
+    color: var(--text);
 }

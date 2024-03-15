@@ -1,7 +1,8 @@
 import companionCardProps from "../types/companionCardProps"
 import "../styles/companionCardStyle.css"
-import {useState,useRef} from "react"
-import PopupMessage from '../components/PopupMessage';
+import {useRef} from "react"
+// import PopupMessage from './Toast';
+import { useToast } from "../utils/ToastContext"
 
 const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, wa, email}) => {
 
@@ -19,21 +20,23 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
       dialogRef.current.close();
     }
   };
+
+  const {showToast} = useToast();
   
-  const [displayPopup, setDisplayPopup] = useState<boolean>(false);
+  // const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   const handleCopyClick = (text: string) => {
-    setDisplayPopup(true);
+    // setDisplayPopup(true);
     navigator.clipboard.writeText(text);
-    setTimeout(() => {
-      setDisplayPopup(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   setDisplayPopup(false);
+    // }, 2000);
+    showToast("Copied to clipboard");
   };
 
   return(
       <>
           
           <dialog className="contact-details" ref={dialogRef} onClose={closeModal}>
-            {displayPopup && <PopupMessage content="Copied to clipboard!"/>}
               <div className="grid-container">
                 <div className="grid-row">
                   <div className="contact-info-left">

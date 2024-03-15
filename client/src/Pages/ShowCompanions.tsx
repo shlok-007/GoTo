@@ -7,7 +7,8 @@ import travelDetails_interface from '../types/travelDetailsInterface';
 import {useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import InfoCard from '../components/InfoCard';
-import PopupMessage from '../components/PopupMessage';
+// import PopupMessage from '../components/Toast';
+import { useToast } from '../utils/ToastContext';
 
 const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) => {
 
@@ -19,22 +20,20 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
     const [pressed, setPressed] = useState<boolean>(false);
     const {destination, date, time, dir} = useParams();
 
-    const [displayPopup, setDisplayPopup] = useState<boolean>(false);
-    const handleNotificationSubscriptionPopup = () => {
-      setDisplayPopup(true);
-      setTimeout(() => {
-        setDisplayPopup(false);
-      }, 2000);
-    };
+    // const [displayPopup, setDisplayPopup] = useState<boolean>(false);
+    // const handleNotificationSubscriptionPopup = () => {
+    //   setDisplayPopup(true);
+    //   setTimeout(() => {
+    //     setDisplayPopup(false);
+    //   }, 2000);
+    // };
+    const {showToast} = useToast();
 
     if(loading && destination && date && dir && email && time){ findCompanions(destination, date, email, name, time, dir).then(
         (val)=>{setData(val);   setLoading(false);});}
 
     return (
         <>
-            {/* <h1>Companions</h1> */}
-            {displayPopup && <PopupMessage content="You will be notified!"/>}
-            
             {loading && <InfoCard key={1} content='Loading...'/>}
 
             {!loading && data===false && <InfoCard key={2} content='Unable to connect to the server :_('/>}
@@ -48,7 +47,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                     <>
                     <InfoCard content={`Don't wanna go alone?
                     We'll let you know when there are companions for you ;-)`}/>
-                    <button className='getNotified-btn' onClick={async()=>{await getSubscriptionObject(email);setPressed(true);handleNotificationSubscriptionPopup();}}>Get Notified!</button>
+                    <button className='getNotified-btn' onClick={async()=>{await getSubscriptionObject(email);setPressed(true);showToast("You will be notified!");}}>Get Notified!</button>
                     </>
                     :<InfoCard content='You will be notified when there are companions for you.'/>
                 }
@@ -70,7 +69,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                         <>
                         <InfoCard key={6} content={`Don't wanna go with them?
                         We'll let you know when there are more companions ;-)`}/>
-                        <button className='getNotified-btn' onClick={async()=>{await getSubscriptionObject(email);setPressed(true);handleNotificationSubscriptionPopup();}}>Get Notified!</button>
+                        <button className='getNotified-btn' onClick={async()=>{await getSubscriptionObject(email);setPressed(true);showToast("You will be notified!");}}>Get Notified!</button>
                         </>
                         :<InfoCard key={7} content='You will be notified when there are more companions for you.'/>
                     }

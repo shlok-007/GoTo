@@ -2,7 +2,8 @@ import loggedInPageProps from "../types/loggedInPageProps"
 import React, {useState} from "react"
 import "../styles/destinationSelectPageStyle.css"
 import InfoCard from '../components/InfoCard';
-import PopupMessage from '../components/PopupMessage';
+// import PopupMessage from '../components/Toast';
+import { useToast } from "../utils/ToastContext";
 
 import {useNavigate} from 'react-router-dom';
 
@@ -70,25 +71,27 @@ export default function DestinationSelect({profile}:loggedInPageProps){
     });
   }
 
-  const [displayPopup, setDisplayPopup] = useState<boolean>(false);
-  const handleUnfilledDestination = () => {
-    setDisplayPopup(true);
-    setTimeout(() => {
-      setDisplayPopup(false);
-    }, 2000);
-  };
+  // const [displayPopup, setDisplayPopup] = useState<boolean>(false);
+  // const handleUnfilledDestination = () => {
+  //   setDisplayPopup(true);
+  //   setTimeout(() => {
+  //     setDisplayPopup(false);
+  //   }, 2000);
+  // };
+
+  const {showToast} = useToast();
 
   const onSearch = (destination:string, date: string) => {
     if( !placeList.includes(destination) ){
       // window.alert("Please select a destination");
-      handleUnfilledDestination();
+      showToast("Please select a destination");
       return;
     }
     if(profile){
       //add a regex to check if the phone number and whatsapp number are valid
 
       if(!regex.test(ph_no) || !regex.test(wa_no)){
-        window.alert("Please enter a valid phone number and whatsapp number");
+        showToast("Please enter a valid phone number and whatsapp number");
         return;
       }
 
@@ -118,7 +121,6 @@ export default function DestinationSelect({profile}:loggedInPageProps){
 
   return(
     <>
-      {displayPopup && <PopupMessage content="Please select a destination."/>}
       {loading && <InfoCard content='Loading...'/>}
 
       {!loading && isServerDown && <InfoCard content='Unable to connect to the server :_('/>}
