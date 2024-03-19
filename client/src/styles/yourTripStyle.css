@@ -1,5 +1,5 @@
 .dest{
-    width: 11ch;
+    width: 12ch;
     margin-right: 0.3rem;
 }
 
@@ -8,22 +8,38 @@
 }
 
 .trip {
-  width: 92%;
+  width: 95%;
   display: flex;
   justify-content: space-between;
   margin: 0 0.4rem 0 0.4rem;
   padding: 1rem 0.5rem;
-  color: white;
+  /* color: white; */
   /* background-color: #3c3c3c82; */
   border-radius: 5px;
   
-  backdrop-filter: blur(3px);
+  /* backdrop-filter: blur(3px); */
 }
 
 .buttons{
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.upd-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 2rem;
+}
+
+.upd-buttons > button{
+  width: fit-content;
+}
+
+.modal-head{
+  margin-bottom: 1.5rem;
+  font-size: large;
 }
 
 .view, .modify{
@@ -49,23 +65,4 @@
   justify-content: flex-end;
   gap: 0.5rem;
   margin: 0 8px 0 5px;
-}
-
-.icon-btn{
-  width: 100%;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.update-button:hover{
-  background-color: rgb(116, 214, 250);
-}
-
-.delete-button:hover{
-  background-color: rgb(249, 112, 112);
-}
-
-.search-button:hover{
-  background-color: rgb(109, 255, 148);
 }

@@ -40,7 +40,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
 
             {!loading && typeof(data)!=='boolean' && data.length === 0 && 
             <>
-            <div key={3} className="companion-list">
+            <div className="companion-list">
                 <InfoCard content={`Sorry, no companions found for
                 ${destination} as of now`}/>
                 {!pressed ?
@@ -55,7 +55,7 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
             </>
             }
 
-            <div key={4} className="companion-list">
+            <div className="companion-list">
                 {typeof(data)!=='boolean' && data.length > 0 && (
                     <>
                     

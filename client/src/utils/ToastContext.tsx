@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import Toast from '../components/Toast';
 
-interface Toast {
+interface ToastProps {
   message: string;
   duration: number;
 }
@@ -22,7 +22,7 @@ export const useToast = () => {
 };
 
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [toast, setToast] = useState<Toast | null>(null);
+  const [toast, setToast] = useState<ToastProps | null>(null);
 
   const showToast = (message: string, duration = 3000) => {
     setToast({ message, duration });

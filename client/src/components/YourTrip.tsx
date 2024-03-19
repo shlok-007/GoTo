@@ -6,8 +6,19 @@ import getDateTime from '../utils/getDateTime';
 // import PopupMessage from './Toast';
 import { useToast } from '../utils/ToastContext';
 import { useNavigate } from 'react-router-dom';
+import Toggle from './Toggle';
 
-export default function YourTrip({ destination, date, time, id, name, dir }: { destination: string, date: string, time: string, id: string, name: string, dir: boolean }) {
+interface YourTripProps {
+    destination: string;
+    date: string;
+    time: string;
+    id: string;
+    name: string;
+    dir: boolean;
+    closeDialog: ()=>void;
+}
+
+export default function YourTrip({destination, date, time, id, name, dir, closeDialog}:YourTripProps) {
     const navigate = useNavigate();
 
     const [deleted, setDeleted] = useState(false);
@@ -19,7 +30,8 @@ export default function YourTrip({ destination, date, time, id, name, dir }: { d
 
     const tripBG = {
         // true: faint green, false: faint blue
-        backgroundColor: dir ? "rgba(0, 0, 255, 0.1)" : "rgba(0, 255, 0, 0.1)"
+        // backgroundColor: dir ? "rgba(0, 0, 255, 0.1)" : "rgba(0, 255, 0, 0.1)"
+        backgroundColor: newDir ? "var(--accent)" : "var(--secondary)"
     }
 
     const deleteRef = useRef<HTMLDialogElement>(null);
@@ -67,17 +79,17 @@ export default function YourTrip({ destination, date, time, id, name, dir }: { d
                         <button className='close-btn' onClick={(e)=>closeDeleteModal()}>No</button>
                         <button className='' onClick={() => {
                             setWarningText("Deleting...");
-                            deleteTrip(id).then(() => {setWarningText("Deleted"); setDeleted(true); closeDeleteModal(); showToast("Trip Deleted");})}
+                            deleteTrip(id).then(() => {setWarningText("Deleted"); setDeleted(true); closeDeleteModal(); closeDialog(); showToast("Trip Deleted");})}
                         }>Yes</button>
                     </div>
                     </div>
                 </dialog>
                 <dialog ref={updateRef}>
                     <div className="modal-content">
-                    <div>{updateText}</div>
+                    <div className='modal-head'>{updateText}</div>
                     <input className='date-time-ip' type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} min={newDate} required></input>
                     <input className='date-time-ip' type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} required></input>
-                    <div className="dir-select">
+                    {/* <div className="dir-select">
                     <div>
                         <input type="radio" id="to" value="to" className="custom-radio" onChange={()=>setNewDir(false)} checked={!newDir}/>
                         <label htmlFor="to">To</label>
@@ -86,14 +98,17 @@ export default function YourTrip({ destination, date, time, id, name, dir }: { d
                         <input type="radio" id="from" value="from" className="custom-radio" onChange={()=>setNewDir(true)} checked={newDir}/>
                         <label htmlFor="from">From</label>
                     </div>
+                    </div> */}
+                    <div onClick={()=>setNewDir(!newDir)}>
+                        <Toggle leftLabel="To" rightLabel="From" dir={dir}/>
                     </div>
-                    <div className="buttons">
-                        <button className='red-text-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
-                        <button className='blue-text-btn' 
+                    <div className="buttons upd-buttons">
+                        <button className='close-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
+                        <button className='' 
                             disabled = {date === newDate && time === newTime && dir === newDir}
                             onClick={() => {
                             setUpdateText("Updating...");
-                            updateTrip(id, newDate, newTime, destination, name, newDir).then(() => {setUpdateText("Updated"); closeUpdateModal();showToast("Trip Updated");})}
+                            updateTrip(id, newDate, newTime, destination, name, newDir).then(() => {closeUpdateModal(); closeDialog();  showToast("Trip Updated");})}
                         }>Update</button>
                     </div>
                     </div>
