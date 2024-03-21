@@ -1,20 +1,30 @@
+.dest-sel-card{
+  background-color: var(--transparent_bg);
+  width:max-content;
+  /* min-width: 40rem; */
+  margin: 2rem auto;
+  padding: 2rem 2rem;
+  border-radius: 10px;
+}
+
 .date-time{
   display: flex;
   justify-content: space-evenly;
-  width: 50%;
-  margin: 4rem auto;
-  margin-bottom: 1rem;
+  align-items: center;
+  width: 100%;
+  /* margin: auto; */
+  margin-bottom: 2rem;
   gap: 1rem;
 }
 
-.dir-select{
+/* .dir-select{
   display: flex;
   justify-content: space-evenly;
   width: 50%;
   margin: 0 auto;
-  /* margin-bottom: 1rem; */
-  /* gap: 1rem; */
-}
+  margin-bottom: 1rem;
+  gap: 1rem;
+} */
 
 .drop-wrap{
   display: flex;
@@ -24,9 +34,9 @@
 }
 
 .destination-selector-button {
-  color: white;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(5px);
+  /* color: white; */
+  background-color: var(--background);
+  /* backdrop-filter: blur(10px); */
   border: none;
   border-radius: 10px;
   text-decoration: none;
@@ -40,7 +50,7 @@
 
 .dropdown.active > .destination-selector-button,
 .destination-selector-button:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  filter: brightness(1.1);
 }
 
 
@@ -53,10 +63,10 @@
   position: absolute;
   left: 0;
   top: calc(100% + 0.25rem);
-  background-color: rgba(0,0,0,0.5);
-  backdrop-filter: blur(5px);
-  width: 30ch;
-  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .1);
+  background-color: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .1); */
   opacity: 0;
   pointer-events: none;
   transform: translateY(-10px);
@@ -74,11 +84,11 @@
 .dropdown-cities {
   display: flex;
   flex-direction: column;
-  background-color: transparent;
+  /* background-color: transparent; */
 }
 
 .dropdown-item {
-  color: white;
+  /* color: white; */
   background-color: transparent;
   border: none;
   border-radius: 10px;
@@ -87,36 +97,36 @@
   font-size: inherit;
   cursor: pointer;
   padding: 8px 50px;
-  transition: background-color 250ms ease-in-out;
+  /* transition: background-color 250ms ease-in-out; */
 }
 
-.dropdown-item:hover {
+/* .dropdown-item:hover {
   background-color: rgba(0,0,0,0.55);
-}
+} */
 
 .search-btn {
   font-size: large;
   font-weight: bold;
-  background-color: rgba(100, 150, 255, 0.7);
-  backdrop-filter: blur(5px);
+  background-color: var(--primary);
+  /* backdrop-filter: blur(5px); */
   border: none;
   border-radius: 5px;
   text-decoration: none;
   font-family: inherit;
-  color: white;
+  color: var(--background);
   cursor: pointer;
   padding: 5px 20px;
-  transition: background-color 150ms ease-in-out, border-radius 150ms ease-in-out;
+  /* transition: background-color 150ms ease-in-out, border-radius 150ms ease-in-out; */
   height: 40px;
   
   /* margin: 0 auto; */
   /* width: 25%; */
 }
 
-.search-btn:hover{
+/* .search-btn:hover{
   border-radius: 20px;
   background-color: rgba(100, 150, 255, 0.9);
-}
+} */
 
 .icon-ip{
   display: flex;
@@ -124,20 +134,30 @@
   gap: 0.5rem;
 }
 
-#myCheckbox{
+.icon-ip > *:first-child{
+  margin-right: 0.5rem;
+}
+
+/* #myCheckbox{
   width: 15px;
   height: 15px;
-  margin: 4px 4px 3px 4px;
-}
+  display: none;
+} */
 
 .checkbox-frame{
-  border: none;
-  background-color: black;
+  width: 20px;
+  height: 20px;
+  background-color: var(--background);
   border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 3px;
 }
 
-#to #from{
+/* #to #from{
   width: 15px;
   height: 15px;
   margin: 4px 4px 3px 4px;
-}
+} */

@@ -1,7 +1,8 @@
 import companionCardProps from "../types/companionCardProps"
 import "../styles/companionCardStyle.css"
-import {useState,useRef} from "react"
-import PopupMessage from '../components/PopupMessage';
+import {useRef} from "react"
+// import PopupMessage from './Toast';
+import { useToast } from "../utils/ToastContext"
 
 const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, wa, email}) => {
 
@@ -19,21 +20,24 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
       dialogRef.current.close();
     }
   };
+
+  const {showToast} = useToast();
   
-  const [displayPopup, setDisplayPopup] = useState<boolean>(false);
+  // const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   const handleCopyClick = (text: string) => {
-    setDisplayPopup(true);
+    // setDisplayPopup(true);
     navigator.clipboard.writeText(text);
-    setTimeout(() => {
-      setDisplayPopup(false);
-    }, 2000);
+    // setTimeout(() => {
+    //   setDisplayPopup(false);
+    // }, 2000);
+    dialogRef.current?.close();
+    showToast("Copied to clipboard");
   };
 
   return(
       <>
           
           <dialog className="contact-details" ref={dialogRef} onClose={closeModal}>
-            {displayPopup && <PopupMessage content="Copied to clipboard!"/>}
               <div className="grid-container">
                 <div className="grid-row">
                   <div className="contact-info-left">
@@ -93,8 +97,9 @@ const CompanionCard : React.FC<companionCardProps> = ({avatar, name, time, ph, w
               </div>
               <div className="right">
                   <div>{time}</div>
-                  <button className="blue-icon-btn contact-frame" onClick={openModal}>
-                      <img src="/icons/contact.png" alt="contact-details" className="contact-icon" />
+                  <button className="contact-frame" onClick={openModal}>
+                      {/* <img src="/icons/contact.png" alt="contact-details" className="contact-icon" /> */}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--text)" viewBox="0 0 512 512"><path d="M96 0C60.7 0 32 28.7 32 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H96zM208 288h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H144c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zM512 80c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V80zM496 192c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm16 144c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V336z"/></svg>
                   </button>
               </div>
       </>

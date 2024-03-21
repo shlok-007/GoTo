@@ -3,11 +3,11 @@
     bottom: 30px;
     left: 30px;
     width: max-content !important;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--transparent_bg);
     backdrop-filter: blur(3px);
     font-size: large;
-    color: white;
-    padding: 10px;
+    /* color: white; */
+    padding: 1rem 2rem;
     border-radius: 5px;
     /* box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.5); */
     animation: slide-up 0.3s ease;

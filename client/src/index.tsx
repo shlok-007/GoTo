@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { BrowserRouter } from 'react-router-dom';
 import ReactGA from 'react-ga4';
+import { ToastProvider } from './utils/ToastContext';
 
 ReactGA.initialize(process.env.REACT_APP_GA_MEASUREMENT_ID || "" );
 
@@ -17,7 +18,9 @@ root.render(
   <GoogleOAuthProvider clientId={process.env.REACT_APP_OAUTH_CLIENT_ID || ""}>
     {/* <React.StrictMode> */}
       <BrowserRouter>
-        <App />
+        <ToastProvider>
+          <App />
+        </ToastProvider>
       </BrowserRouter>
     {/* </React.StrictMode> */}
   </GoogleOAuthProvider>
