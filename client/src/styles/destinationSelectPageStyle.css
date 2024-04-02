@@ -5,6 +5,7 @@
   margin: 2rem auto;
   padding: 2rem 2rem;
   border-radius: 10px;
+  max-width: 75%;
 }
 
 .date-time{
@@ -44,7 +45,7 @@
   font-size: inherit;
   cursor: pointer;
   padding: 15px;
-  width: 30ch;
+  width: 25ch;
   transition: 250ms ease-in-out;
 }
 
@@ -120,7 +121,7 @@
   height: 40px;
   
   /* margin: 0 auto; */
-  /* width: 25%; */
+  /* width: 25%;*/
 }
 
 /* .search-btn:hover{

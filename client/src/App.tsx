@@ -16,6 +16,7 @@ import PrivateRoutes from './utils/PrivateRoutes';
 
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
+import Footer from './components/Footer';
 
 const App: React.FC = () => {
 
@@ -66,7 +67,6 @@ const App: React.FC = () => {
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>
       }
-
     </>
   );
 }
