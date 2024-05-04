@@ -92,7 +92,8 @@
     border-radius: 8px;
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
     border-color: var(--secondary);
-    max-width: 390px;
+    width: fit-content ;
+    max-width:90%;
     /* color: var(--text-950); */
     background-color: var(--transparent_bg);
     animation: slide-down 0.3s ease;
@@ -114,7 +115,8 @@
     /* margin: 0;
     padding: 0 0 0.5rem 0;
     box-sizing: border-box; */
-    width: 390px;
+    width: fit-content;
+    max-width: 90%;
     padding: 1rem 0.5rem;
     /* background-color: rgba(0,0,0,0.7); */
     /* position: absolute; */
