@@ -8,8 +8,8 @@
     background-color: var(--secondary);
     /* backdrop-filter: blur(5px); */
     font-size: large;
-    width: 100%;
-    max-width: 350px;
+    width: 22rem;
+    max-width: 75%;
     transition: 250ms ease-in-out;
 }
 
@@ -52,6 +52,8 @@
 }
 
 .contact-details{
+  width: fit-content;
+  max-width: 80%;
   padding-bottom: 0.2rem;
 }
 

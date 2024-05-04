@@ -5,7 +5,7 @@
     width: max-content !important;
     background-color: var(--transparent_bg);
     backdrop-filter: blur(3px);
-    font-size: large;
+    font-size: medium;
     /* color: white; */
     padding: 1rem 2rem;
     border-radius: 5px;
