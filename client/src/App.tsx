@@ -17,11 +17,28 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
 
+// const dummyProfile: profile_interface = {
+//   sub: "1234567890",
+//   name: "John Doe",
+//   given_name: "John",
+//   family_name: "Doe",
+//   email: "21cs02008@iitbbs.ac.in",
+//   picture: "https://lh3.googleusercontent.com/a/ACg8ocILCoSKIjk_01JAqfNFoliZkCmaNBgNC8LE-J-4QDUQRGEc=s96-c"
+// }
+
 const App: React.FC = () => {
 
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [profile, setProfile] = useState<profile_interface | undefined>(undefined);
+
+  // for testing
+
+  // const [isLogged, setIsLogged] = useState<boolean>(true);
+  // const [profile, setProfile] = useState<profile_interface | undefined>(dummyProfile);
+
+  //
+
   const [serverDown, setServerDown] = useState<boolean>(false);
   const authToken = localStorage.getItem('authToken');
 
