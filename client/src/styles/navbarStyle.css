@@ -102,7 +102,7 @@
 
   dialog::backdrop{
     backdrop-filter: blur(20px);
-    filter: brightness(0.5);
+    /* filter: brightness(0.5); */
     /* z-index: 1000; */
   }
 
@@ -140,7 +140,7 @@
 
   .no-trips{
     margin: 0;
-    padding: 2rem 0;
+    padding: 2rem 1rem;
     font-size: large;
   }
 
@@ -189,7 +189,7 @@
 
   /* select the 2nd child of buttons */
   .buttons > button:nth-child(2){
-    background-color: var(--secondary);
+    background-color: var(--primary);
     border: none;
   }
 
@@ -199,7 +199,7 @@
     /* color: white; */
     background-color: var(--primary);
     border: none;
-    color: var(--secondary);
+    color: var(--background);
     /* margin-left: 1rem; */
     width: 20%;
     /* padding: 8px 16px;
@@ -313,7 +313,7 @@
 
   .date-time-ip{
     background-color: var(--primary);
-    /* color: black; */
+    color: var(--background);
     border:none;
     padding: 5px 10px;
     border-radius: 5px;

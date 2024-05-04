@@ -1,65 +1,63 @@
+:root{
+  --text: rgb(234, 229, 245);
+  --background: rgb(11, 8, 22);
+  --primary: rgb(167, 145, 217);
+  --secondary: rgb(109, 46, 132);
+  --accent: rgb(179, 96, 199);
+
+  --line: rgba(255, 255, 255, 0.1);
+  --transparent_bg: rgba(94, 40, 113, 0.35);
+
+  background-color: var(--background);
+  color: var(--text);
+
+}
+
 @media (prefers-color-scheme: light) {
   :root {
-    --text: oklab(17.59% -0.009 -0.01);
-    --background: oklab(96.50% -0.007 -0.01);
-    --primary: oklab(45.99% -0.053 -0.04);
-    --secondary: oklab(78.68% -0.071 -0.05);
-    --accent: oklab(68.18% -0.089 -0.07);
-    --line: oklab(85.49% -0.021 -0.02);
-    --transparent_bg: rgba(116, 200, 220, 0.7);
-  }
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: oklab(95.64% -0.006 -0.00);
-    --background: oklab(16.15% -0.010 -0.01);
-    --primary: oklab(80.89% -0.054 -0.04);
-    --secondary: oklab(52.65% -0.065 -0.05);
-    --accent: oklab(72.76% -0.092 -0.07);
-    --line: oklab(33.63% -0.024 -0.02);
-    --transparent_bg: rgba(35, 118, 139, 0.4);
+    --text: rgb(15, 10, 26);
+    --background: rgb(236, 233, 247);
+    --primary: rgb(59, 38, 110);
+    --secondary: rgb(186, 123, 209);
+    --accent: rgb(138, 56, 159);
+
+    --line: rgba(0, 0, 0, 0.1);
+
+    --transparent_bg: rgba(196, 142, 215, 0.35);
+    /* secondary-300 */
   }
 }
 
-html{
-  background-color: var(--background);
-  color: var(--text);
+/* added css */
+
+
+@media (prefers-color-scheme: dark) {
+:root {
+  --text: rgb(234, 229, 245);
+  --background: rgb(11, 8, 22);
+  --primary: rgb(167, 145, 217);
+  --secondary: rgb(109, 46, 132);
+  --accent: rgb(179, 96, 199);
+
+  --line: rgba(255, 255, 255, 0.1);
+
+  /* secondary-300 */
+  --transparent_bg: rgba(94, 40, 113, 0.35);
 }
+/* 7,0,64 */
+}
+
 
 /* all buttons slightly darker when hovered */
 /* also button size increased */
 button:hover {
-  filter: brightness(0.9);
-  transform: scale(0.95);
+filter: brightness(0.9);
+transform: scale(0.95);
 }
 
 button{
-  cursor: pointer;
-  transition: 250ms ease-in-out;
-  font-size: medium;
-  color: var(--text);
+cursor: pointer;
+transition: 250ms ease-in-out;
+font-size: medium;
+color: var(--text);
 }
-
-/* :root{
-  --text: hsl(220, 66%, 92%);
-  --background: hsl(0, 0%, 0%);
-  --primary: hsl(221, 100%, 78%);
-  --secondary: hsl(221, 58%, 14%);
-  --accent: hsl(281, 65%, 52%);
-} */
-
-
-/* html {
-  --s: 200px;
-  --c1: #1d1d1d;
-  --c2: #4e4f51;
-  --c3: #3c3c3c;
-  
-  background:
-    repeating-conic-gradient(from 30deg,#0000 0 120deg,var(--c3) 0 180deg) 
-     calc(.5*var(--s)) calc(.5*var(--s)*0.577),
-    repeating-conic-gradient(from 30deg,var(--c1) 0 60deg,var(--c2) 0 120deg,var(--c3) 0 180deg);
-  background-size: var(--s) calc(var(--s)*0.577);
-
-  color: white;
-} */

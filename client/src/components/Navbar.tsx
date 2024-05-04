@@ -110,7 +110,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
           <div>Are you sure that you want to logout?</div>
           <div className="buttons">
               <button className='close-btn' onClick={closeLogoutModal}>No</button>
-              <button className='' onClick={()=>{onLogout(); closeLogoutModal()}}>Yes</button>
+              <button className='navbar__logout' onClick={()=>{onLogout(); closeLogoutModal()}}>Yes</button>
           </div>
           </div>
       </dialog>

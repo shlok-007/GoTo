@@ -84,6 +84,8 @@ const App: React.FC = () => {
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>
       }
+
+      {/* <Footer/> */}
     </>
   );
 }

@@ -64,7 +64,7 @@
   position: absolute;
   left: 0;
   top: calc(100% + 0.25rem);
-  background-color: rgba(0,0,0,0.7);
+  background-color: var(--background);
   backdrop-filter: blur(10px);
   width: 100%;
   /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .1); */
@@ -85,6 +85,8 @@
 .dropdown-cities {
   display: flex;
   flex-direction: column;
+  border: var(--transparent_bg) 1px solid;
+  border-radius: 10px;
   /* background-color: transparent; */
 }
 
@@ -92,7 +94,7 @@
   /* color: white; */
   background-color: transparent;
   border: none;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   text-decoration: none;
   font-family: inherit;
   font-size: inherit;
@@ -101,9 +103,10 @@
   /* transition: background-color 250ms ease-in-out; */
 }
 
-/* .dropdown-item:hover {
-  background-color: rgba(0,0,0,0.55);
-} */
+.dropdown-item:hover {
+  background-color: var(--secondary);
+  transform: scale(1);
+}
 
 .search-btn {
   font-size: large;
