@@ -20,3 +20,44 @@ html {
   --secondary: hsl(221, 58%, 14%);
   --accent: hsl(281, 65%, 52%);
 }
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --text: rgb(3, 22, 36);
+    --background: rgb(209, 236, 243);
+    --primary: rgb(26, 187, 204);
+    --secondary: rgb(22, 213, 238);
+    --accent: rgb(124, 88, 239);
+    --line: oklab(85.49% -0.021 -0.02);
+    --transparent_bg: rgba(67, 123, 197);
+  }
+}
+//added css
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: rgb(241, 254, 242);
+    --background: rgb(0,0,0);
+    --primary: rgb(75, 56, 112);
+    --secondary: rgb(24, 12, 36);
+    --accent: rgb(49, 132, 242);
+    --line: oklab(33.63% -0.024 -0.02);
+    --transparent_bg: rgba(31, 27, 50);
+
+  }
+  //7,0,64
+}
+
+
+/* all buttons slightly darker when hovered */
+/* also button size increased */
+button:hover {
+  filter: brightness(0.9);
+  transform: scale(0.95);
+}
+
+button{
+  cursor: pointer;
+  transition: 250ms ease-in-out;
+  font-size: medium;
+  color: var(--text);
+}
