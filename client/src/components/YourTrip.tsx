@@ -77,7 +77,7 @@ export default function YourTrip({destination, date, time, id, name, dir, closeD
                     <div>{warningText}</div>
                     <div className="buttons">
                         <button className='close-btn' onClick={(e)=>closeDeleteModal()}>No</button>
-                        <button className='' onClick={() => {
+                        <button className='navbar__logout' onClick={() => {
                             setWarningText("Deleting...");
                             deleteTrip(id).then(() => {setWarningText("Deleted"); setDeleted(true); closeDeleteModal(); closeDialog(); showToast("Trip Deleted");})}
                         }>Yes</button>
@@ -87,8 +87,19 @@ export default function YourTrip({destination, date, time, id, name, dir, closeD
                 <dialog ref={updateRef}>
                     <div className="modal-content">
                     <div className='modal-head'>{updateText}</div>
-                    <input className='date-time-ip' type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} min={newDate} required></input>
-                    <input className='date-time-ip' type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} required></input>
+                    {/* <input className='date-time-ip' type="date" value={newDate} onChange={(e) => setNewDate(e.target.value)} min={newDate} required></input>
+                    <input className='date-time-ip' type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} required></input> */}
+
+
+                    <div className="date-time-wrapper">
+                        <input className="date-time-ip" type="date" onChange={(e)=>setNewDate(e.target.value)} value={newDate} min={newDate} required/>
+                        <svg className="date-time-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 448 512"><path d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"/></svg>
+                    </div>
+                    <div className="date-time-wrapper">
+                        <input className="date-time-ip" type="time" onChange={(e)=>setNewTime(e.target.value)} value={newTime} required/>
+                        <svg className="date-time-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512"><path d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>
+                    </div>
+
                     {/* <div className="dir-select">
                     <div>
                         <input type="radio" id="to" value="to" className="custom-radio" onChange={()=>setNewDir(false)} checked={!newDir}/>
@@ -104,7 +115,7 @@ export default function YourTrip({destination, date, time, id, name, dir, closeD
                     </div>
                     <div className="buttons upd-buttons">
                         <button className='close-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
-                        <button className='' 
+                        <button className='navbar__logout' 
                             disabled = {date === newDate && time === newTime && dir === newDir}
                             onClick={() => {
                             setUpdateText("Updating...");

@@ -60,11 +60,13 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                     <>
                     
                     <InfoCard key={5} content={`You can ${dir==='true'? 'return from' : 'go to'} ${destination} with anyone of them...`}/>
-                    {data.map((item) => (
-                        <div className="companion-card" key={item._id}>
-                            <CompanionCard avatar={item.avatar} name={item.name} time={item.time} ph={item.ph_no} wa={item.wa_no} email={item.email}/>
-                        </div>
-                    ))}
+                    <div className="companion-cards-container">
+                        {data.map((item) => (
+                            <div className="companion-card" key={item._id}>
+                                <CompanionCard avatar={item.avatar} name={item.name} time={item.time} ph={item.ph_no} wa={item.wa_no} email={item.email}/>
+                            </div>
+                        ))}
+                    </div>
                     {!pressed ?
                         <>
                         <InfoCard key={6} content={`Don't wanna go with them?

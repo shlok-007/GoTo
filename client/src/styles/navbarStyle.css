@@ -321,7 +321,30 @@
     font-family: inherit;
     width: 9rem;
     height: 1.5rem;
-    /* font-family: inherit; */
+  }
+
+  .date-time-ip::-webkit-calendar-picker-indicator {
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    width: 100%; /* Make the calendar picker indicator cover the entire input field */
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .date-time-icon {
+    position: absolute;
+    top: 20%;
+    right: 10px;
+    fill: var(--background);
+    pointer-events: none;
+  }
+
+  .date-time-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
   }
 
   .contact-ip{
