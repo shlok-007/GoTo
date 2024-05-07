@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useQuery } from 'react-query'
 
 import './App.css';
 
@@ -27,11 +28,29 @@ import Footer from './components/Footer';
 //   picture: "https://lh3.googleusercontent.com/a/ACg8ocILCoSKIjk_01JAqfNFoliZkCmaNBgNC8LE-J-4QDUQRGEc=s96-c"
 // }
 
+const fetchServerStatus = async () => {
+  try{
+    const response = await fetch(process.env.REACT_APP_SERVER_URL || '');
+    if (!response.ok) {
+      console.log("Server is offline");
+      return true;
+    }
+    return false;
+    console.log("Server is online");
+  } catch (error) {
+    return true;
+    console.log("Server is offline");
+  }
+};
+
 const App: React.FC = () => {
 
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [profile, setProfile] = useState<profile_interface | undefined>(undefined);
+  // const [serverDown, setServerDown] = useState<boolean>(false);
+
+  const { data: serverDown } = useQuery('serverStatus', fetchServerStatus);
 
   // for testing
 
@@ -40,7 +59,6 @@ const App: React.FC = () => {
 
   //
 
-  const [serverDown, setServerDown] = useState<boolean>(false);
   const authToken = localStorage.getItem('authToken');
 
   if(!!authToken && !isLogged){
@@ -53,7 +71,8 @@ const App: React.FC = () => {
       let temp = decodeJwtResponse(credentialResponse.credential);
       setProfile(temp);
       localStorage.setItem('authToken', credentialResponse.credential);
-      addUser(temp.email, temp.name, temp.picture).then((val)=>{if(!val) setServerDown(true);});
+      // addUser(temp.email, temp.name, temp.picture).then((val)=>{if(!val) setServerDown(true);});
+      await addUser(temp.email, temp.name, temp.picture);
     }
     navigate("/selectDestination");
   }
@@ -68,7 +87,6 @@ const App: React.FC = () => {
 
   return (
     <>
-
       <Navbar isLogged={isLogged} profile={profile} siteName="GoTogether" onLogout={handleLogout}/>
       {serverDown && <InfoCard content="Unable to connect to the server :_(" />}
 
@@ -84,7 +102,6 @@ const App: React.FC = () => {
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>
       }
-
       {/* <Footer/> */}
     </>
   );

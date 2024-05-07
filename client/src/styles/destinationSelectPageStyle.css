@@ -3,9 +3,10 @@
   width:max-content;
   /* min-width: 40rem; */
   margin: 2rem auto;
-  padding: 2rem 2rem;
+  padding: 2rem 1rem;
   border-radius: 10px;
   max-width: 75%;
+  min-width: max-content;
 }
 
 .date-time{

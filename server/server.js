@@ -8,8 +8,7 @@ import userDetailsCollection from "./routes/userDetailsCollection.js"
 const PORT = process.env.PORT || 3069;
 const app = express();
 
-const allowedOrigins = ['https://goto-nine.vercel.app'
-                        // , 'http://localhost:3000'
+const allowedOrigins = [process.env.CLIENT_URL
                        ];
 const corsOptions = {
   origin: function (origin, callback) {
@@ -23,8 +22,8 @@ const corsOptions = {
   },
 };
 
-// app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
+// app.use(cors());
 app.use(express.json());
 
 app.use("/travelDetails", travelDetailsCollection);

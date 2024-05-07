@@ -7,9 +7,11 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { BrowserRouter } from 'react-router-dom';
 import ReactGA from 'react-ga4';
 import { ToastProvider } from './utils/ToastContext';
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 ReactGA.initialize(process.env.REACT_APP_GA_MEASUREMENT_ID || "" );
 
+const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -19,7 +21,9 @@ root.render(
     {/* <React.StrictMode> */}
       <BrowserRouter>
         <ToastProvider>
+          <QueryClientProvider client={queryClient}>
           <App />
+          </QueryClientProvider>
         </ToastProvider>
       </BrowserRouter>
     {/* </React.StrictMode> */}

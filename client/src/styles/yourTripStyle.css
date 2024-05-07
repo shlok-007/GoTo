@@ -1,5 +1,5 @@
 .dest{
-    width: 11ch;
+    width: 10ch;
     margin-right: 0.3rem;
 }
 
@@ -16,6 +16,7 @@
   /* color: white; */
   /* background-color: #3c3c3c82; */
   border-radius: 5px;
+  max-width: 96%;
   
   /* backdrop-filter: blur(3px); */
 }

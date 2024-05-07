@@ -52,7 +52,7 @@ export default function DestinationSelect({profile}:loggedInPageProps){
       setDestination(e.currentTarget.textContent);
   }
   
-  const placeList = ["DNR", "Khurda Station", "Bhubaneshwar", "Airport", "Puri", "NISER", "Esplanade"];
+  const placeList = ["DNR", "Khurda Station", "Bhubaneswar", "Airport", "Puri", "NISER", "Esplanade"];
 
 
   if(serverDate===true && profile){
