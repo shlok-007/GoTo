@@ -35,11 +35,11 @@ const fetchServerStatus = async () => {
       console.log("Server is offline");
       return true;
     }
-    return false;
     console.log("Server is online");
+    return false;
   } catch (error) {
-    return true;
     console.log("Server is offline");
+    return true;
   }
 };
 
