@@ -31,7 +31,7 @@ app.use("/getDateTime", getDateTime);
 app.use("/userDetails", userDetailsCollection);
 app.get('*',(req,res,next)=>{
     res.status(200).json({
-      message:'server is working'
+      message:'GoTogether server is LIVE!'
     })
 })
 

@@ -17,7 +17,7 @@ import PrivateRoutes from './utils/PrivateRoutes';
 
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 
 // const dummyProfile: profile_interface = {
 //   sub: "1234567890",
