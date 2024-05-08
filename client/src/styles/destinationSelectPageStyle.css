@@ -48,6 +48,8 @@
   padding: 15px;
   width: 25ch;
   transition: 250ms ease-in-out;
+  color: var(--text);
+  text-align: center;
 }
 
 .dropdown.active > .destination-selector-button,
@@ -88,6 +90,7 @@
   flex-direction: column;
   border: var(--transparent_bg) 1px solid;
   border-radius: 10px;
+  padding: 0.5rem 0;
   /* background-color: transparent; */
 }
 
@@ -100,7 +103,7 @@
   font-family: inherit;
   font-size: inherit;
   cursor: pointer;
-  padding: 8px 50px;
+  padding: 0.5rem 1rem;
   /* transition: background-color 250ms ease-in-out; */
 }
 

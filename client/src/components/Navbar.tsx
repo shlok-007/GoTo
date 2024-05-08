@@ -44,7 +44,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
   const openUserMenu = () => {
     // setTripsShown(false);
-    if(profile && (ph_no==="Loading..." || wa_no==="Loading...")){
+    if(profile){
     getContact(profile.email).then((contact) => {
       if(typeof(contact)!=='boolean'){
         setPh_no(contact.ph_no);
@@ -98,7 +98,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
       </dialog>
 
       <dialog className="user-menu-dialog" style={userMenuDialogPosition} open={userMenuShown}>
-        <UserMenu key={ph_no} email={profile?.email || ""} ph_no={ph_no} wa_no={wa_no} />
+        <UserMenu key={ph_no+wa_no} email={profile?.email || ""} ph_no={ph_no} wa_no={wa_no} />
         <div className="usr-menu-inline-buttons">
           <button className="close-btn" onClick={()=> setUserMenuShown(false)}>Close</button>
           <button className="navbar__logout" onClick={openLogoutModal}>Logout</button>

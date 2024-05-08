@@ -77,7 +77,7 @@ export default function YourTrip({destination, date, time, id, name, dir, closeD
                     <div>{warningText}</div>
                     <div className="buttons">
                         <button className='close-btn' onClick={(e)=>closeDeleteModal()}>No</button>
-                        <button className='navbar__logout' onClick={() => {
+                        <button className='navbar__logout' onClick={async () => {
                             setWarningText("Deleting...");
                             deleteTrip(id).then(() => {setWarningText("Deleted"); setDeleted(true); closeDeleteModal(); closeDialog(); showToast("Trip Deleted");})}
                         }>Yes</button>
@@ -122,7 +122,7 @@ export default function YourTrip({destination, date, time, id, name, dir, closeD
                         <button className='close-btn' onClick={()=>{closeUpdateModal(); setNewDate(date); setNewTime(time);}}>Cancel</button>
                         <button className='navbar__logout' 
                             disabled = {date === newDate && time === newTime && dir === newDir}
-                            onClick={() => {
+                            onClick={async () => {
                             setUpdateText("Updating...");
                             updateTrip(id, newDate, newTime, destination, name, newDir).then(() => {closeUpdateModal(); closeDialog();  showToast("Trip Updated");})}
                         }>Update</button>

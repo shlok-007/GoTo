@@ -139,7 +139,7 @@ router.post("/", async (req, res) => {
   res.send(result).status(204);
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/trip/:id", async (req, res) => {
 
   const { time, destination, date, dir, name } = req.body;
   let db = await connectToDatabase();
@@ -214,6 +214,58 @@ router.get("/dailyCleanUp", async (req, res) => {
   let result = await collection.deleteMany({ date: { $lt: currentDate } });
   console.log(result);
   res.send(result).status(200);
+});
+
+router.get("/destinations", async (req, res) => {
+  let db = await connectToDatabase();
+  let collection = db.collection("Destinations");
+  let results = await collection.find({}).toArray();
+  res.send(results).status(200);
+});
+
+router.post("/destinations", async (req, res) => {
+  let db = await connectToDatabase();
+  let collection = db.collection("Destinations");
+  console.log(req.body);
+  let result = await collection.insertOne(req.body);
+  res.send(result).status(200);
+});
+
+router.patch("/destinations", async (req, res) => {
+  let reportedDestination = req.body.reportedDestination;
+  let reporterEmail = req.body.reporterEmail;
+  let db = await connectToDatabase();
+  let collection = db.collection("Destinations");
+
+  // check if the reporter has already reported the destination
+  let result = await collection.findOne({
+    "name": reportedDestination });
+
+  if(!result){
+    return res.send({msg: "Destination not found."}).status(404);
+  }
+
+  if(result.reports){
+
+    if(result.reports.includes(reporterEmail)){
+      return res.send({msg: "You have already reported."}).status(204);
+    }
+
+    if(result.reports.length >= 4){
+      await collection.deleteOne({ "name": reportedDestination });
+      return res.send({msg: "Reported & removed destination."}).status(200);
+    }
+  }
+
+  const query = { name: reportedDestination };
+  const updates =  {
+    $push: {
+      reports: reporterEmail
+    }
+  };
+  result = await collection.updateOne(query, updates);
+  res.send({msg: "Reported successfully."}).status(200);
+
 });
 
 export default router;

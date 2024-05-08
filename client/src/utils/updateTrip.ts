@@ -1,7 +1,7 @@
 export default async function updateTrip(tripId: string, date: string, time: string, destination: string, name: string, dir: boolean){
     try{
         let serverURL = process.env.REACT_APP_SERVER_URL;
-        await fetch(serverURL+`/travelDetails/${tripId}`,{
+        await fetch(serverURL+`/travelDetails/trip/${tripId}`,{
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

@@ -59,7 +59,7 @@ export default function UserMenu({email, ph_no, wa_no}:{email:string, ph_no:stri
             
             <div className="inline-buttons up-modal-btn">
                 <button className='close-btn' onClick={()=>{closeUpdateModal(); setCurr_ph_no(ph_no); setCurr_wa_no(wa_no);}}>Cancel</button>
-                <button className='' onClick={() => {
+                <button className='' onClick={async () => {
                     updateContact(email, curr_ph_no, curr_wa_no).then(() => {closeUpdateModal();showToast("Contact(s) Updated");})}
                 }>Update</button>
             </div>
