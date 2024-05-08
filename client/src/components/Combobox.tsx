@@ -16,7 +16,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({ options, onSelect, email }) => {
     null
   );
   const reportConfirmation = useRef<HTMLDialogElement>(null);
-  const {showToast} = useToast();
+  const { showToast } = useToast();
 
   const filteredOptions = options
     .filter((option) => option.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -56,21 +56,25 @@ const ComboBox: React.FC<ComboBoxProps> = ({ options, onSelect, email }) => {
   };
 
   const handleLongPress = (option: string) => {
-      setLongPressOption(option);
-      reportConfirmation.current?.showModal();
+    setLongPressOption(option);
+    reportConfirmation.current?.showModal();
   };
 
-  const handleMouseDown = (option: string) => {
+  const handlePointerDown = (option: string, event: React.PointerEvent<HTMLButtonElement>) => {
     longPressTimeoutRef.current = setTimeout(() => {
       handleLongPress(option);
     }, 500); // Adjust the duration as needed
+
+    (event.target as HTMLElement).setPointerCapture(event.pointerId);
   };
 
-  const handleMouseUp = () => {
+  const handlePointerUp = (event: React.PointerEvent<HTMLButtonElement>) => {
     if (longPressTimeoutRef.current) {
       clearTimeout(longPressTimeoutRef.current);
       longPressTimeoutRef.current = null;
     }
+
+    (event.target as HTMLElement).releasePointerCapture(event.pointerId);
   };
 
   const closeReportModal = () => {
@@ -78,7 +82,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({ options, onSelect, email }) => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
@@ -88,8 +92,10 @@ const ComboBox: React.FC<ComboBoxProps> = ({ options, onSelect, email }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, []);
 
@@ -112,8 +118,8 @@ const ComboBox: React.FC<ComboBoxProps> = ({ options, onSelect, email }) => {
                   key={option}
                   className="dropdown-item"
                   onClick={() => handleOptionSelect(option)}
-                  onMouseDown={() => handleMouseDown(option)}
-                  onMouseUp={handleMouseUp}
+                  onPointerDown={(event) => handlePointerDown(option, event)}
+                  onPointerUp={handlePointerUp}
                 >
                   {option}
                 </button>
@@ -125,18 +131,13 @@ const ComboBox: React.FC<ComboBoxProps> = ({ options, onSelect, email }) => {
             )}
           </div>
         </div>
-        {/* {showDialog && (
-        <div className="dialog">
-          <p>You long-pressed on: {longPressOption}</p>
-          <button onClick={() => setShowDialog(false)}>Close</button>
-        </div>
-      )} */}
       </div>
 
       <dialog ref={reportConfirmation}>
         <div className="modal-content">
           <div>
-            Report the destination: <span style={{fontWeight: "bold"}}>{longPressOption}</span> ?
+            Report the destination:
+            <div style={{ fontWeight: "bold", marginTop: "1rem", textAlign: "center" }}>{longPressOption + " ?"}</div>
           </div>
           <div>It will be removed after 5 reports.</div>
           <div className="buttons">
