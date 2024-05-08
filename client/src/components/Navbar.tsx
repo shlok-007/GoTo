@@ -24,6 +24,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
   const logoutConfirmationDialog = useRef<HTMLDialogElement>(null);
   const userTripsDialog = useRef<HTMLDialogElement>(null);
+  const userMenuRef = useRef<HTMLDialogElement>(null);
 
   const [ph_no, setPh_no] = useState<string>(localStorage.getItem('ph_no') || "Loading...");
   const [wa_no, setWa_no] = useState<string>(localStorage.getItem('wa_no') || "Loading...");
@@ -83,6 +84,22 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
     setUserMenuShown(false);
   }
   ,[location.pathname]);
+
+  useEffect(()=>{
+    const handleClickOutside = (e : MouseEvent | TouchEvent) => {
+      if(userMenuRef.current && !userMenuRef.current.contains(e.target as Node)){
+        setUserMenuShown(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }
+  ,[]);
   
     return(
       <>
@@ -97,7 +114,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
         </div>
       </dialog>
 
-      <dialog className="user-menu-dialog" style={userMenuDialogPosition} open={userMenuShown}>
+      <dialog className="user-menu-dialog" style={userMenuDialogPosition} open={userMenuShown} ref={userMenuRef}>
         <UserMenu key={ph_no+wa_no} email={profile?.email || ""} ph_no={ph_no} wa_no={wa_no} />
         <div className="usr-menu-inline-buttons">
           <button className="close-btn" onClick={()=> setUserMenuShown(false)}>Close</button>
