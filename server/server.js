@@ -4,6 +4,9 @@ import "./loadEnvironment.js";
 import travelDetailsCollection from "./routes/travelDetailsCollection.js";
 import getDateTime from "./routes/getDateTime.js"
 import userDetailsCollection from "./routes/userDetailsCollection.js"
+import fs from "fs";
+import jws from "jws-jwk";
+import cookieParser from "cookie-parser";
 
 const PORT = process.env.PORT || 3069;
 const app = express();
@@ -22,12 +25,20 @@ const corsOptions = {
   },
 };
 
+const jwk = fs.readFileSync('./jwk.json', 'utf8');
+
+const verifyUser = (req, res, next) => {
+  let jwt = req.cookies.jwt_auth_token;
+  console.log("JWT : "+jwt);
+  next();
+};
+
+app.use(cookieParser());
 app.use(cors(corsOptions));
-// app.use(cors());
 app.use(express.json());
 
 app.use("/travelDetails", travelDetailsCollection);
-app.use("/getDateTime", getDateTime);
+app.use("/getDateTime", verifyUser, getDateTime);
 app.use("/userDetails", userDetailsCollection);
 app.get('*',(req,res,next)=>{
     res.status(200).json({

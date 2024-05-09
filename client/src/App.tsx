@@ -14,6 +14,7 @@ import ShowCompanions from './Pages/ShowCompanions';
 import HomePage from './Pages/HomePage';
 import InfoCard from './components/InfoCard';
 import PrivateRoutes from './utils/PrivateRoutes';
+import Cookies from 'universal-cookie';
 
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
@@ -59,20 +60,24 @@ const App: React.FC = () => {
 
   //
 
-  const authToken = localStorage.getItem('authToken');
+  const profileCache = localStorage.getItem('profile');
+  const cookies = new Cookies();
 
-  if(!!authToken && !isLogged){
+  if(!!profileCache && !isLogged && cookies.get('jwt_auth_token')) {
     setIsLogged(true);
-    setProfile(decodeJwtResponse(authToken));
+    setProfile(JSON.parse(profileCache));
   }
 
   const handleLoginSuccess = async (credentialResponse: CredentialResponse)=>{
     if(credentialResponse.credential){
       let temp = decodeJwtResponse(credentialResponse.credential);
       setProfile(temp);
-      localStorage.setItem('authToken', credentialResponse.credential);
-      // addUser(temp.email, temp.name, temp.picture).then((val)=>{if(!val) setServerDown(true);});
+      localStorage.setItem('profile', JSON.stringify(temp));
+      
+      setIsLogged(true);
+      
       await addUser(temp.email, temp.name, temp.picture);
+      console.log(cookies.get('jwt_auth_token'));
     }
     navigate("/selectDestination");
   }
@@ -81,7 +86,8 @@ const App: React.FC = () => {
     setIsLogged(false);
     setProfile(undefined);
     googleLogout();
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('profile');
+    cookies.remove('jwt_auth_token');
     navigate("/loginPage");
   };
 

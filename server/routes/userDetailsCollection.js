@@ -30,8 +30,21 @@ router.post("/addUser", async (req, res) => {
   let email=req.body.email;
   const existingUser = await collection.findOne({ email });
 
+  res.cookie('jwt_auth_token', "authToken"
+  , {
+    // Set cookie options
+    httpOnly: true, // Prevent client-side script access
+    // secure: process.env.NODE_ENV === 'production', // Set secure cookie in production
+    secure: true, // Set secure cookie in production
+    sameSite: 'strict', // Prevent cross-site request forgery
+    maxAge: 360000000, // 1 hour in milliseconds
+    path: '/', // Make the cookie accessible for all routes
+  }
+);
+  console.log("User added successfully");
+
   if (existingUser) {
-    return res.send(existingUser).status(204);
+    return res.send({msg: "User already exists."}).status(204);
   }
 
   let newUser = {
@@ -43,7 +56,7 @@ router.post("/addUser", async (req, res) => {
     "subObject": {}
   };
   let result = await collection.insertOne(newUser);
-  res.send(result).status(204);
+  res.send({msg: "User added successfully!"}).status(200);
 });
 
 router.patch("/updateContact", async (req, res) => {
