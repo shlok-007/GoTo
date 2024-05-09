@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useQuery } from 'react-query';
 
-import './App.css';
+// import './App.css';
 
 import {googleLogout, CredentialResponse} from '@react-oauth/google';
 import decodeJwtResponse from './utils/decodeJwtResponse';
