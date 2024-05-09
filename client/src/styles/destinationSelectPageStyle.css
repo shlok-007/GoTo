@@ -1,12 +1,12 @@
 .dest-sel-card{
   background-color: var(--transparent_bg);
-  width:max-content;
+  width:fit-content;
   /* min-width: 40rem; */
   margin: 2rem auto;
   padding: 2rem 1rem;
   border-radius: 10px;
   max-width: 75%;
-  min-width: max-content;
+  min-width: fit-content;
 }
 
 .date-time{

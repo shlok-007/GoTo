@@ -23,7 +23,7 @@ const LoginPage : React.FC<loginPageProps> = ({handleLoginSuccess}) => {
                     theme='filled_black'
                     size='large'
                     shape='pill'
-                    width='250px'
+                    width='50%'
                 />
             </div>
         </>
