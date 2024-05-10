@@ -33,13 +33,13 @@ const fetchServerStatus = async () => {
   try{
     const response = await fetch(process.env.REACT_APP_SERVER_URL || '', {credentials: 'include'});
     if (!response.ok) {
-      console.log("Server is offline");
+      // console.log("Server is offline");
       return true;
     }
-    console.log("Server is online");
+    // console.log("Server is online");
     return false;
   } catch (error) {
-    console.log("Server is offline");
+    // console.log("Server is offline");
     return true;
   }
 };
@@ -101,20 +101,20 @@ const App: React.FC = () => {
   return (
     <>
       <Navbar isLogged={isLogged} profile={profile} siteName="GoTogether" onLogout={handleLogout}/>
-      {serverDown && <InfoCard content="Server down or invalid session." />}
+      {serverDown && isLogged && <InfoCard content="Server down or invalid session." />}
 
-      {!serverDown &&
       <Routes>
-        <Route path="/loginPage" element={<LoginPage handleLoginSuccess={handleLoginSuccess}/>}/>
+      {!isLogged && <Route path="/loginPage" element={<LoginPage handleLoginSuccess={handleLoginSuccess}/>}/>}
+      {!serverDown &&
         <Route element={<PrivateRoutes isLogged={isLogged}/>}>
           <Route path="/home" element={<HomePage name={profile?.name || ""}/>}/>
           <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>
           <Route path="/showCompanions/:destination/:date/:time/:dir" element={<ShowCompanions email={profile?.email || ""} name={profile?.name || ""} />}/>
           {/* <Route path="/serverOffline" element={<InfoCard content="Unable to connect to the server :_(" />}/> */}
         </Route>
+      }
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>
-      }
       {/* <Footer/> */}
     </>
   );
