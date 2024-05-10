@@ -203,18 +203,18 @@ router.delete("/deleteOneTrip", async (req, res) => {
   res.send(result).status(200);
 });
 
-router.get("/dailyCleanUp", async (req, res) => {
-  let db = await connectToDatabase();
-  const collection = db.collection("TravelDetails");
+// router.get("/dailyCleanUp", async (req, res) => {
+//   let db = await connectToDatabase();
+//   const collection = db.collection("TravelDetails");
 
-  let now = new Date();
-  let currentDate = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
-  currentDate = currentDate.toISOString().split('T')[0];
+//   let now = new Date();
+//   let currentDate = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
+//   currentDate = currentDate.toISOString().split('T')[0];
 
-  let result = await collection.deleteMany({ date: { $lt: currentDate } });
-  console.log(result);
-  res.send(result).status(200);
-});
+//   let result = await collection.deleteMany({ date: { $lt: currentDate } });
+//   console.log(result);
+//   res.send(result).status(200);
+// });
 
 router.get("/destinations", async (req, res) => {
   let db = await connectToDatabase();
