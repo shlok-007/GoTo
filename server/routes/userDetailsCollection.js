@@ -70,9 +70,15 @@ router.patch("/addSubscription", async (req, res) => {
 // });
 
 router.patch("/updateContact", async (req, res) => {
-  let db = await connectToDatabase();
+  const regex = /^(?:\+91|0)?[6789]\d{9}$/;
   const {email, ph_no, wa_no} = req.body;
-  let collection = await db.collection("GotoUsers");
+
+  if(!ph_no.match(regex) || !wa_no.match(regex)){
+    return res.status(400).json({ error: 'Invalid phone/whatsapp number' });
+  }
+
+  let db = await connectToDatabase();
+  let collection = db.collection("GotoUsers");
   const filter = { "email": email };
   const update = { $set: { "ph_no": ph_no, "wa_no": wa_no } };
   const options = {returnOriginal: false};
@@ -82,7 +88,7 @@ router.patch("/updateContact", async (req, res) => {
     if (!result.value) {
         return res.status(404).json({ error: 'User not found' });
       }
-    res.json(result.value);
+    res.json({msg: "Contact updated"});
 
     }catch (error) {
       console.error('Error occurred while updating user:', error);

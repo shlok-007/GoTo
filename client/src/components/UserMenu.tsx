@@ -1,9 +1,10 @@
 import '../styles/userMenuStyle.css'
 import { useState, useRef } from 'react'
 import getSubscriptionObject from '../utils/getSubscriptionObject'
-// import PopupMessage from './Toast'
 import { useToast } from '../utils/ToastContext'
 import updateContact from '../utils/updateContact'
+
+const regex = /^(?:\+91|0)?[6789]\d{9}$/;
 
 export default function UserMenu({email, ph_no, wa_no}:{email:string, ph_no:string, wa_no:string}) {
 
@@ -59,7 +60,7 @@ export default function UserMenu({email, ph_no, wa_no}:{email:string, ph_no:stri
             
             <div className="inline-buttons up-modal-btn">
                 <button className='close-btn' onClick={()=>{closeUpdateModal(); setCurr_ph_no(ph_no); setCurr_wa_no(wa_no);}}>Cancel</button>
-                <button className='' onClick={async () => {
+                <button className='' disabled={!regex.test(curr_ph_no) || !regex.test(curr_wa_no) || (curr_ph_no === ph_no && curr_wa_no === wa_no)} onClick={async () => {
                     updateContact(email, curr_ph_no, curr_wa_no).then((res) => {
                         if(res) showToast("Contact details updated successfully");
                         else showToast("Error updating contact details");
