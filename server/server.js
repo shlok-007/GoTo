@@ -26,9 +26,9 @@ app.use("/userDetails", verifyJWT, userDetailsCollection);
 app.use("/login", login);
 app.use("/dailyCleanup", dailyCleanup);
 
-app.get('*',(req,res)=>{
+app.get('*', verifyJWT, (req,res)=>{
     res.status(200).json({
-      message: new Date().toISOString()
+      message: "GoTo server is LIVE!"
     })
 })
 

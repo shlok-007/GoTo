@@ -31,7 +31,7 @@ import { useToast } from './utils/ToastContext';
 
 const fetchServerStatus = async () => {
   try{
-    const response = await fetch(process.env.REACT_APP_SERVER_URL || '');
+    const response = await fetch(process.env.REACT_APP_SERVER_URL || '', {credentials: 'include'});
     if (!response.ok) {
       console.log("Server is offline");
       return true;
@@ -101,7 +101,7 @@ const App: React.FC = () => {
   return (
     <>
       <Navbar isLogged={isLogged} profile={profile} siteName="GoTogether" onLogout={handleLogout}/>
-      {serverDown && <InfoCard content="Unable to connect to the server :_(" />}
+      {serverDown && <InfoCard content="Server down or invalid session." />}
 
       {!serverDown &&
       <Routes>
