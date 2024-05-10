@@ -60,7 +60,11 @@ export default function UserMenu({email, ph_no, wa_no}:{email:string, ph_no:stri
             <div className="inline-buttons up-modal-btn">
                 <button className='close-btn' onClick={()=>{closeUpdateModal(); setCurr_ph_no(ph_no); setCurr_wa_no(wa_no);}}>Cancel</button>
                 <button className='' onClick={async () => {
-                    updateContact(email, curr_ph_no, curr_wa_no).then(() => {closeUpdateModal();showToast("Contact(s) Updated");})}
+                    updateContact(email, curr_ph_no, curr_wa_no).then((res) => {
+                        if(res) showToast("Contact details updated successfully");
+                        else showToast("Error updating contact details");
+                        closeUpdateModal();
+                    })}
                 }>Update</button>
             </div>
             </div>
@@ -90,7 +94,14 @@ export default function UserMenu({email, ph_no, wa_no}:{email:string, ph_no:stri
                     {/* <img src="/icons/edit-button.png" alt="edit-icon" /> */}
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
                 </button>
-                <button onClick={async ()=>{ await getSubscriptionObject(email); showToast("You will be notified!") ; setNotified(true);}}>
+                <button onClick={async ()=>{ 
+                    let res = await getSubscriptionObject(email);
+                    if(res){
+                        showToast("You will be notified!") ; setNotified(true);
+                    } else {
+                        showToast("Error in subscribing for notifications");
+                    }
+                }}>
                     {notified?
                         // <img src="/icons/notification.png" alt="notification-icon" />
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 448 512"><path d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"/></svg>

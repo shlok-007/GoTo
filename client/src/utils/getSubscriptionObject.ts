@@ -12,7 +12,8 @@ export default async function getSubscriptionObject(email: string) {
       if (subscription) {
         // Subscription exists, send it to the server
         console.log(subscription);
-        await addSubscriptionToServer(subscription, email);
+        let res = await addSubscriptionToServer(subscription, email);
+        return res;
       } else {
         // Subscription doesn't exist, subscribe the user
         const newSubscription = await registration.pushManager.subscribe({
@@ -21,13 +22,16 @@ export default async function getSubscriptionObject(email: string) {
         });
 
         // Send the new subscription to the server
-        console.log(newSubscription);
-        await addSubscriptionToServer(newSubscription, email);
+        // console.log(newSubscription);
+        let res = await addSubscriptionToServer(newSubscription, email);
+        return res;
       }
     } catch (error) {
       console.error('Error occurred while registering service worker:', error);
+      return false;
     }
   }
+  return false;
 }
 
 async function addSubscriptionToServer(subscription: PushSubscription, email: string) {
@@ -35,14 +39,21 @@ async function addSubscriptionToServer(subscription: PushSubscription, email: st
   const serverURL = process.env.REACT_APP_SERVER_URL;
 
   try {
-    await fetch(`${serverURL}/userDetails/addSubscription`, {
+    let res = await fetch(`${serverURL}/userDetails/addSubscription`, {
+      credentials: 'include',
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     });
+    if (res.status === 200) return true;
+    else {
+      console.log(res);
+      return false;
+    }
   } catch (err) {
     console.log(err);
+    return false;
   }
 }

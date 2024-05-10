@@ -30,13 +30,18 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
     const {showToast} = useToast();
 
     if(loading && destination && date && dir && email && time){ findCompanions(destination, date, email, name, time, dir).then(
-        (val)=>{setData(val);   setLoading(false);});}
+        (val)=>{
+            if(val === false){  showToast("Something went wrong :_(");  }
+            setData(val);
+            setLoading(false);
+        });
+    }
 
     return (
         <>
             {loading && <InfoCard key={1} content='Loading...'/>}
 
-            {!loading && data===false && <InfoCard key={2} content='Unable to connect to the server :_('/>}
+            {!loading && data===false && <InfoCard key={2} content='Something went wrong. Wait for sometime or try logging in again'/>}
 
             {!loading && typeof(data)!=='boolean' && data.length === 0 && 
             <>
@@ -47,7 +52,12 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                     <>
                     <InfoCard content={`Don't wanna go alone?
                     We'll let you know when there are companions for you ;-)`}/>
-                    <button className='getNotified-btn' onClick={async()=>{await getSubscriptionObject(email);setPressed(true);showToast("You will be notified!");}}>Get Notified!</button>
+                    <button className='getNotified-btn' onClick={async()=>{
+                        let res = await getSubscriptionObject(email);
+                        if(res){
+                            setPressed(true);   showToast("You will be notified!");
+                        } else showToast("Something went wrong :_(");
+                    }}>Get Notified!</button>
                     </>
                     :<InfoCard content='You will be notified when there are companions for you.'/>
                 }
@@ -71,7 +81,12 @@ const ShowCompanions : React.FC<{email:string, name:string}> = ({email, name}) =
                         <>
                         <InfoCard key={6} content={`Don't wanna go with them?
                         We'll let you know when there are more companions ;-)`}/>
-                        <button className='getNotified-btn' onClick={async()=>{await getSubscriptionObject(email);setPressed(true);showToast("You will be notified!");}}>Get Notified!</button>
+                        <button className='getNotified-btn' onClick={async()=>{
+                            let res = await getSubscriptionObject(email);
+                            if(res){
+                                setPressed(true);   showToast("You will be notified!");
+                            } else showToast("Something went wrong :_(");
+                        }}>Get Notified!</button>
                         </>
                         :<InfoCard key={7} content='You will be notified when there are more companions for you.'/>
                     }

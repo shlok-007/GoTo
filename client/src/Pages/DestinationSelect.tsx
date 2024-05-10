@@ -47,24 +47,6 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
   const [isServerDown, setIsServerDown] = useState<boolean>(true);
   const [ischecked, setIsChecked] = useState<boolean>(false);
 
-  // const handleDropdownVisibility = (e:React.MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   let dropdown = document.querySelector("[data-dropdown]");
-  //   if(dropdown){
-  //     dropdown.classList.toggle("active");
-  //   }
-  // }
-
-  // const handleDestinationSelection = (e:React.MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   let dropdown = e.currentTarget.closest("[data-dropdown]");
-  //   if(dropdown){
-  //     dropdown.classList.toggle("active");
-  //   }
-  //   if(e.currentTarget.textContent)
-  //     setDestination(e.currentTarget.textContent);
-  // }
-
   const [placeList, setPlaceList] = useState<string[]>(localStorage.getItem("placeList")?.split(",") || []);
 
   useQuery('setup page', async () => {
@@ -72,20 +54,23 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
   if (profile) {
 
     getDateTime().then((val) => {
-      // setLoading(false);
+      // console.log(val);
       if (typeof val !== "boolean") {
         setServerDate(val);
         setDate(val.date);
         setTime(val.time);
-        // setIsServerDown(false);
-      } else{ setLoading(false);  return;};
+      } else{ 
+        setLoading(false);
+        console.log("Couldn't get date and time from server");
+        return;
+      };
     });
 
     setIsServerDown(false);
     setLoading(false);
 
     getContact(profile.email).then((val) => {
-      if (val === false){ setLoading(false); setIsServerDown(true); return;}
+      if (val === false){ setIsServerDown(true);}
       else if (typeof val !== "boolean") {
         setPh_no(val.ph_no);
         setWa_no(val.wa_no);
@@ -98,23 +83,14 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
       if (val.length !== 0) {
         // console.log(val);
         setPlaceList(val);
-        setIsServerDown(false);
         localStorage.setItem("placeList", val.join(","));
-      }
+      } else setIsServerDown(true);
     });
   }
   else{
     setLoading(false);
   }
   });
-
-  // const [displayPopup, setDisplayPopup] = useState<boolean>(false);
-  // const handleUnfilledDestination = () => {
-  //   setDisplayPopup(true);
-  //   setTimeout(() => {
-  //     setDisplayPopup(false);
-  //   }, 2000);
-  // };
 
   const { showToast } = useToast();
 
@@ -188,7 +164,7 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
       {loading && <InfoCard content="Loading..." />}
 
       {!loading && isServerDown && (
-        <InfoCard content="Unable to connect to the server :_(" />
+        <InfoCard content="Something went wrong. Please login again." />
       )}
 
       {!loading && !isServerDown && typeof serverDate !== "boolean" && (

@@ -24,40 +24,50 @@ router.patch("/addSubscription", async (req, res) => {
     }
 });
 
-router.post("/addUser", async (req, res) => {
-  let db = await connectToDatabase();
-  let collection = await db.collection("GotoUsers");
-  let email=req.body.email;
-  const existingUser = await collection.findOne({ email });
+// router.post("/addUser", async (req, res) => {
+//   let oauthJWT = req.body.jwt;
+//   if(!oauthJWT){
+//     return res.status(401).json({ error: 'No token found' });
+//   }
+//   let userData = await verifyOAuthJWT(oauthJWT);
 
-  res.cookie('jwt_auth_token', "authToken"
-  , {
-    // Set cookie options
-    httpOnly: true, // Prevent client-side script access
-    // secure: process.env.NODE_ENV === 'production', // Set secure cookie in production
-    secure: true, // Set secure cookie in production
-    sameSite: 'strict', // Prevent cross-site request forgery
-    maxAge: 360000000, // 1 hour in milliseconds
-    path: '/', // Make the cookie accessible for all routes
-  }
-);
-  console.log("User added successfully");
+//   if(!!!userData){
+//     return res.status(401).json({ error: 'Invalid token' });
+//   }
 
-  if (existingUser) {
-    return res.send({msg: "User already exists."}).status(204);
-  }
+//   const authToken = jwt.sign(userData, process.env.JWT_SECRET, { expiresIn: '30d' });
 
-  let newUser = {
-    "email": email,
-    "name": req.body.name,
-    "ph_no": "",
-    "wa_no": "",
-    "avatar": req.body.avatar,
-    "subObject": {}
-  };
-  let result = await collection.insertOne(newUser);
-  res.send({msg: "User added successfully!"}).status(200);
-});
+//   res.cookie('jwt_auth_token', authToken
+//   , {
+//     httpOnly: false,
+//     secure: process.env.NODE_ENV === 'production',
+//     sameSite: 'strict',
+//     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+//     path: '/',
+//   }
+//   );
+
+//   let db = await connectToDatabase();
+//   let collection = db.collection("GotoUsers");
+//   let email = userData.email;
+//   const existingUser = await collection.findOne({ email });
+
+//   if (existingUser) {
+//     return res.send({msg: "User already exists.", profile: userData}).status(204);
+//   }
+
+//   let newUser = {
+//     "email": email,
+//     "name": req.body.name,
+//     "ph_no": "",
+//     "wa_no": "",
+//     "avatar": req.body.avatar,
+//     "subObject": {}
+//   };
+//   let result = await collection.insertOne(newUser);
+//   res.send({msg: "New user added.", profile: userData}).status(200);
+
+// });
 
 router.patch("/updateContact", async (req, res) => {
   let db = await connectToDatabase();
@@ -83,7 +93,7 @@ router.patch("/updateContact", async (req, res) => {
 router.get("/getContact", async (req, res) => {
   let db = await connectToDatabase();
   const {email} = req.query;
-  let collection = await db.collection("GotoUsers");
+  let collection = db.collection("GotoUsers");
   let results = await collection.findOne({"email": email});
   if(results){
   res.send({

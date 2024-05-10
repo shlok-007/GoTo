@@ -79,7 +79,18 @@ export default function YourTrip({destination, date, time, id, name, dir, closeD
                         <button className='close-btn' onClick={(e)=>closeDeleteModal()}>No</button>
                         <button className='navbar__logout' onClick={async () => {
                             setWarningText("Deleting...");
-                            deleteTrip(id).then(() => {setWarningText("Deleted"); setDeleted(true); closeDeleteModal(); closeDialog(); showToast("Trip Deleted");})}
+                            deleteTrip(id).then((res) => {
+                                if(res){
+                                    setWarningText("Deleted");
+                                    setDeleted(true);
+                                    showToast("Trip Deleted");
+                                }else{
+                                    setWarningText("Error deleting trip");
+                                    showToast("Error deleting trip");
+                                }
+                                closeDeleteModal();
+                                closeDialog();
+                            })}
                         }>Yes</button>
                     </div>
                     </div>
@@ -124,7 +135,16 @@ export default function YourTrip({destination, date, time, id, name, dir, closeD
                             disabled = {date === newDate && time === newTime && dir === newDir}
                             onClick={async () => {
                             setUpdateText("Updating...");
-                            updateTrip(id, newDate, newTime, destination, name, newDir).then(() => {closeUpdateModal(); closeDialog();  showToast("Trip Updated");})}
+                            // updateTrip(id, newDate, newTime, destination, name, newDir).then(() => {closeUpdateModal(); closeDialog();  showToast("Trip Updated");})
+                            let res = await updateTrip(id, newDate, newTime, destination, name, newDir);
+                            if(res){
+                                setUpdateText("Updated");
+                                showToast("Trip Updated");
+                            } else {
+                                setUpdateText("Error updating trip");
+                                showToast("Error updating trip");
+                            }
+                        }
                         }>Update</button>
                     </div>
                     </div>

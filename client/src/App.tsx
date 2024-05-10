@@ -4,7 +4,6 @@ import { useQuery } from 'react-query';
 // import './App.css';
 
 import {googleLogout, CredentialResponse} from '@react-oauth/google';
-import decodeJwtResponse from './utils/decodeJwtResponse';
 import addUser from './utils/addUser';
 
 import Navbar from './components/Navbar';
@@ -18,6 +17,7 @@ import Cookies from 'universal-cookie';
 
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
+import { useToast } from './utils/ToastContext';
 // import Footer from './components/Footer';
 
 // const dummyProfile: profile_interface = {
@@ -49,6 +49,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [profile, setProfile] = useState<profile_interface | undefined>(undefined);
+  const {showToast} = useToast();
   // const [serverDown, setServerDown] = useState<boolean>(false);
 
   const { data: serverDown } = useQuery('serverStatus', fetchServerStatus);
@@ -70,16 +71,22 @@ const App: React.FC = () => {
 
   const handleLoginSuccess = async (credentialResponse: CredentialResponse)=>{
     if(credentialResponse.credential){
-      let temp = decodeJwtResponse(credentialResponse.credential);
-      setProfile(temp);
-      localStorage.setItem('profile', JSON.stringify(temp));
+      // let temp = decodeJwtResponse(credentialResponse.credential);
+      // setProfile(temp);
+      // localStorage.setItem('profile', JSON.stringify(temp));
       
-      setIsLogged(true);
+      // setIsLogged(true);
       
-      await addUser(temp.email, temp.name, temp.picture);
-      console.log(cookies.get('jwt_auth_token'));
+      const res = await addUser(credentialResponse.credential, setProfile);
+      // console.log(cookies.get('jwt_auth_token'));
+      if(res){
+        setIsLogged(true);
+        showToast("Login successful!");
+        navigate("/selectDestination");
+      } else {
+        showToast("Unable to login. Please try again or contact the admin.");
+      }
     }
-    navigate("/selectDestination");
   }
 
   const handleLogout = () => {

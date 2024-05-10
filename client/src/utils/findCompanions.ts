@@ -19,17 +19,21 @@ const findCompanions = async (
           name: name,
           time: time,
           dir: dir
-        })
+        }),
+      {
+        credentials: "include"
+      }
     );
+
     if (!response.ok) {
-      const message = `An error occurred: ${response.statusText}`;
-      window.alert(message);
+      // const message = `An error occurred: ${response.statusText}`;
+      // window.alert(message);
       return false;
     }
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return false;
   }
 };

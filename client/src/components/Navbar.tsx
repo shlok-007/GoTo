@@ -8,6 +8,7 @@ import getUserTrips from "../utils/getUserTrips"
 import getContact from "../utils/getContact"
 import { useLocation } from "react-router-dom"
 import { useEffect } from "react"
+import { useToast } from "../utils/ToastContext"
 
 const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) => {
   const navigate = useNavigate();
@@ -26,21 +27,25 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
   const userTripsDialog = useRef<HTMLDialogElement>(null);
   const userMenuRef = useRef<HTMLDialogElement>(null);
 
+  const {showToast} = useToast();
+
   const [ph_no, setPh_no] = useState<string>(localStorage.getItem('ph_no') || "Loading...");
   const [wa_no, setWa_no] = useState<string>(localStorage.getItem('wa_no') || "Loading...");
 
   const openTripsDialog = () => {
     setUserMenuShown(false);
     userTripsDialog.current?.showModal()
-    if(profile)  getUserTrips(profile.email).then((trips) => {if(trips.length===0)  setTripState("You haven't added any trips."); setMyTrips(trips)});
-    // if(openTripsDialogButton.current){
-    //   const buttonRect = openTripsDialogButton.current.getBoundingClientRect();
-    //   setDialogPosition({
-    //     top: buttonRect.bottom + 15,
-    //     left: buttonRect.right - 320,
-    //   });
-    // }
-    // setTripsShown(true);
+    if(profile)  getUserTrips(profile.email).then((trips) => {
+      if(trips===false){
+        setTripState("Error fetching trips.");
+        showToast("Error fetching your trips. Please try again later.");
+        return;
+      }
+      else if(trips.length===0){
+        setTripState("You haven't added any trips.");
+      }
+      setMyTrips(trips);
+    });
   }
 
   const openUserMenu = () => {
@@ -107,9 +112,11 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
         <div className="user-trips-title">Your Trips</div>
         <div className="dialog-content">
           {myTrips.length === 0 && <div className="no-trips">{tripState}</div>}
-          {myTrips.map((trip) => (
-            <YourTrip key={trip._id+trip.date+trip.time} closeDialog={closeUserTripsDialog} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id} name={profile?.name || ""} dir={trip.dir}/>
-          ))}
+          <div className="trips">
+            {myTrips.map((trip) => (
+              <YourTrip key={trip._id+trip.date+trip.time} closeDialog={closeUserTripsDialog} destination={trip.destination} date={trip.date} time={trip.time} id={trip._id} name={profile?.name || ""} dir={trip.dir}/>
+            ))}
+          </div>
           <button className="close-btn" onClick={closeUserTripsDialog}>Close</button>
         </div>
       </dialog>

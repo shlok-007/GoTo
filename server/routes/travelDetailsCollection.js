@@ -193,9 +193,9 @@ router.patch("/trip/:id", async (req, res) => {
   res.send(result).status(200);
 });
 
-router.delete("/deleteOneTrip/:id", async (req, res) => {
+router.delete("/deleteOneTrip", async (req, res) => {
   let db = await connectToDatabase();
-  const query = { _id: new ObjectId(req.params.id) };
+  const query = { _id: new ObjectId(req.body.tripId) };
 
   const collection = db.collection("TravelDetails");
   let result = await collection.deleteOne(query);
@@ -226,14 +226,18 @@ router.get("/destinations", async (req, res) => {
 router.post("/destinations", async (req, res) => {
   let db = await connectToDatabase();
   let collection = db.collection("Destinations");
-  console.log(req.body);
-  let result = await collection.insertOne(req.body);
-  res.send(result).status(200);
+  // console.log(req.body);
+  let newDest = {
+    name: req.body.destname,
+    reports: []
+  }
+  await collection.insertOne(newDest);
+  res.status(204).json({msg: "Destination added successfully."});
 });
 
-router.patch("/destinations", async (req, res) => {
+router.patch("/destinations/report", async (req, res) => {
   let reportedDestination = req.body.reportedDestination;
-  let reporterEmail = req.body.reporterEmail;
+  let reporterEmail = req.body.email;
   let db = await connectToDatabase();
   let collection = db.collection("Destinations");
 

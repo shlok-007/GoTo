@@ -10,7 +10,7 @@ export default function HomePage({name}: {name:string}) {
             <div className="center-btn">
                 <button onClick={()=>navigate("/selectDestination")}>Get Started!</button>
             </div>
-            <InfoCard content="Tip: You can search for your destination or add a new destination if it's not available." />
+            <InfoCard content="Tip: You can search for your destination or add a new one if it's not available." />
         </>
     )
 }
