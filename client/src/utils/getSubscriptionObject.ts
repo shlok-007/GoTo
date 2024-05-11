@@ -2,16 +2,20 @@ export default async function getSubscriptionObject(email: string) {
   if ('serviceWorker' in navigator && 'PushManager' in window) {
     try {
       // Register a service worker
-      const registration = await navigator.serviceWorker.register('/service-worker.js', { scope: '/' });
+      let registration = await navigator.serviceWorker.register('service-worker.js', { scope: '/' });
+      window.alert('Service worker registered');
 
       // Update the service worker and get the subscription
       // const subscription = await registration.update().then(registration => registration.pushManager.getSubscription());
       await registration.update()
       const subscription = await registration.pushManager.getSubscription();
 
+      window.alert('Subscription obtained');
+
       if (subscription) {
         // Subscription exists, send it to the server
         console.log(subscription);
+        window.alert('Subscription exists');
         let res = await addSubscriptionToServer(subscription, email);
         return res;
       } else {
@@ -20,6 +24,7 @@ export default async function getSubscriptionObject(email: string) {
           userVisibleOnly: true,
           applicationServerKey: process.env.REACT_APP_PUBLIC_VAPID_KEY
         });
+        window.alert('New subscription obtained');
 
         // Send the new subscription to the server
         // console.log(newSubscription);
@@ -27,10 +32,12 @@ export default async function getSubscriptionObject(email: string) {
         return res;
       }
     } catch (error) {
+      window.alert(error);
       console.error('Error occurred while registering service worker:', error);
       return false;
     }
   }
+  window.alert('Your browser does not support push notifications or service workers');
   return false;
 }
 
