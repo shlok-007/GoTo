@@ -13,6 +13,8 @@
 
 }
 
+/* transparent-bg is secondary-300 with 0.35 opacity */
+
 @media (prefers-color-scheme: light) {
   :root {
     --text: rgb(15, 10, 26);
@@ -24,40 +26,33 @@
     --line: rgba(0, 0, 0, 0.1);
 
     --transparent_bg: rgba(196, 142, 215, 0.35);
-    /* secondary-300 */
+    
   }
 }
 
-/* added css */
-
-
 @media (prefers-color-scheme: dark) {
-:root {
-  --text: rgb(234, 229, 245);
-  --background: rgb(11, 8, 22);
-  --primary: rgb(167, 145, 217);
-  --secondary: rgb(109, 46, 132);
-  --accent: rgb(179, 96, 199);
+  :root {
+    --text: rgb(234, 229, 245);
+    --background: rgb(11, 8, 22);
+    --primary: rgb(167, 145, 217);
+    --secondary: rgb(109, 46, 132);
+    --accent: rgb(179, 96, 199);
 
-  --line: rgba(255, 255, 255, 0.1);
+    --line: rgba(255, 255, 255, 0.1);
 
-  /* secondary-300 */
-  --transparent_bg: rgba(94, 40, 113, 0.35);
-}
-/* 7,0,64 */
+    --transparent_bg: rgba(94, 40, 113, 0.35);
+  }
 }
 
 
-/* all buttons slightly darker when hovered */
-/* also button size increased */
 button:hover {
-filter: brightness(0.9);
-transform: scale(0.95);
+  filter: brightness(0.9);
+  transform: scale(0.95);
 }
 
 button{
-cursor: pointer;
-transition: 250ms ease-in-out;
-font-size: medium;
-color: var(--text);
+  cursor: pointer;
+  transition: 250ms ease-in-out;
+  font-size: medium;
+  color: var(--text);
 }
