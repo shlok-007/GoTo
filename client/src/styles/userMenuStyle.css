@@ -58,8 +58,8 @@
 }
 
 .up-modal-btn > :nth-child(2){
-    background-color: var(--primary);
-    color: var(--background);
+    background-color: var(--primary-500);
+    color: var(--background-50);
     font-weight: bold;
 }
 
@@ -69,6 +69,6 @@
     height: 35px;
     border-color: transparent;
     border-radius: 5px;
-    background-color: var(--secondary);
-    color: var(--text);
+    background-color: var(--secondary-300);
+    color: var(--text-950);
 }

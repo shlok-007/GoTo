@@ -1,5 +1,5 @@
 .info-card {
-    background-color: var(--transparent_bg);
+    background-color: var(--secondary-200);
     border-radius: 8px;
     /* box-shadow: 0 2px 4px rgba(255, 255, 255, 0.3); */
     width: fit-content;

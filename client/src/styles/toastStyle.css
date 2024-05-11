@@ -3,7 +3,7 @@
     bottom: 1rem;
     left: 1rem;
     width: max-content !important;
-    background-color: var(--transparent_bg);
+    background-color: var(--secondary-200);
     backdrop-filter: blur(3px);
     font-size: medium;
     /* color: white; */
