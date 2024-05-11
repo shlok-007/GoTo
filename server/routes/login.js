@@ -20,14 +20,24 @@ router.post("/", async (req, res) => {
   
     res.cookie('jwt_auth_token', authToken
     , {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
       path: '/',
     }
     );
   
+    res.cookie('dummy_jwt_auth_token', "i exist!"
+    , {
+      httpOnly: false,
+      secure: true,
+      sameSite: 'strict',
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      path: '/',
+    }
+    );
+
     let db = await connectToDatabase();
     let collection = db.collection("GotoUsers");
     let email = userData.email;

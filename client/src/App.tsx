@@ -29,30 +29,31 @@ import { useToast } from './utils/ToastContext';
 //   picture: "https://lh3.googleusercontent.com/a/ACg8ocILCoSKIjk_01JAqfNFoliZkCmaNBgNC8LE-J-4QDUQRGEc=s96-c"
 // }
 
-const fetchServerStatus = async () => {
-  try{
-    const response = await fetch(process.env.REACT_APP_SERVER_URL || '', {credentials: 'include'});
-    if (!response.ok) {
-      // console.log("Server is offline");
-      return true;
-    }
-    // console.log("Server is online");
-    return false;
-  } catch (error) {
-    // console.log("Server is offline");
-    return true;
-  }
-};
-
 const App: React.FC = () => {
 
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [profile, setProfile] = useState<profile_interface | undefined>(undefined);
   const {showToast} = useToast();
-  // const [serverDown, setServerDown] = useState<boolean>(false);
+  const [serverDown, setServerDown] = useState<boolean>(false);
 
-  const { data: serverDown } = useQuery('serverStatus', fetchServerStatus);
+  const fetchServerStatus = async () => {
+    try{
+      const response = await fetch(process.env.REACT_APP_SERVER_URL || '', {credentials: 'include'});
+      if (!response.ok) {
+        // console.log("Server is offline");
+        setServerDown(true);
+        return;
+      }
+      // console.log("Server is online");
+      setServerDown(false);
+    } catch (error) {
+      // console.log("Server is offline");
+      setServerDown(true);
+    }
+  };
+
+  useQuery('serverStatus', fetchServerStatus);
 
   // for testing
 
@@ -64,7 +65,7 @@ const App: React.FC = () => {
   const profileCache = localStorage.getItem('profile');
   const cookies = new Cookies();
 
-  if(!!profileCache && !isLogged && cookies.get('jwt_auth_token')) {
+  if(!!profileCache && !isLogged && cookies.get('dummy_jwt_auth_token')) {
     setIsLogged(true);
     setProfile(JSON.parse(profileCache));
   }
@@ -78,9 +79,10 @@ const App: React.FC = () => {
       // setIsLogged(true);
       
       const res = await addUser(credentialResponse.credential, setProfile);
-      // console.log(cookies.get('jwt_auth_token'));
+      // console.log(cookies.get('dummy_jwt_auth_token'));
       if(res){
         setIsLogged(true);
+        setServerDown(false);
         showToast("Login successful!");
         navigate("/selectDestination");
       } else {
@@ -94,7 +96,7 @@ const App: React.FC = () => {
     setProfile(undefined);
     googleLogout();
     localStorage.removeItem('profile');
-    cookies.remove('jwt_auth_token');
+    cookies.remove('dummy_jwt_auth_token');
     navigate("/loginPage");
   };
 
