@@ -23,17 +23,17 @@ router.post("/", async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      maxAge: 30 * 24 * 60 * 60,  // 30 days
       path: '/',
     }
     );
   
-    res.cookie('dummy_jwt_auth_token', "i exist!"
+    res.cookie('dummy_jwt_auth_token', "iExist!"
     , {
       httpOnly: false,
       secure: true,
       sameSite: 'none',
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      maxAge: 30 * 24 * 60 * 60,
       path: '/',
     }
     );
@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
     const existingUser = await collection.findOne({ email });
   
     if (existingUser) {
-      return res.send({msg: "User already exists.", profile: userData}).status(204);
+      return res.status(208).send({msg: "User already exists.", profile: userData});
     }
   
     let newUser = {
@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
       "subObject": {}
     };
     let result = await collection.insertOne(newUser);
-    res.send({msg: "New user added.", profile: userData}).status(200);
+    res.status(200).send({msg: "New user added.", profile: userData});
   
   });
 

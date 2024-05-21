@@ -31,8 +31,8 @@ export default function YourTrip({destination, date, time, id, name, dir, closeD
     const tripBG = {
         // true: faint green, false: faint blue
         // backgroundColor: dir ? "rgba(0, 0, 255, 0.1)" : "rgba(0, 255, 0, 0.1)"
-        backgroundColor: newDir ? "var(--accent-400)" : "var(--secondary-300)",
-        color: newDir ? "var(--background-50)" : "var(--text-950)"
+        backgroundColor: newDir ? "var(--accent)" : "var(--secondary)",
+        color: newDir ? "var(--bg)" : "var(--text)"
     }
 
     const deleteRef = useRef<HTMLDialogElement>(null);

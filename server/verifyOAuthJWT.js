@@ -1,8 +1,7 @@
 import jws from "jws-jwk";
 import fs from "fs";
-import exp from "constants";
 
-const jwk = JSON.parse(fs.readFileSync("jwk.json", "utf8"));
+const jwk = JSON.parse(fs.readFileSync("./jwk.json", "utf8"));
 
 const verifyOAuthJWT = async (oauthJWT) => {
     const body = JSON.parse(Buffer.from(oauthJWT.split(".")[1], "base64").toString());

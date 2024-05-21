@@ -1,26 +1,29 @@
 :root{
-  --text: rgb(234, 229, 245);
-  --background: rgb(11, 8, 22);
-  --primary: rgb(167, 145, 217);
-  --secondary: rgb(109, 46, 132);
-  --accent: rgb(179, 96, 199);
+  --text: var(--text-950);
+  --bg: var(--background-50);
+  --primary: var(--primary-500);
+  --secondary: var(--secondary-400);
+  --accent: var(--accent-600);
 
-  --line: rgba(255, 255, 255, 0.1);
-  --transparent_bg: rgba(94, 40, 113, 0.35);
+  --line: var(--text-100);
+  /* alt-bg is secondary-300 with 0.35 opacity */
+  --alt-bg: var(--secondary-200);
+  --info-card-bg: var(--secondary-100);
 
-  background-color: var(--background-50);
-  color: var(--text-950);
+  background-color: var(--bg);
+  color: var(--text);
 
 }
 
-/* transparent-bg is secondary-300 with 0.35 opacity */
+/* alt-bg is secondary-300 with 0.35 opacity */
+
 /* text: text-950 */
 /* bg: background-50 */
 /* primary: primary-500 */
 /* secondary: secondary-300 */
 /* accent: accent-400 */
-/* line: text-50 */
-/* transparent_bg: secondary-200 */
+/* line: text-100 */
+/* alt-bg: secondary-300 with 0.35 opacity */
 
 /* @media (prefers-color-scheme: light) {
   :root {
@@ -190,5 +193,5 @@ button{
   cursor: pointer;
   transition: 250ms ease-in-out;
   font-size: medium;
-  color: var(--text-950);
+  color: var(--text);
 }

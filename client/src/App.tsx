@@ -42,11 +42,15 @@ const App: React.FC = () => {
       const response = await fetch(process.env.REACT_APP_SERVER_URL || '', {credentials: 'include'});
       if (!response.ok) {
         // console.log("Server is offline");
-        setServerDown(true);
-        return;
-      }
+        // if 401, logout
+        if(response.status === 401) {
+          handleLogout();
+        }
+        else  setServerDown(true);
+      } else {
       // console.log("Server is online");
-      setServerDown(false);
+        setServerDown(false);
+      }
     } catch (error) {
       // console.log("Server is offline");
       setServerDown(true);

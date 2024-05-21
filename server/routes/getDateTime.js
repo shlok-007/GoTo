@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     let results = giveDateTime();
-    res.send(results).status(200);
+    res.status(200).send(results);
 });
 
 export default router;

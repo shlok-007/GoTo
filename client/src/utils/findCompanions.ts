@@ -7,7 +7,7 @@ const findCompanions = async (
   name: string,
   time: string,
   dir: string
-): Promise<travelDetails_interface[] | boolean> => {
+): Promise<travelDetails_interface[] | false> => {
   try {
     let serverURL = process.env.REACT_APP_SERVER_URL;
     const response = await fetch(

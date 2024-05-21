@@ -6,7 +6,7 @@ const router = express.Router();
 router.patch("/addSubscription", async (req, res) => {
     let db = await connectToDatabase();
     const {email, subscription} = req.body;
-    let collection = await db.collection("GotoUsers");
+    let collection = db.collection("GotoUsers");
     const filter = { "email": email };
     const update = { $set: { "subObject": subscription } };
     const options = {returnOriginal: false};
@@ -53,7 +53,7 @@ router.patch("/addSubscription", async (req, res) => {
 //   const existingUser = await collection.findOne({ email });
 
 //   if (existingUser) {
-//     return res.send({msg: "User already exists.", profile: userData}).status(204);
+//     return res.send({msg: "User already exists.", profile: userData}).status(208);
 //   }
 
 //   let newUser = {
@@ -102,15 +102,16 @@ router.get("/getContact", async (req, res) => {
   let collection = db.collection("GotoUsers");
   let results = await collection.findOne({"email": email});
   if(results){
-  res.send({
-    "ph_no": results.ph_no,
-    "wa_no": results.wa_no
-  }).status(200);
+    res.status(200).send({
+      "ph_no": results.ph_no,
+      "wa_no": results.wa_no
+    });
   }else{
-  res.send({
-    "ph_no": "",
-    "wa_no": ""
-  }).status(404);}
+    res.status(404).send({
+      "ph_no": "",
+      "wa_no": ""
+    });
+  }
 });
 
 export default router;

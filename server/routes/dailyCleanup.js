@@ -7,7 +7,7 @@ router.delete("/", async (req, res) => {
     let key = req.body.key;
 
     if (key !== process.env.JWT_SECRET) {
-        res.send("Invalid Key").status(401);
+        res.status(401).send("Invalid Key");
         return;
     }
 
@@ -20,7 +20,7 @@ router.delete("/", async (req, res) => {
   
     let result = await collection.deleteMany({ date: { $lt: currentDate } });
     // console.log(result);
-    res.send(result).status(200);
+    res.status(200).send(result);
 });
 
 export default router;

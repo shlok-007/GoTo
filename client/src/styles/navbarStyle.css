@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    border-bottom: 1px solid var(--text-50);
+    border-bottom: 1px solid var(--line);
   }
   
   .navbar__site-name {
@@ -11,8 +11,8 @@
     font-weight: bold;
     cursor: pointer;
 
-    background-color: var(--text-950);
-    background-image: linear-gradient(120deg, var(--primary-500), var(--accent-400));
+    background-color: var(--text);
+    background-image: linear-gradient(120deg, var(--primary), var(--accent));
     background-size: 100%;
     background-repeat: repeat;
     -webkit-background-clip: text;
@@ -24,7 +24,7 @@
   }
 
   .navbar__site-name:hover{
-    background-image: linear-gradient(240deg, var(--primary-500), var(--accent-400));
+    background-image: linear-gradient(240deg, var(--primary), var(--accent));
   }
   
   .navbar__user {
@@ -36,7 +36,7 @@
   .navbar__avatar-frame {
     width: 40px;
     height: 40px;
-    border: 3px solid var(--accent-400);
+    border: 3px solid var(--accent);
     padding: 0;
     border-radius: 50%;
     overflow: hidden;
@@ -52,12 +52,12 @@
   }
 
   .user-trips{
-    color: var(--text-950);
+    color: var(--bg);
     font-size: large;
     font-weight: bold;
     border: none;
     border-radius: 5px;
-    background-color: var(--secondary-300);
+    background-color: var(--primary);
     padding: 8px 16px;
     cursor: pointer;
     transition: 250ms ease-in-out;
@@ -92,13 +92,13 @@
     z-index: 1000;
     border-radius: 8px;
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-    border-color: var(--secondary-300);
+    border-color: var(--secondary);
     width: fit-content ;
     max-width:90%;
-    /* color: var(--text-950); */
-    background-color: var(--secondary-200);
+    /* color: var(--text); */
+    background-color: var(--alt-bg);
     animation: slide-down 0.3s ease;
-    color: var(--text-950);
+    color: var(--text);
   }
 
   dialog::backdrop{
@@ -182,7 +182,7 @@
     height: 35px;
     /* border-color: transparent; */
     border-radius: 5px;
-    /* background-color: var(--secondary-300); */
+    /* background-color: var(--secondary); */
 }
 
   .buttons{
@@ -202,7 +202,7 @@
 
   /* select the 2nd child of buttons */
   .buttons > button:nth-child(2){
-    background-color: var(--primary-500);
+    background-color: var(--primary);
     border: none;
   }
 
@@ -210,9 +210,9 @@
     font-weight: bold;
     /* font-family: inherit; */
     /* color: white; */
-    background-color: var(--primary-500);
+    background-color: var(--primary);
     border: none;
-    color: var(--background-50);
+    color: var(--bg);
     /* margin-left: 1rem; */
     width: 20%;
     /* padding: 8px 16px;
@@ -223,7 +223,7 @@
   .close-btn{
     /* margin-right: 1rem; */
     background-color: transparent !important;
-    border: 2px solid var(--text-950) !important;
+    border: 2px solid var(--text) !important;
     border-radius: 5px;
     width: 30%;
     padding: 8px 16px;
@@ -325,8 +325,8 @@
   } */
 
   .date-time-ip{
-    background-color: var(--primary-500);
-    color: var(--background-50);
+    background-color: var(--primary);
+    color: var(--bg);
     border:none;
     padding: 5px 10px;
     border-radius: 5px;
@@ -352,7 +352,7 @@
     position: absolute;
     top: 20%;
     right: 10px;
-    fill: var(--background-50);
+    fill: var(--bg);
     pointer-events: none;
   }
 
@@ -363,9 +363,9 @@
   }
 
   .contact-ip{
-    background-color: var(--background-50);
+    background-color: var(--bg);
     backdrop-filter: blur(20px);
-    color: var(--text-950);
+    color: var(--text);
     border:none;
     padding: 5px 10px;
     border-radius: 5px;

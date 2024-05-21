@@ -3,13 +3,13 @@
     font-weight: bold;
     font-family: inherit;
     /* background-color:rgba(100, 150, 255, 0.7); */
-    background-color: var(--primary-500);
+    background-color: var(--accent);
     /* backdrop-filter: blur(5px); */
     border: none;
     border-radius: 5px;
     text-decoration: none;
     /* color: white; */
-    color: var(--background-50);
+    color: var(--bg);
     cursor: pointer;
     padding: 5px 20px;
     /* transition: 250ms ease-in-out; */

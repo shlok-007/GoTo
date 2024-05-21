@@ -27,7 +27,7 @@ app.use(cookieParser());
 
 const limiter = rateLimit({
   windowMs: 1*60*1000,
-  max: process.env.NODE_ENV === 'production' ? 30 : 1000,
+  max: process.env.NODE_ENV === 'production' ? 60 : 1000,
   keyGenerator: (req) => {
     const authToken = req.cookies.jwt_auth_token;
     if (authToken) {

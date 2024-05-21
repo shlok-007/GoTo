@@ -1,5 +1,5 @@
 .dest-sel-card{
-  background-color: var(--secondary-200);
+  background-color: var(--alt-bg);
   width:max-content;
   /* min-width: 40rem; */
   margin: 2rem auto;
@@ -37,7 +37,7 @@
 
 .destination-selector-button {
   /* color: white; */
-  background-color: var(--background-50);
+  background-color: var(--bg);
   /* backdrop-filter: blur(10px); */
   border: none;
   border-radius: 10px;
@@ -48,7 +48,7 @@
   padding: 15px;
   width: 25ch;
   transition: 250ms ease-in-out;
-  color: var(--text-950);
+  color: var(--text);
   text-align: center;
 }
 
@@ -67,7 +67,7 @@
   position: absolute;
   left: 0;
   top: calc(100% + 0.25rem);
-  background-color: var(--background-50);
+  background-color: var(--bg);
   backdrop-filter: blur(10px);
   width: 100%;
   /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .1); */
@@ -88,7 +88,7 @@
 .dropdown-cities {
   display: flex;
   flex-direction: column;
-  border: var(--secondary-200) 1px solid;
+  border: var(--alt-bg) 1px solid;
   border-radius: 10px;
   padding: 0.5rem 0;
   /* background-color: transparent; */
@@ -108,20 +108,20 @@
 }
 
 .dropdown-item:hover {
-  background-color: var(--secondary-300);
+  background-color: var(--secondary);
   transform: scale(1);
 }
 
 .search-btn {
   font-size: large;
   font-weight: bold;
-  background-color: var(--primary-500);
+  background-color: var(--primary);
   /* backdrop-filter: blur(5px); */
   border: none;
   border-radius: 5px;
   text-decoration: none;
   font-family: inherit;
-  color: var(--background-50);
+  color: var(--bg);
   cursor: pointer;
   padding: 5px 20px;
   /* transition: background-color 150ms ease-in-out, border-radius 150ms ease-in-out; */
@@ -155,7 +155,7 @@
 .checkbox-frame{
   width: 20px;
   height: 20px;
-  background-color: var(--background-50);
+  background-color: var(--bg);
   border-radius: 3px;
   display: flex;
   align-items: center;
