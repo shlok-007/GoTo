@@ -100,7 +100,7 @@
     border-radius: 5px;
     text-decoration: none;
     font-family: inherit;
-    color: var(--background);
+    color: var(--bg);
     cursor: pointer;
     padding: 5px 20px;
     /* transition: background-color 150ms ease-in-out, border-radius 150ms ease-in-out; */

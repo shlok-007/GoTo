@@ -1,43 +1,65 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import "./loadEnvironment.js";
+import "./cronDailyCleanup.js"
+import rateLimit from "express-rate-limit";
+import jwt from 'jsonwebtoken';
+
 import travelDetailsCollection from "./routes/travelDetailsCollection.js";
 import getDateTime from "./routes/getDateTime.js"
 import userDetailsCollection from "./routes/userDetailsCollection.js"
+import login from "./routes/login.js";
+import dailyCleanup from "./routes/dailyCleanup.js";
+
+import verifyJWT from "./verifyJWT.js";
 
 const PORT = process.env.PORT || 3069;
 const app = express();
 
-const allowedOrigins = [process.env.CLIENT_URL
-                       ];
-const corsOptions = {
-  origin: function (origin, callback) {
-    console.log("REQUEST_ORIGIN : "+origin);
-    //allow a specific request user agent
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-
-app.use(cors(corsOptions));
-// app.use(cors());
+app.use(cors({ origin: [
+    process.env.CLIENT_URL, 
+    "https://goto-git-dev-shlok007s-projects.vercel.app"], 
+  credentials: true }));
+  
 app.use(express.json());
+app.use(cookieParser());
 
-app.use("/travelDetails", travelDetailsCollection);
-app.use("/getDateTime", getDateTime);
-app.use("/userDetails", userDetailsCollection);
-app.get('*',(req,res,next)=>{
+const limiter = rateLimit({
+  windowMs: 1*60*1000,
+  max: process.env.NODE_ENV === 'production' ? 60 : 1000,
+  keyGenerator: (req) => {
+    const authToken = req.cookies.jwt_auth_token;
+    if (authToken) {
+      try {
+        const user = jwt.verify(authToken, process.env.JWT_SECRET);
+        return user.email;
+      } catch (err) {
+        return req.ip;
+      }
+    }
+    return req.ip;
+  }
+});
+
+app.use(limiter);
+
+app.use("/travelDetails", verifyJWT, travelDetailsCollection);
+app.use("/getDateTime", verifyJWT, getDateTime);
+app.use("/userDetails", verifyJWT, userDetailsCollection);
+
+app.use("/login", login);
+app.use("/dailyCleanup", dailyCleanup);
+
+app.get('*', verifyJWT, (req,res)=>{
     res.status(200).json({
-      message:'GoTogether server is LIVE!'
+      message: "GoTo server is LIVE!"
     })
 })
-
-// module.exports = app;
-// export default app;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
+
+// module.exports = app;
+// export default app;

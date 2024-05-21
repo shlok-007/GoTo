@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import { useQuery } from 'react-query';
 
-import './App.css';
+// import './App.css';
 
 import {googleLogout, CredentialResponse} from '@react-oauth/google';
-import decodeJwtResponse from './utils/decodeJwtResponse';
 import addUser from './utils/addUser';
 
 import Navbar from './components/Navbar';
@@ -14,9 +13,11 @@ import ShowCompanions from './Pages/ShowCompanions';
 import HomePage from './Pages/HomePage';
 import InfoCard from './components/InfoCard';
 import PrivateRoutes from './utils/PrivateRoutes';
+import Cookies from 'universal-cookie';
 
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
+import { useToast } from './utils/ToastContext';
 // import Footer from './components/Footer';
 
 // const dummyProfile: profile_interface = {
@@ -28,29 +29,35 @@ import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
 //   picture: "https://lh3.googleusercontent.com/a/ACg8ocILCoSKIjk_01JAqfNFoliZkCmaNBgNC8LE-J-4QDUQRGEc=s96-c"
 // }
 
-const fetchServerStatus = async () => {
-  try{
-    const response = await fetch(process.env.REACT_APP_SERVER_URL || '');
-    if (!response.ok) {
-      console.log("Server is offline");
-      return true;
-    }
-    console.log("Server is online");
-    return false;
-  } catch (error) {
-    console.log("Server is offline");
-    return true;
-  }
-};
-
 const App: React.FC = () => {
 
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [profile, setProfile] = useState<profile_interface | undefined>(undefined);
-  // const [serverDown, setServerDown] = useState<boolean>(false);
+  const {showToast} = useToast();
+  const [serverDown, setServerDown] = useState<boolean>(false);
 
-  const { data: serverDown } = useQuery('serverStatus', fetchServerStatus);
+  const fetchServerStatus = async () => {
+    try{
+      const response = await fetch(process.env.REACT_APP_SERVER_URL || '', {credentials: 'include'});
+      if (!response.ok) {
+        // console.log("Server is offline");
+        // if 401, logout
+        if(response.status === 401) {
+          handleLogout();
+        }
+        else  setServerDown(true);
+      } else {
+      // console.log("Server is online");
+        setServerDown(false);
+      }
+    } catch (error) {
+      // console.log("Server is offline");
+      setServerDown(true);
+    }
+  };
+
+  useQuery('serverStatus', fetchServerStatus);
 
   // for testing
 
@@ -59,49 +66,61 @@ const App: React.FC = () => {
 
   //
 
-  const authToken = localStorage.getItem('authToken');
+  const profileCache = localStorage.getItem('profile');
+  const cookies = new Cookies();
 
-  if(!!authToken && !isLogged){
+  if(!!profileCache && !isLogged && cookies.get('dummy_jwt_auth_token')) {
     setIsLogged(true);
-    setProfile(decodeJwtResponse(authToken));
+    setProfile(JSON.parse(profileCache));
   }
 
   const handleLoginSuccess = async (credentialResponse: CredentialResponse)=>{
     if(credentialResponse.credential){
-      let temp = decodeJwtResponse(credentialResponse.credential);
-      setProfile(temp);
-      localStorage.setItem('authToken', credentialResponse.credential);
-      // addUser(temp.email, temp.name, temp.picture).then((val)=>{if(!val) setServerDown(true);});
-      await addUser(temp.email, temp.name, temp.picture);
+      // let temp = decodeJwtResponse(credentialResponse.credential);
+      // setProfile(temp);
+      // localStorage.setItem('profile', JSON.stringify(temp));
+      
+      // setIsLogged(true);
+      
+      const res = await addUser(credentialResponse.credential, setProfile);
+      // console.log(cookies.get('dummy_jwt_auth_token'));
+      if(res){
+        setIsLogged(true);
+        setServerDown(false);
+        showToast("Login successful!");
+        navigate("/selectDestination");
+      } else {
+        showToast("Unable to login. Please try again or contact the admin.");
+      }
     }
-    navigate("/selectDestination");
   }
 
   const handleLogout = () => {
     setIsLogged(false);
     setProfile(undefined);
     googleLogout();
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('profile');
+    cookies.remove('dummy_jwt_auth_token');
     navigate("/loginPage");
   };
 
   return (
     <>
       <Navbar isLogged={isLogged} profile={profile} siteName="GoTogether" onLogout={handleLogout}/>
-      {serverDown && <InfoCard content="Unable to connect to the server :_(" />}
+      {serverDown && isLogged && <InfoCard content="Server down or invalid session." />}
 
-      {!serverDown &&
       <Routes>
-        <Route path="/loginPage" element={<LoginPage handleLoginSuccess={handleLoginSuccess}/>}/>
+      {!isLogged && <Route path="/loginPage" element={<LoginPage handleLoginSuccess={handleLoginSuccess}/>}/>}
+      {!serverDown &&
         <Route element={<PrivateRoutes isLogged={isLogged}/>}>
           <Route path="/home" element={<HomePage name={profile?.name || ""}/>}/>
           <Route path="/selectDestination" element={<DestinationSelect profile={profile}/>}/>
           <Route path="/showCompanions/:destination/:date/:time/:dir" element={<ShowCompanions email={profile?.email || ""} name={profile?.name || ""} />}/>
           {/* <Route path="/serverOffline" element={<InfoCard content="Unable to connect to the server :_(" />}/> */}
         </Route>
+      }
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>
-      }
       {/* <Footer/> */}
     </>
   );

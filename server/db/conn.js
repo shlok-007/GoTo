@@ -10,13 +10,12 @@ async function connectToDatabase() {
   let conn;
   try {
     conn = await client.connect();
+    let db = conn.db("GoTo");
+    return db;
   } catch (e) {
     console.error(e);
+    return null;
   }
-
-  let db = conn.db("GoTo");
-
-  return db;
 }
 
 export default connectToDatabase;

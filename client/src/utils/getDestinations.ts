@@ -1,7 +1,7 @@
 export default async function getDestinations() : Promise<string[]> {
     try{
         let serverURL = process.env.REACT_APP_SERVER_URL;
-        const response = await fetch(serverURL+"/travelDetails/destinations");
+        const response = await fetch(serverURL+"/travelDetails/destinations",{credentials: "include"});
         if(!response.ok){
             const message = `An error occurred: ${response.statusText}`;
             console.log(message);

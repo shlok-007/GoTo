@@ -13,12 +13,12 @@
   }
   
   .toggle.active  {
-    background-color: var(--primary);
-    color: var(--background);
+    background-color: var(--accent);
+    color: var(--bg);
   }
 
   .toggle.active > .toggle-handle{
-    background-color: var(--background);
+    background-color: var(--bg);
   }
   
   .toggle-handle {

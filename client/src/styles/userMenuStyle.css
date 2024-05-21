@@ -59,7 +59,7 @@
 
 .up-modal-btn > :nth-child(2){
     background-color: var(--primary);
-    color: var(--background);
+    color: var(--bg);
     font-weight: bold;
 }
 

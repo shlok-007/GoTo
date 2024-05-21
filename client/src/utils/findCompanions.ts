@@ -7,7 +7,7 @@ const findCompanions = async (
   name: string,
   time: string,
   dir: string
-): Promise<travelDetails_interface[] | boolean> => {
+): Promise<travelDetails_interface[] | false> => {
   try {
     let serverURL = process.env.REACT_APP_SERVER_URL;
     const response = await fetch(
@@ -19,17 +19,21 @@ const findCompanions = async (
           name: name,
           time: time,
           dir: dir
-        })
+        }),
+      {
+        credentials: "include"
+      }
     );
+
     if (!response.ok) {
-      const message = `An error occurred: ${response.statusText}`;
-      window.alert(message);
+      // const message = `An error occurred: ${response.statusText}`;
+      // window.alert(message);
       return false;
     }
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return false;
   }
 };

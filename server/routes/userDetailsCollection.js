@@ -6,7 +6,7 @@ const router = express.Router();
 router.patch("/addSubscription", async (req, res) => {
     let db = await connectToDatabase();
     const {email, subscription} = req.body;
-    let collection = await db.collection("GotoUsers");
+    let collection = db.collection("GotoUsers");
     const filter = { "email": email };
     const update = { $set: { "subObject": subscription } };
     const options = {returnOriginal: false};
@@ -24,32 +24,61 @@ router.patch("/addSubscription", async (req, res) => {
     }
 });
 
-router.post("/addUser", async (req, res) => {
-  let db = await connectToDatabase();
-  let collection = await db.collection("GotoUsers");
-  let email=req.body.email;
-  const existingUser = await collection.findOne({ email });
+// router.post("/addUser", async (req, res) => {
+//   let oauthJWT = req.body.jwt;
+//   if(!oauthJWT){
+//     return res.status(401).json({ error: 'No token found' });
+//   }
+//   let userData = await verifyOAuthJWT(oauthJWT);
 
-  if (existingUser) {
-    return res.send(existingUser).status(204);
-  }
+//   if(!!!userData){
+//     return res.status(401).json({ error: 'Invalid token' });
+//   }
 
-  let newUser = {
-    "email": email,
-    "name": req.body.name,
-    "ph_no": "",
-    "wa_no": "",
-    "avatar": req.body.avatar,
-    "subObject": {}
-  };
-  let result = await collection.insertOne(newUser);
-  res.send(result).status(204);
-});
+//   const authToken = jwt.sign(userData, process.env.JWT_SECRET, { expiresIn: '30d' });
+
+//   res.cookie('jwt_auth_token', authToken
+//   , {
+//     httpOnly: false,
+//     secure: process.env.NODE_ENV === 'production',
+//     sameSite: 'strict',
+//     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+//     path: '/',
+//   }
+//   );
+
+//   let db = await connectToDatabase();
+//   let collection = db.collection("GotoUsers");
+//   let email = userData.email;
+//   const existingUser = await collection.findOne({ email });
+
+//   if (existingUser) {
+//     return res.send({msg: "User already exists.", profile: userData}).status(208);
+//   }
+
+//   let newUser = {
+//     "email": email,
+//     "name": req.body.name,
+//     "ph_no": "",
+//     "wa_no": "",
+//     "avatar": req.body.avatar,
+//     "subObject": {}
+//   };
+//   let result = await collection.insertOne(newUser);
+//   res.send({msg: "New user added.", profile: userData}).status(200);
+
+// });
 
 router.patch("/updateContact", async (req, res) => {
-  let db = await connectToDatabase();
+  const regex = /^(?:\+91|0)?[6789]\d{9}$/;
   const {email, ph_no, wa_no} = req.body;
-  let collection = await db.collection("GotoUsers");
+
+  if(!ph_no.match(regex) || !wa_no.match(regex)){
+    return res.status(400).json({ error: 'Invalid phone/whatsapp number' });
+  }
+
+  let db = await connectToDatabase();
+  let collection = db.collection("GotoUsers");
   const filter = { "email": email };
   const update = { $set: { "ph_no": ph_no, "wa_no": wa_no } };
   const options = {returnOriginal: false};
@@ -59,7 +88,7 @@ router.patch("/updateContact", async (req, res) => {
     if (!result.value) {
         return res.status(404).json({ error: 'User not found' });
       }
-    res.json(result.value);
+    res.json({msg: "Contact updated"});
 
     }catch (error) {
       console.error('Error occurred while updating user:', error);
@@ -70,18 +99,19 @@ router.patch("/updateContact", async (req, res) => {
 router.get("/getContact", async (req, res) => {
   let db = await connectToDatabase();
   const {email} = req.query;
-  let collection = await db.collection("GotoUsers");
+  let collection = db.collection("GotoUsers");
   let results = await collection.findOne({"email": email});
   if(results){
-  res.send({
-    "ph_no": results.ph_no,
-    "wa_no": results.wa_no
-  }).status(200);
+    res.status(200).send({
+      "ph_no": results.ph_no,
+      "wa_no": results.wa_no
+    });
   }else{
-  res.send({
-    "ph_no": "",
-    "wa_no": ""
-  }).status(404);}
+    res.status(404).send({
+      "ph_no": "",
+      "wa_no": ""
+    });
+  }
 });
 
 export default router;

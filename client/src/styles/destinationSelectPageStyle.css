@@ -1,6 +1,7 @@
 .dest-sel-card{
-  background-color: var(--transparent_bg);
-  width:fit-content;
+
+  background-color: var(--alt-bg);
+  width:max-content;
   /* min-width: 40rem; */
   margin: 2rem auto;
   padding: 2rem 1rem;
@@ -37,7 +38,7 @@
 
 .destination-selector-button {
   /* color: white; */
-  background-color: var(--background);
+  background-color: var(--bg);
   /* backdrop-filter: blur(10px); */
   border: none;
   border-radius: 10px;
@@ -67,7 +68,7 @@
   position: absolute;
   left: 0;
   top: calc(100% + 0.25rem);
-  background-color: var(--background);
+  background-color: var(--bg);
   backdrop-filter: blur(10px);
   width: 100%;
   /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, .1); */
@@ -88,7 +89,7 @@
 .dropdown-cities {
   display: flex;
   flex-direction: column;
-  border: var(--transparent_bg) 1px solid;
+  border: var(--alt-bg) 1px solid;
   border-radius: 10px;
   padding: 0.5rem 0;
   /* background-color: transparent; */
@@ -121,7 +122,7 @@
   border-radius: 5px;
   text-decoration: none;
   font-family: inherit;
-  color: var(--background);
+  color: var(--bg);
   cursor: pointer;
   padding: 5px 20px;
   /* transition: background-color 150ms ease-in-out, border-radius 150ms ease-in-out; */
@@ -155,7 +156,7 @@
 .checkbox-frame{
   width: 20px;
   height: 20px;
-  background-color: var(--background);
+  background-color: var(--bg);
   border-radius: 3px;
   display: flex;
   align-items: center;

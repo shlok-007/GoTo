@@ -20,8 +20,13 @@ router.get("/", async (req, res) => {
     "destination": destination,
     "date": { $in: [date, prevDate] },
     "dir": dir === 'true',
-    "email": { $ne: email }
+    // "email": { $ne: email }
   }).toArray();
+
+  if( !(email in trips.map(trip => trip.email)) ){
+    console.log("email not found in trips");
+    return res.status(403).send([]);
+  }
 
   const usersCollection = db.collection("GotoUsers");
 
@@ -51,23 +56,23 @@ router.get("/", async (req, res) => {
 
   results = sortCompanions(results, date, time);
 
-  res.send(results).status(200);
+  res.status(200).send(results);
 });
 
 
 router.get("/userTrips", async (req, res) => {
   let db = await connectToDatabase();
   const email= req.query.email;
-  let collection = await db.collection("TravelDetails");
+  let collection = db.collection("TravelDetails");
   let results = await collection.find({ "email": email }).project({email: 0}).toArray();
-  res.send(results).status(200);
+  res.status(200).send(results);
 });
 
 //--------obsolete------------
 router.get("/checkEntry", async (req, res) => {
   let db = await connectToDatabase();
   const { email, destination, date, time} = req.query;
-  let collection = await db.collection("TravelDetails");
+  let collection = db.collection("TravelDetails");
   let results = await collection.find({
       "email": email,
       "destination": destination,
@@ -76,21 +81,21 @@ router.get("/checkEntry", async (req, res) => {
   },{"_id":1}).toArray();
   let found = false;
   if(results.length>0){ found = true; }
-  res.send({"found":found}).status(200);
+  res.status(200).send({"found":found});
 });
 //--------------------------------
 
 router.post("/", async (req, res) => {
   let db = await connectToDatabase();
   const { email, time, destination, date, dir, name} = req.body;
-  let tripsCollection = await db.collection("TravelDetails");
+  let tripsCollection = db.collection("TravelDetails");
   const existingTravelDetail = await tripsCollection.findOne({
     "email": email,
     "destination": destination,
     "date": date,
     "dir": dir
   });
-  if(existingTravelDetail)  return res.send(existingTravelDetail).status(204);
+  if(existingTravelDetail)  return res.status(208).send(existingTravelDetail);
   let newTravelDetail = {
     "email": email,
     "time": time,
@@ -112,7 +117,7 @@ router.post("/", async (req, res) => {
     "email": {$ne: email}
   }).project({email:1, time:1, date:1}).toArray();
 
-  let companionData = await db.collection("GotoUsers").find({
+  let companionData = db.collection("GotoUsers").find({
     email: { $in: companions.map(companion => companion.email) }
   }).toArray();
 
@@ -136,7 +141,7 @@ router.post("/", async (req, res) => {
 
   await sendNotifications(subObjects, notification);
 
-  res.send(result).status(204);
+  res.status(200).send(result);
 });
 
 router.patch("/trip/:id", async (req, res) => {
@@ -166,7 +171,7 @@ router.patch("/trip/:id", async (req, res) => {
     "_id": { $ne: new ObjectId(req.params.id) }
   }).project({email:1, time:1, date:1}).toArray();
 
-  let companionData = await db.collection("GotoUsers").find({
+  let companionData = db.collection("GotoUsers").find({
     email: { $in: companions.map(companion => companion.email) }
   }).toArray();
 
@@ -190,50 +195,60 @@ router.patch("/trip/:id", async (req, res) => {
 
   await sendNotifications(subObjects, notification);
 
-  res.send(result).status(200);
+  res.status(200).send(result);
 });
 
-router.delete("/deleteOneTrip/:id", async (req, res) => {
+router.delete("/deleteOneTrip", async (req, res) => {
   let db = await connectToDatabase();
-  const query = { _id: new ObjectId(req.params.id) };
+  const query = { _id: new ObjectId(req.body.tripId) };
 
   const collection = db.collection("TravelDetails");
   let result = await collection.deleteOne(query);
 
-  res.send(result).status(200);
+  res.status(200).send(result);
 });
 
-router.get("/dailyCleanUp", async (req, res) => {
-  let db = await connectToDatabase();
-  const collection = db.collection("TravelDetails");
+// router.get("/dailyCleanUp", async (req, res) => {
+//   let db = await connectToDatabase();
+//   const collection = db.collection("TravelDetails");
 
-  let now = new Date();
-  let currentDate = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
-  currentDate = currentDate.toISOString().split('T')[0];
+//   let now = new Date();
+//   let currentDate = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
+//   currentDate = currentDate.toISOString().split('T')[0];
 
-  let result = await collection.deleteMany({ date: { $lt: currentDate } });
-  console.log(result);
-  res.send(result).status(200);
-});
+//   let result = await collection.deleteMany({ date: { $lt: currentDate } });
+//   console.log(result);
+//   res.status(200).send(result);
+// });
 
 router.get("/destinations", async (req, res) => {
   let db = await connectToDatabase();
   let collection = db.collection("Destinations");
   let results = await collection.find({}).toArray();
-  res.send(results).status(200);
+  res.status(200).send(results);
 });
 
 router.post("/destinations", async (req, res) => {
   let db = await connectToDatabase();
   let collection = db.collection("Destinations");
-  console.log(req.body);
-  let result = await collection.insertOne(req.body);
-  res.send(result).status(200);
+
+  let result = await collection.findOne({
+    "name": req.body.destname });
+  if(result){
+    return res.status(208).send({msg: "Destination already exists."});
+  }
+  let newDest = {
+    name: req.body.destname,
+    reports: []
+  }
+  await collection.insertOne(newDest);
+  res.status(200).json({msg: "Destination added successfully."});
+
 });
 
-router.patch("/destinations", async (req, res) => {
+router.patch("/destinations/report", async (req, res) => {
   let reportedDestination = req.body.reportedDestination;
-  let reporterEmail = req.body.reporterEmail;
+  let reporterEmail = req.body.email;
   let db = await connectToDatabase();
   let collection = db.collection("Destinations");
 
@@ -242,18 +257,22 @@ router.patch("/destinations", async (req, res) => {
     "name": reportedDestination });
 
   if(!result){
-    return res.send({msg: "Destination not found."}).status(404);
+    return res.status(404).json({msg: "Destination not found."});
   }
 
   if(result.reports){
 
     if(result.reports.includes(reporterEmail)){
-      return res.send({msg: "You have already reported."}).status(204);
+      // res.status = 204;
+      // res.statusCode = 204;
+      console.log("You have already reported.");
+      // return res.json({msg: "You have already reported."});
+      return res.status(208).json({msg: "You have already reported."});
     }
 
     if(result.reports.length >= 4){
       await collection.deleteOne({ "name": reportedDestination });
-      return res.send({msg: "Reported & removed destination."}).status(200);
+      return res.status(200).json({msg: "Reported & removed destination."});
     }
   }
 
@@ -264,7 +283,7 @@ router.patch("/destinations", async (req, res) => {
     }
   };
   result = await collection.updateOne(query, updates);
-  res.send({msg: "Reported successfully."}).status(200);
+  res.status(200).json({msg: "Reported successfully."});
 
 });
 

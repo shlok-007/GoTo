@@ -5,6 +5,7 @@ export default async function addTravelDetail(travelDetail : travelDetailsPOST_i
     try{
     let serverURL = process.env.REACT_APP_SERVER_URL;
     await fetch(serverURL+'/travelDetails', {
+        credentials: 'include',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
