@@ -24,3 +24,5 @@ yarn-error.log*
 temp.txt
 .env
 client/src/pages/PrevLoginPage.tsx
+
+/server/jwk.json

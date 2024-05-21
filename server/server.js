@@ -2,7 +2,10 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import "./loadEnvironment.js";
+
 import "./cronDailyCleanup.js"
+import "./cronFetchOAuthJWKs.js"
+
 import rateLimit from "express-rate-limit";
 import jwt from 'jsonwebtoken';
 
