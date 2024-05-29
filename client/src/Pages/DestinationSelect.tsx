@@ -23,6 +23,8 @@ import addDestination from "../utils/addDestination";
 
 import { useQuery } from "react-query";
 
+import { SVGDate, SVGTime, SVGPhone, SVGWhatsapp } from "../components/SVGIcons";
+
 const regex = /^(?:\+91|0)?[6789]\d{9}$/;
 
 export default function DestinationSelect({ profile }: loggedInPageProps) {
@@ -184,7 +186,7 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
                   min={serverDate.date}
                   required
                 />
-                <svg
+                {/* <svg
                   className="date-time-icon"
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -192,7 +194,8 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
                   viewBox="0 0 448 512"
                 >
                   <path d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z" />
-                </svg>
+                </svg> */}
+                <SVGDate height="20" width="20" fill="var(--bg)" cssClass="date-time-icon" />
               </div>
               <div className="date-time-wrapper">
                 <input
@@ -203,7 +206,7 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
                   value={time.slice(0, 5)}
                   required
                 />
-                <svg
+                {/* <svg
                   className="date-time-icon"
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -211,13 +214,14 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
                   viewBox="0 0 512 512"
                 >
                   <path d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z" />
-                </svg>
+                </svg> */}
+                <SVGTime height="20" width="20" fill="var(--bg)" cssClass="date-time-icon" />
               </div>
             </div>
             <div className="drop-wrap">
               <div className="icon-ip">
                 {/* <img src="/icons/telephone-call.png" alt="phone number" /> */}
-                <svg
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="35"
                   height="35"
@@ -225,7 +229,9 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
                   viewBox="0 0 448 512"
                 >
                   <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm90.7 96.7c9.7-2.6 19.9 2.3 23.7 11.6l20 48c3.4 8.2 1 17.6-5.8 23.2L168 231.7c16.6 35.2 45.1 63.7 80.3 80.3l20.2-24.7c5.6-6.8 15-9.2 23.2-5.8l48 20c9.3 3.9 14.2 14 11.6 23.7l-12 44C336.9 378 329 384 320 384C196.3 384 96 283.7 96 160c0-9 6-16.9 14.7-19.3l44-12z" />
-                </svg>
+                </svg> */}
+
+                <SVGPhone height="35" width="35" fill="var(--primary)" />
 
                 <input
                   className="contact-ip"
@@ -238,7 +244,7 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
               </div>
               <div className="icon-ip">
                 {/* <img src="/icons/whatsapp.png" alt="whatsapp number" /> */}
-                <svg
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="35"
                   height="35"
@@ -246,7 +252,9 @@ export default function DestinationSelect({ profile }: loggedInPageProps) {
                   viewBox="0 0 448 512"
                 >
                   <path d="M92.1 254.6c0 24.9 7 49.2 20.2 70.1l3.1 5-13.3 48.6L152 365.2l4.8 2.9c20.2 12 43.4 18.4 67.1 18.4h.1c72.6 0 133.3-59.1 133.3-131.8c0-35.2-15.2-68.3-40.1-93.2c-25-25-58-38.7-93.2-38.7c-72.7 0-131.8 59.1-131.9 131.8zM274.8 330c-12.6 1.9-22.4 .9-47.5-9.9c-36.8-15.9-61.8-51.5-66.9-58.7c-.4-.6-.7-.9-.8-1.1c-2-2.6-16.2-21.5-16.2-41c0-18.4 9-27.9 13.2-32.3c.3-.3 .5-.5 .7-.8c3.6-4 7.9-5 10.6-5c2.6 0 5.3 0 7.6 .1c.3 0 .5 0 .8 0c2.3 0 5.2 0 8.1 6.8c1.2 2.9 3 7.3 4.9 11.8c3.3 8 6.7 16.3 7.3 17.6c1 2 1.7 4.3 .3 6.9c-3.4 6.8-6.9 10.4-9.3 13c-3.1 3.2-4.5 4.7-2.3 8.6c15.3 26.3 30.6 35.4 53.9 47.1c4 2 6.3 1.7 8.6-1c2.3-2.6 9.9-11.6 12.5-15.5c2.6-4 5.3-3.3 8.9-2s23.1 10.9 27.1 12.9c.8 .4 1.5 .7 2.1 1c2.8 1.4 4.7 2.3 5.5 3.6c.9 1.9 .9 9.9-2.4 19.1c-3.3 9.3-19.1 17.7-26.7 18.8zM448 96c0-35.3-28.7-64-64-64H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96zM148.1 393.9L64 416l22.5-82.2c-13.9-24-21.2-51.3-21.2-79.3C65.4 167.1 136.5 96 223.9 96c42.4 0 82.2 16.5 112.2 46.5c29.9 30 47.9 69.8 47.9 112.2c0 87.4-72.7 158.5-160.1 158.5c-26.6 0-52.7-6.7-75.8-19.3z" />
-                </svg>
+                </svg> */}
+
+                <SVGWhatsapp height="35" width="35" fill="var(--primary)" />
 
                 <input
                   className="contact-ip"

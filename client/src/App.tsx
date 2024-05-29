@@ -106,6 +106,7 @@ const App: React.FC = () => {
 
   return (
     <>
+    <div className="content">
       <Navbar isLogged={isLogged} profile={profile} siteName="GoTogether" onLogout={handleLogout}/>
       {serverDown && isLogged && <InfoCard content="Server down or invalid session." />}
 
@@ -121,6 +122,7 @@ const App: React.FC = () => {
       }
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>
+    </div>
       <Footer/> 
     </>
   );

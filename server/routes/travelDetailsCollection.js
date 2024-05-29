@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
     // "email": { $ne: email }
   }).toArray();
 
-  if( !(email in trips.map(trip => trip.email)) ){
+  if( !trips.map(trip => trip.email).includes(email)){
     console.log("email not found in trips");
     return res.status(403).send([]);
   }
@@ -31,7 +31,10 @@ router.get("/", async (req, res) => {
   const usersCollection = db.collection("GotoUsers");
 
   let userDetails = await usersCollection.find({
-    email: { $in: trips.map(trip => trip.email) }
+    email: { 
+      $in: trips.map(trip => trip.email),
+      $ne: email
+    }
   }).toArray();
 
   let results = [];
@@ -117,7 +120,7 @@ router.post("/", async (req, res) => {
     "email": {$ne: email}
   }).project({email:1, time:1, date:1}).toArray();
 
-  let companionData = db.collection("GotoUsers").find({
+  let companionData = await db.collection("GotoUsers").find({
     email: { $in: companions.map(companion => companion.email) }
   }).toArray();
 
@@ -171,7 +174,7 @@ router.patch("/trip/:id", async (req, res) => {
     "_id": { $ne: new ObjectId(req.params.id) }
   }).project({email:1, time:1, date:1}).toArray();
 
-  let companionData = db.collection("GotoUsers").find({
+  let companionData = await db.collection("GotoUsers").find({
     email: { $in: companions.map(companion => companion.email) }
   }).toArray();
 
