@@ -11,7 +11,7 @@
 
 # production
 # /deployment/server/vercel.json
-/build
+client/build
 
 # misc
 .DS_Store
@@ -25,4 +25,4 @@ temp.txt
 .env
 client/src/pages/PrevLoginPage.tsx
 
-# /server/jwk.json
+server/jwk.json
