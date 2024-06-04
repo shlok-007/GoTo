@@ -10,7 +10,10 @@ import { useLocation } from "react-router-dom"
 import { useEffect } from "react"
 import { useToast } from "../utils/ToastContext"
 
-import logo from "../logo.png"
+// import logo from "../logo.png"
+// import svgLogo from "../logo.svg"
+
+import { SVGLogo } from "./SVGIcons"
 
 const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) => {
   const navigate = useNavigate();
@@ -145,7 +148,10 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
         <div className="navbar__left" onClick={()=> navigate("/home")}>
 
-          <img src={logo} alt="GoTogether" className="navbar__logo"/>
+          {/* <img src={logo} alt="GoTogether" className="navbar__logo"/> */}
+          {/* <img src={svgLogo} alt="GoTogether" className="navbar__logo"/> */}
+
+          <SVGLogo width="28" height="48" fill="var(--accent)"/>
           
           <div className="navbar__site-name">
             {window.screen.width>window.screen.height || !isLogged?"GoTogether":"GoTo"}

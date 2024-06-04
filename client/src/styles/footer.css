@@ -1,5 +1,5 @@
 footer {
-  padding: 1rem 8rem;
+  padding: 1rem 10rem;
   /* padding-top: 4rem; */
   margin-top: auto ;
   display: flex;
@@ -122,5 +122,13 @@ h4 {
 
   .user-trips{
     padding: 0.4rem;
+  }
+
+  .navbar__left{
+    gap: 0.5rem;
+  }
+
+  .navbar{
+    padding: 0.7rem 1.3rem;
   }
 }
