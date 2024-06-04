@@ -5,13 +5,13 @@ import App from './App';
 // import reportWebVitals from './reportWebVitals';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { BrowserRouter } from 'react-router-dom';
-// import ReactGA from 'react-ga4';
+import ReactGA from 'react-ga4';
 import { ToastProvider } from './utils/ToastContext';
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { inject } from '@vercel/analytics';
+// import { inject } from '@vercel/analytics';
 // import { injectSpeedInsights } from '@vercel/speed-insights/*';
 
-// ReactGA.initialize(process.env.REACT_APP_GA_MEASUREMENT_ID || "" );
+ReactGA.initialize(process.env.REACT_APP_GA_MEASUREMENT_ID || "" );
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(
@@ -32,7 +32,7 @@ root.render(
   </GoogleOAuthProvider>
 );
 
-inject();
+// inject();
 // injectSpeedInsights
 
 // If you want to start measuring performance in your app, pass a function

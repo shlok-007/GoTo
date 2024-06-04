@@ -26,3 +26,5 @@ temp.txt
 client/src/pages/PrevLoginPage.tsx
 
 server/jwk.json
+
+/zz_icons

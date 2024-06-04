@@ -22,3 +22,8 @@ jobs:
           cd server
           npm install --only=prod
           pm2 restart gotoServer
+
+          cd ../client
+          npm install --only=prod
+          npm run build
+          pm2 restart gotoFrontend
