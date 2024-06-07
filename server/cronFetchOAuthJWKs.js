@@ -2,7 +2,7 @@ import cron from "node-cron";
 import fs from 'fs';
 
 
-const fetchOAuthJWKs = async () => {
+export const fetchOAuthJWKs = async () => {
     console.log('Fetching OAuth JWKs');
     const result = await fetch(`https://accounts.google.com/.well-known/openid-configuration`, {
         method: 'GET',

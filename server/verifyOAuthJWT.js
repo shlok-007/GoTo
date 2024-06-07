@@ -1,7 +1,17 @@
 import jws from "jws-jwk";
 import fs from "fs";
+import { fetchOAuthJWKs } from "./cronFetchOAuthJWKs.js";
 
-const jwk = JSON.parse(fs.readFileSync("./jwk.json", "utf8"));
+let jwk = {};
+
+try{
+    jwk = JSON.parse(fs.readFileSync("./jwk.json", "utf8"));
+}catch(e){
+    console.log("Error reading jwk.json");
+    // console.log(e);
+    await fetchOAuthJWKs();
+    jwk = JSON.parse(fs.readFileSync("./jwk.json", "utf8"));
+}
 
 const verifyOAuthJWT = async (oauthJWT) => {
     const body = JSON.parse(Buffer.from(oauthJWT.split(".")[1], "base64").toString());
