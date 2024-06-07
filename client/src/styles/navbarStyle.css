@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8rem 3rem;
+    padding: 0.8rem 6rem;
     border-bottom: 1px solid var(--line);
   }
   
@@ -20,6 +20,7 @@
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
     transition: 500ms ease-in-out;
+    transition-behavior: allow-discrete;
   }
 
   .navbar__logo{
@@ -343,11 +344,12 @@
     background-color: var(--primary);
     color: var(--bg);
     border:none;
-    padding: 5px 10px;
+    padding: 5px 5px;
     border-radius: 5px;
-    font-size: large;
+    font-size: medium;
     font-family: inherit;
-    width: 9rem;
+    font-weight:500;
+    width: 8.5rem;
     height: 1.5rem;
   }
 

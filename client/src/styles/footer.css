@@ -14,6 +14,7 @@ footer {
   width: 100%;
   /* max-width: 1200px; */
   margin-bottom: 1rem;
+  gap: 3rem;
 }
 
 .contribute, .developers {
@@ -97,7 +98,7 @@ h4 {
   align-items: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
   footer {
     padding: 1rem 2rem;
@@ -106,6 +107,7 @@ h4 {
   .footer-section {
     flex-direction: column;
     align-items: center;
+    gap: 0;
   }
 
   .contribute, .developers {
@@ -120,15 +122,15 @@ h4 {
     text-align: center;
   }
 
-  .user-trips{
+  /* .user-trips{
     padding: 0.4rem;
-  }
+  } */
 
   .navbar__left{
     gap: 0.5rem;
   }
 
   .navbar{
-    padding: 0.7rem 1.3rem;
+    padding: 0.7rem 1.5rem;
   }
 }

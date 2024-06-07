@@ -1,6 +1,6 @@
 # GoTogether
 
-Try it out: https://goto-iitbbs.vercel.app
+Try it out: https://goto.webnd-iitbbs.org
 
 GoTo is a travel companion matching application that allows users to find travel companions for their desired destinations and dates. It is mainly for IIT BBS students as none of us like to pay the auto-rickshaw fare alone ;)
 

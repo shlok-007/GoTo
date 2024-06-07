@@ -46,3 +46,8 @@ workbox.routing.registerRoute(
               url.origin === 'https://fonts.gstatic.com',
   new workbox.strategies.StaleWhileRevalidate()
 );
+
+workbox.routing.registerRoute(
+  ({request}) => request.destination === 'script',
+  new workbox.strategies.NetworkFirst()
+);
