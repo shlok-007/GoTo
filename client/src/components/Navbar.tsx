@@ -37,7 +37,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
   const [ph_no, setPh_no] = useState<string>(localStorage.getItem('ph_no') || "Loading...");
   const [wa_no, setWa_no] = useState<string>(localStorage.getItem('wa_no') || "Loading...");
 
-  const [orientation, setOrientation] = useState<boolean>(false);
+  const [orientation, setOrientation] = useState<boolean>(window.innerWidth>550);
 
   const openTripsDialog = () => {
     setUserMenuShown(false);
@@ -106,12 +106,7 @@ const Navbar: React.FC<navbarProps> = ({isLogged, profile, siteName, onLogout}) 
 
     const updateOrientation = () => {
       // console.log(window.innerWidth);
-      if(window.innerWidth>550){
-        setOrientation(true);
-      }
-      else{
-        setOrientation(false);
-      }
+      setOrientation(window.innerWidth>550);
     }
 
     document.addEventListener("mousedown", handleClickOutside);
