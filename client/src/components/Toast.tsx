@@ -26,6 +26,9 @@
 // }
 
 // Toast.tsx
+
+/// <reference types="react/canary" />
+
 import React, { useEffect } from 'react';
 import '../styles/toastStyle.css';
 
@@ -45,7 +48,10 @@ const Toast: React.FC<ToastProps> = ({ message, duration, onClose }) => {
   }, [duration, onClose]);
 
   return (
-      <div className="popup">{message}</div>
+      <div className="popup" 
+      // popover="auto"
+      
+      >{message}</div>
   );
 };
 

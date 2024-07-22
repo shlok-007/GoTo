@@ -52,6 +52,7 @@ const verifyOAuthJWT = async (oauthJWT) => {
         catch(e){
             console.log("JWT verification failed");
             await fetchOAuthJWKs();
+            return false;
         }
         
     }
