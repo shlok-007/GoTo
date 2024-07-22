@@ -55,26 +55,26 @@ const Footer: React.FC = () => {
 
           <div className="developer">
             <div className="dev-detail">
-              <div className="dev-name">Shahji</div>
+              <div className="dev-name">Shahaji Deshmukh</div>
               <div className="dev-role">Frontend</div>
             </div>
             <div className="dev-social">
               <a
-                href="https://github.com/in/developer1"
+                href="https://github.com/Algo-O3"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <SVGGithub width="25" height="25"/>
               </a>
               <a
-                href="https://linkedin.com/in/developer1"
+                href="https://www.linkedin.com/in/sd-541u"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <SVGLinkedin  width="25" height="25"/>
               </a>
               <a
-                href="https://instagram.com/developer1"
+                href="https://instagram.com/_shahaji_"
                 target="_blank"
                 rel="noopener noreferrer"
               >
