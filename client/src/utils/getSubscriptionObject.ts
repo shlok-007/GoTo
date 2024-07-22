@@ -2,7 +2,7 @@ export default async function getSubscriptionObject(email: string) {
   if ('serviceWorker' in navigator && 'PushManager' in window) {
     try {
       // Register a service worker
-      let registration = await navigator.serviceWorker.register('service-worker.js', { scope: '/' });
+      let registration = await navigator.serviceWorker.register('/service-worker.js', { scope: '/' });
 
       // Update the service worker and get the subscription
       // const subscription = await registration.update().then(registration => registration.pushManager.getSubscription());

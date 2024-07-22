@@ -1,28 +1,127 @@
-import React from 'react';
-import '../styles/Footer.css';
+import "../styles/footer.css";
+import React from "react";
 
-function Footer() {
+import { SVGInstagram, SVGGithub, SVGLinkedin } from "./SVGIcons";
+
+const Footer: React.FC = () => {
   return (
-    <footer>
-      <div className="footer-container">
-        <div className="footer-row">
-          <div className="footer-col">
-            <h4>About Us</h4>
-            <p>Welcome to our logistics company Vitaran! We are a leading provider of comprehensive logistics solutions tailored to meet the diverse needs of our clients. With a deep understanding of the logistics industry and a commitment to excellence, we strive to deliver efficient and reliable services that streamline supply chains and drive business success.</p>
+    <footer className="footer">
+      <div className="footer-section">
+        <div className="contribute">
+          <h4>Contribute here</h4>
+          
+          <a
+            href="https://github.com/shlok-007/GoTo"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <SVGGithub />
+          </a>
+
+        </div>
+        <div className="developers">
+          <h4>Developers</h4>
+
+          <div className="developer">
+            <div className="dev-detail">
+              <div className="dev-name">Shlok Kumar Shaw</div>
+              <div className="dev-role">Lead • Backend • Frontend</div>
+            </div>
+            <div className="dev-social">
+              <a
+                href="https://github.com/shlok-007"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SVGGithub width="25" height="25"/>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/shlok-kumar-shaw-71a883203"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SVGLinkedin  width="25" height="25"/>
+              </a>
+              <a
+                href="https://www.instagram.com/shlok_3.14"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SVGInstagram width="25" height="25" />
+              </a>
+              
+            </div>
           </div>
-          <div className="footer-col">
-            <h4>Contact Us</h4>
-            <ul>
-              <li>Email: info@vitaran.com</li>
-              <li>Phone: +91 99129-85659</li>
-              <li>Address: 123, Andheri East, Navi Mumbai</li>
-            </ul>
+
+          <div className="developer">
+            <div className="dev-detail">
+              <div className="dev-name">Shahji</div>
+              <div className="dev-role">Frontend</div>
+            </div>
+            <div className="dev-social">
+              <a
+                href="https://github.com/in/developer1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SVGGithub width="25" height="25"/>
+              </a>
+              <a
+                href="https://linkedin.com/in/developer1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SVGLinkedin  width="25" height="25"/>
+              </a>
+              <a
+                href="https://instagram.com/developer1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SVGInstagram width="25" height="25" />
+              </a>
+              
+            </div>
+          </div>
+
+          <div className="developer">
+            <div className="dev-detail">
+              <div className="dev-name">Varsha Swaraj</div>
+              <div className="dev-role">Frontend</div>
+            </div>
+            <div className="dev-social">
+              <a
+                href="https://github.com/callmeVAMP"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SVGGithub width="25" height="25"/>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/varsha-swaraj-843724274"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SVGLinkedin  width="25" height="25"/>
+              </a>
+              <a
+                href="https://www.instagram.com/callmevam___p"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SVGInstagram width="25" height="25" />
+              </a>
+              
+            </div>
           </div>
 
         </div>
       </div>
+      <div className="powered-by">
+        Powered by the WebnD society, IIT BBS
+      </div>
     </footer>
   );
-}
+};
 
 export default Footer;

@@ -2,17 +2,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 0.8rem 6rem;
     border-bottom: 1px solid var(--line);
   }
   
   .navbar__site-name {
     font-size: 40px;
     font-weight: bold;
-    cursor: pointer;
 
     background-color: var(--text);
-    background-image: linear-gradient(120deg, var(--primary), var(--accent));
+    background-image: linear-gradient(120deg, var(--accent), var(--primary));
     background-size: 100%;
     background-repeat: repeat;
     -webkit-background-clip: text;
@@ -21,10 +20,25 @@
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
     transition: 500ms ease-in-out;
+    transition-behavior: allow-discrete;
+  }
+
+  .navbar__logo{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .navbar__left{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
   }
 
   .navbar__site-name:hover{
-    background-image: linear-gradient(240deg, var(--primary), var(--accent));
+    background-image: linear-gradient(240deg, var(--accent), var(--primary));
   }
   
   .navbar__user {
@@ -62,6 +76,8 @@
     cursor: pointer;
     transition: 250ms ease-in-out;
     height: 40px;
+    display: flex;
+    align-items: center;
   }
 
   .user-trips-title{
@@ -328,11 +344,12 @@
     background-color: var(--primary);
     color: var(--bg);
     border:none;
-    padding: 5px 10px;
+    padding: 5px 5px;
     border-radius: 5px;
-    font-size: large;
+    font-size: medium;
     font-family: inherit;
-    width: 9rem;
+    font-weight:500;
+    width: 8.5rem;
     height: 1.5rem;
   }
 

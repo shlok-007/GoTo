@@ -22,9 +22,9 @@ router.post("/", async (req, res) => {
     , {
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
-      maxAge: 30 * 24 * 60 * 60,  // 30 days
-      path: '/',
+      sameSite: 'strict',
+      maxAge: 30 * 24 * 60 * 60 * 1000,  // 30 days
+      path: '/api',
     }
     );
   
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
       httpOnly: false,
       secure: true,
       sameSite: 'none',
-      maxAge: 30 * 24 * 60 * 60,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
       path: '/',
     }
     );

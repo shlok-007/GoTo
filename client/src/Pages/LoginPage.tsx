@@ -7,7 +7,7 @@ const LoginPage : React.FC<loginPageProps> = ({handleLoginSuccess}) => {
     return (
         <>
             <div id="google-one-tap-button">
-                <InfoCard content="Hello there, please login to continue"/>
+                <InfoCard content="Hello there, please login using your institute ID to continue"/>
                 <GoogleLogin
                     onSuccess={credentialResponse => {
                         handleLoginSuccess(credentialResponse);

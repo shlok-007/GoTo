@@ -18,7 +18,7 @@ import Cookies from 'universal-cookie';
 import profile_interface from './types/profile_interface';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
 import { useToast } from './utils/ToastContext';
-// import Footer from './components/Footer';
+import Footer from './components/Footer';
 
 // const dummyProfile: profile_interface = {
 //   sub: "1234567890",
@@ -106,6 +106,7 @@ const App: React.FC = () => {
 
   return (
     <>
+    <div className="content">
       <Navbar isLogged={isLogged} profile={profile} siteName="GoTogether" onLogout={handleLogout}/>
       {serverDown && isLogged && <InfoCard content="Server down or invalid session." />}
 
@@ -121,7 +122,8 @@ const App: React.FC = () => {
       }
         <Route path="/" element={isLogged ? <Navigate to="/home" /> : <Navigate to="/loginPage" />} />
       </Routes>
-      {/* <Footer/> */}
+    </div>
+      <Footer/> 
     </>
   );
 }
